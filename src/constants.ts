@@ -1,0 +1,1 @@
+export const tokenStorageKey: string = 'pi-token-storage';

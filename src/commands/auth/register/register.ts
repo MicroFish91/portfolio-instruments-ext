@@ -1,13 +1,13 @@
-import { RegisterContext } from "./RegisterContext";
-import { CommandContext } from "../registerCommand";
-import { Wizard } from "../../wizard/Wizard";
+import { CommandContext } from "../../registerCommand";
+import { Wizard } from "../../../wizard/Wizard";
 import { RegisterUserExecuteStep } from "./RegisterUserExecuteStep";
-import { UserEmailPromptStep } from "./UserEmailPromptStep";
-import { UserPasswordPromptStep } from "./UserPasswordPromptStep";
 import { l10n } from "vscode";
-import { nonNullProp } from "../../utils/nonNull";
+import { nonNullProp } from "../../../utils/nonNull";
+import { UserEmailPromptStep } from "../UserEmailPromptStep";
+import { UserPasswordPromptStep } from "../UserPasswordPromptStep";
+import { RegisterContext } from "./RegisterContext";
 
-export async function register(context: CommandContext) {
+export async function register(context: CommandContext): Promise<void> {
     const wizardContext: RegisterContext = context as RegisterContext;
     const wizard: Wizard<RegisterContext> = new Wizard(wizardContext, {
         title: l10n.t("Register a new user"),

@@ -1,6 +1,8 @@
 import { TreeDataProvider, TreeItem } from "vscode";
 import { RegisterItem } from "./auth/RegisterItem";
 import { LoginItem } from "./auth/LoginItem";
+import { getTokenRecord } from "../utils/tokenUtils";
+import { GenericItem } from "./GenericItem";
 
 export interface PiExtTreeItem extends TreeItem {
     getTreeItem(): TreeItem;
@@ -16,14 +18,21 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
         if (item) {
             return await item.getChildren?.();
         } else {
-            // Check for existing login tokens
-            // For each existing login, create a login item 
-
-            // If no tokens, create a click to login command item
-            return [
-                new LoginItem(),
-                new RegisterItem(),
-            ];
+            const tokenRecord: Record<string, string> = await getTokenRecord();
+            if (Object.keys(tokenRecord).length) {
+                return [
+                    new GenericItem({
+                        id: 'pi/signed-in',
+                        label: "Placeholder: Signed in successfully!",
+                        contextValue: 'signedInItem',
+                    }),
+                ];
+            } else {
+                return [
+                    new LoginItem(),
+                    new RegisterItem(),
+                ];
+            }
         }
     }
 }

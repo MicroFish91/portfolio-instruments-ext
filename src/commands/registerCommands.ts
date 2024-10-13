@@ -1,5 +1,5 @@
-import { login } from "./login/login";
-import { register } from "./register/register";
+import { login } from "./auth/login/login";
+import { register } from "./auth/register/register";
 import { registerCommand } from "./registerCommand";
 
 export function registerCommands() {

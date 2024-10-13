@@ -1,6 +1,6 @@
 import { Progress } from "vscode";
-import { registerUser, RegisterUserApiResponse } from "../../sdk/auth/registerUser";
-import { nonNullProp } from "../../utils/nonNull";
+import { registerUser, RegisterUserApiResponse } from "../../../sdk/auth/registerUser";
+import { nonNullProp } from "../../../utils/nonNull";
 import { RegisterContext } from "./RegisterContext";
 
 export class RegisterUserExecuteStep<T extends RegisterContext> {
