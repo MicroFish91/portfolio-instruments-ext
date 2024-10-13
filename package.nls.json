@@ -1,0 +1,5 @@
+{
+    "portfolioInstruments.description": "A VS Code extension for interacting with the Portfolio Instruments API - provides a convenient interface for managing investment portfolio data directly within the VS Code editor",
+    "portfolioInstruments.register": "Create a platform account",
+    "portfolioInstruments.login": "Login to platform account"
+}
