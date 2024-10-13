@@ -1,3 +1,3 @@
-import { ExtensionContext } from "vscode";
+import { CommandContext } from "../registerCommand";
 
-export type LoginContext = ExtensionContext;
+export type LoginContext = CommandContext;

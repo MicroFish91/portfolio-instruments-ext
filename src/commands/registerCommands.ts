@@ -1,8 +1,8 @@
-import { commands } from "vscode";
-import { register } from "./register/register";
 import { login } from "./login/login";
+import { register } from "./register/register";
+import { registerCommand } from "./registerCommand";
 
 export function registerCommands() {
-    commands.registerCommand('portfolioInstruments.register', register);
-    commands.registerCommand('portfolioInstruments.login', login);
+    registerCommand('portfolioInstruments.register', register);
+    registerCommand('portfolioInstruments.login', login);
 }
