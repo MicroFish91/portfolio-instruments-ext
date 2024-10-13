@@ -1,9 +1,11 @@
 import { commands } from "vscode";
 import { ext } from "../extensionVariables";
+import { UserInterface } from "../wizard/UserInterface";
 
 export interface CommandContext {
-    commandId: string;
+    ui: UserInterface;
     metadata: {
+        commandId: string;
         start: number;
         end?: number;
     }
@@ -18,11 +20,16 @@ export function registerCommand(commandId: string, callback: CommandCallback): v
 }
 
 function wrapCallbackWithCommandContext(commandId: string, callback: CommandCallback) {
-    const commandContext: CommandContext = {
-        commandId,
-        metadata: {
-            start: Date.now(),
-        }
+    return async (...args: unknown[]) => {
+        const commandContext: CommandContext = {
+            ui: new UserInterface(),
+            metadata: {
+                commandId,
+                start: Date.now(),
+            },
+        };
+
+        await callback(commandContext, ...args);
+        commandContext.metadata.end = Date.now();
     };
-    return (...args: unknown[]) => callback(commandContext, ...args);
 }

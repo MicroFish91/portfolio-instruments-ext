@@ -1,16 +1,25 @@
-import { window } from "vscode";
 import { RegisterContext } from "./RegisterContext";
-import { RegisterUserApiResponse, registerUser, RegisterUserPayload } from "../../sdk/auth/registerUser";
+import { CommandContext } from "../registerCommand";
+import { Wizard } from "../../wizard/Wizard";
+import { RegisterUserExecuteStep } from "./RegisterUserExecuteStep";
+import { UserEmailPromptStep } from "./UserEmailPromptStep";
+import { UserPasswordPromptStep } from "./UserPasswordPromptStep";
 
-export async function register(_: RegisterContext) {
-    window.showInformationMessage("called register");
+export async function register(context: CommandContext) {
+    const wizardContext: RegisterContext = context as RegisterContext;
+    const wizard: Wizard<RegisterContext> = new Wizard(wizardContext, {
+        title: "Register a new user",
+        promptSteps: [
+            new UserEmailPromptStep(),
+            new UserPasswordPromptStep(),
+        ],
+        executeSteps: [
+            new RegisterUserExecuteStep(),
+        ],
+    });
 
-    // Build a lightweight wizard
-    // Prompt for values
-    const registerUserPayload: RegisterUserPayload = {
-        email: "test_user@gmail.com",
-        password: "abcd1234",
-    };
-    const response: RegisterUserApiResponse = await registerUser(registerUserPayload);
-    console.log(response);
+    await wizard.prompt();
+    await wizard.execute();
+
+    void context.ui.showInformationMessage(`Successfully registered new user: ${wizardContext.email}`);
 }

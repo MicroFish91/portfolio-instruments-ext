@@ -10,7 +10,7 @@ export type RegisterUserApiResponse = {
     status: number;
     user?: User;
     settings?: Settings;
-    errorMessage?: string;
+    error?: string;
 };
 
 export async function registerUser(payload: RegisterUserPayload): Promise<RegisterUserApiResponse> {
