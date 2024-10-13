@@ -1,7 +1,7 @@
-import { ThemeIcon, TreeItem } from "vscode";
+import { l10n, ThemeIcon, TreeItem } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 
-const createPlatformAccount: string = 'Create an account...';
+const createPlatformAccount: string = l10n.t('Create an account...');
 
 export class RegisterItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'registerItem';
@@ -15,13 +15,13 @@ export class RegisterItem extends TreeItem implements PiExtTreeItem {
         return {
             id: 'pi/register',
             label: this.label,
-            description: 'Register',
+            description: l10n.t('Register'),
             contextValue: RegisterItem.contextValue,
             iconPath: new ThemeIcon("plus", "white"),
             command: {
                 title: createPlatformAccount,
                 command: 'portfolioInstruments.register',
-                tooltip: 'Register',
+                tooltip: l10n.t('Register'),
             }
         };
     }
