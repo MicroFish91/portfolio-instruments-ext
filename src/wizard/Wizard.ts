@@ -27,6 +27,7 @@ export class Wizard<T extends CommandContext> {
             if (!s.shouldPrompt(this.context)) {
                 continue;
             }
+            s.title = this.title;
             await s.prompt(this.context);
         }
     }

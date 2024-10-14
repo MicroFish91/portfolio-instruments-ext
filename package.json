@@ -22,7 +22,8 @@
       {
         "command": "portfolioInstruments.login",
         "title": "%portfolioInstruments.login%",
-        "category": "Portfolio Instruments"
+        "category": "Portfolio Instruments",
+        "icon": "$(log-in)"
       },
       {
         "command": "portfolioInstruments.logoutAll",
@@ -51,6 +52,11 @@
     },
     "menus": {
       "view/title": [
+        {
+          "command": "portfolioInstruments.login",
+          "when": "view == portfolioInstruments.main",
+          "group": "navigation" 
+        },
         {
           "command": "portfolioInstruments.logoutAll",
           "when": "view == portfolioInstruments.main",

@@ -6,6 +6,7 @@ import { RegisterContext } from "./register/RegisterContext";
 export class UserEmailPromptStep<T extends RegisterContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
         context.email = (await context.ui.showInputBox({
+            title: this.title,
             prompt: l10n.t('Enter an email address'),
             validateInput: this.validateInput,
         }))?.trim();

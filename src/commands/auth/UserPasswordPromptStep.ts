@@ -6,6 +6,7 @@ import { RegisterContext } from "./register/RegisterContext";
 export class UserPasswordPromptStep<T extends RegisterContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
         context.password = (await context.ui.showInputBox({
+            title: this.title,
             prompt: l10n.t('Enter a password'),
             password: true,
             validateInput: this.validateInput,
