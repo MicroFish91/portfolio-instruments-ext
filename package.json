@@ -36,6 +36,11 @@
         "title": "%portfolioInstruments.logoutAll%",
         "category": "Portfolio Instruments",
         "icon": "$(log-out)"
+      },
+      {
+        "command": "portfolioInstruments.createAccount",
+        "title": "%portfolioInstruments.createAccount%",
+        "category": "Portfolio Instruments"
       }
     ],
     "viewsContainers": {
@@ -61,13 +66,22 @@
         {
             "command": "portfolioInstruments.logout",
             "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.createAccount",
+          "when": "never"
         }
       ],
       "view/item/context": [
         {
             "command": "portfolioInstruments.logout",
-            "when": "view =~ /portfolioInstruments.main/ && viewItem =~ /emailItem/i",
+            "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /emailItem/i",
             "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.createAccount",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /accountsItem/i",
+          "group": "1@1"
         }
       ],
       "view/title": [

@@ -1,3 +1,4 @@
+import { createAccount } from "./accounts/createAccount/createAccount";
 import { login } from "./auth/login/login";
 import { logout } from "./auth/logout/logout";
 import { logoutAll } from "./auth/logout/logoutAll";
@@ -10,4 +11,7 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.login', login);
     registerCommand('portfolioInstruments.logout', logout);
     registerCommand('portfolioInstruments.logoutAll', logoutAll);
+
+    // Accounts
+    registerCommand('portfolioInstruments.createAccount', createAccount);
 }
