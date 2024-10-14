@@ -29,7 +29,7 @@ export async function getAuthTokenRecord(): Promise<Record<string, string>> {
     return tokenStrings ? JSON.parse(tokenStrings) : {};
 }
 
-export async function removeAllAuthTokens(): Promise<void> {
+export async function removeAuthTokenRecord(): Promise<void> {
     const secrets: SecretStorage = ext.context.secrets;
     await secrets.delete(tokenStorageKey);
 }
