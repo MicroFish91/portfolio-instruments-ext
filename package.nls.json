@@ -1,5 +1,6 @@
 {
     "portfolioInstruments.description": "A VS Code extension for interacting with the Portfolio Instruments API - provides a convenient interface for managing investment portfolio data directly within the VS Code editor",
     "portfolioInstruments.register": "Create an account...",
-    "portfolioInstruments.login": "Sign-in..."
+    "portfolioInstruments.login": "Sign-in...",
+    "portfolioInstruments.logoutAll": "Sign-out from all accounts..."
 }

@@ -23,5 +23,5 @@ export async function register(context: CommandContext): Promise<void> {
     await wizard.prompt();
     await wizard.execute();
 
-    void context.ui.showInformationMessage(l10n.t('Successfully registered new user: "{0}"', nonNullProp(wizardContext, 'email')));
+    void context.ui.showInformationMessage(l10n.t('Successfully created user "{0}"', nonNullProp(wizardContext, 'email')));
 }

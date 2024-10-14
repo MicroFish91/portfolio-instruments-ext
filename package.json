@@ -23,6 +23,12 @@
         "command": "portfolioInstruments.login",
         "title": "%portfolioInstruments.login%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.logoutAll",
+        "title": "%portfolioInstruments.logoutAll%",
+        "category": "Portfolio Instruments",
+        "icon": "$(log-out)"
       }
     ],
     "viewsContainers": {
@@ -40,6 +46,15 @@
           "id": "portfolioInstruments.main",
           "name": "Portfolio Instruments",
           "visibility": "visible"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "portfolioInstruments.logoutAll",
+          "when": "view == portfolioInstruments.main",
+          "group": "navigation" 
         }
       ]
     }

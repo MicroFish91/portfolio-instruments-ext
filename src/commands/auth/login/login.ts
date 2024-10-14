@@ -6,6 +6,7 @@ import { UserEmailPromptStep } from "../UserEmailPromptStep";
 import { UserPasswordPromptStep } from "../UserPasswordPromptStep";
 import { LoginUserExecuteStep } from "./LoginUserExecuteStep";
 import { nonNullProp } from "../../../utils/nonNull";
+import { ext } from "../../../extensionVariables";
 
 export async function login(context: CommandContext): Promise<void> {
     const wizardContext: LoginContext = context as LoginContext;
@@ -23,5 +24,6 @@ export async function login(context: CommandContext): Promise<void> {
     await wizard.prompt();
     await wizard.execute();
 
-    void context.ui.showInformationMessage(l10n.t('Successfully logged in user: "{0}"', nonNullProp(wizardContext, 'email')));
+    void context.ui.showInformationMessage(l10n.t('Successfully logged into "{0}"', nonNullProp(wizardContext, 'email')));
+    ext.portfolioInstrumentsTdp.refresh();
 }

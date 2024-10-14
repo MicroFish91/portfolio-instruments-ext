@@ -1,7 +1,7 @@
-import { TreeDataProvider, TreeItem } from "vscode";
+import { Event, EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import { RegisterItem } from "./auth/RegisterItem";
 import { LoginItem } from "./auth/LoginItem";
-import { getTokenRecord } from "../utils/tokenUtils";
+import { getAuthTokenRecord } from "../utils/tokenUtils";
 import { GenericItem } from "./GenericItem";
 
 export interface PiExtTreeItem extends TreeItem {
@@ -10,6 +10,9 @@ export interface PiExtTreeItem extends TreeItem {
 }
 
 export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
+    private readonly onDidChangeTreeDataEmitter = new EventEmitter<PiExtTreeItem | PiExtTreeItem[] | undefined | null | void>();
+    onDidChangeTreeData: Event<PiExtTreeItem | PiExtTreeItem[] | undefined | null | void> = this.onDidChangeTreeDataEmitter.event;
+
     getTreeItem(item: PiExtTreeItem): TreeItem {
         return item.getTreeItem();
     }
@@ -18,7 +21,7 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
         if (item) {
             return await item.getChildren?.();
         } else {
-            const tokenRecord: Record<string, string> = await getTokenRecord();
+            const tokenRecord: Record<string, string> = await getAuthTokenRecord();
             if (Object.keys(tokenRecord).length) {
                 return [
                     new GenericItem({
@@ -34,5 +37,9 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
                 ];
             }
         }
+    }
+
+    refresh() {
+        this.onDidChangeTreeDataEmitter.fire(undefined);
     }
 }
