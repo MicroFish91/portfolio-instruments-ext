@@ -1,7 +1,7 @@
 import { l10n } from "vscode";
-import { hasAuthTokenRecord, removeAuthTokenRecord } from "../../utils/tokenUtils";
-import { CommandContext } from "../registerCommand";
-import { ext } from "../../extensionVariables";
+import { hasAuthTokenRecord, removeAuthTokenRecord } from "../../../utils/tokenUtils";
+import { CommandContext } from "../../registerCommand";
+import { ext } from "../../../extensionVariables";
 
 export async function logoutAll(context: CommandContext): Promise<void> {
     if (!await hasAuthTokenRecord()) {

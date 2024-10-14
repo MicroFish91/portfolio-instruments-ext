@@ -1,6 +1,6 @@
 import { login } from "./auth/login/login";
 import { logout } from "./auth/logout/logout";
-import { logoutAll } from "./auth/logoutAll";
+import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
 import { registerCommand } from "./registerCommand";
 
