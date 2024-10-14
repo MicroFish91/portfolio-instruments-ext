@@ -26,6 +26,12 @@
         "icon": "$(log-in)"
       },
       {
+        "command": "portfolioInstruments.logout",
+        "title": "%portfolioInstruments.logout%",
+        "category": "Portfolio Instruments",
+        "icon": "$(log-out)"
+      },
+      {
         "command": "portfolioInstruments.logoutAll",
         "title": "%portfolioInstruments.logoutAll%",
         "category": "Portfolio Instruments",
@@ -51,6 +57,19 @@
       ]
     },
     "menus": {
+      "commandPalette": [
+        {
+            "command": "portfolioInstruments.logout",
+            "when": "never"
+        }
+      ],
+      "view/item/context": [
+        {
+            "command": "portfolioInstruments.logout",
+            "when": "view =~ /portfolioInstruments.main/ && viewItem =~ /emailItem/i",
+            "group": "1@1"
+        }
+      ],
       "view/title": [
         {
           "command": "portfolioInstruments.login",

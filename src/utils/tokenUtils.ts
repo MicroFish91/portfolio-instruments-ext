@@ -19,6 +19,16 @@ export async function storeAuthToken(email: string, token: string): Promise<void
     return await secrets.store(tokenStorageKey, JSON.stringify(tokenRecord));
 }
 
+export async function removeAuthToken(email: string): Promise<void> {
+    email = email.toLowerCase();
+
+    const tokenRecord: Record<string, string> = await getAuthTokenRecord();
+    delete tokenRecord[email];
+
+    const secrets: SecretStorage = ext.context.secrets;
+    await secrets.store(tokenStorageKey, JSON.stringify(tokenRecord));
+}
+
 export async function hasAuthTokenRecord(): Promise<boolean> {
     return !!Object.keys((await getAuthTokenRecord())).length;
 }
