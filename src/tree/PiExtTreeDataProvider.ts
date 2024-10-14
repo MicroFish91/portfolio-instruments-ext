@@ -1,8 +1,8 @@
 import { Event, EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import { RegisterItem } from "./auth/RegisterItem";
 import { LoginItem } from "./auth/LoginItem";
-import { getAuthTokenRecord } from "../utils/tokenUtils";
-import { GenericItem } from "./GenericItem";
+import { getAuthTokenRecord, hasAuthTokenRecord } from "../utils/tokenUtils";
+import { EmailItem } from "./auth/EmailItem";
 
 export interface PiExtTreeItem extends TreeItem {
     getTreeItem(): TreeItem;
@@ -21,15 +21,9 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
         if (item) {
             return await item.getChildren?.();
         } else {
-            const tokenRecord: Record<string, string> = await getAuthTokenRecord();
-            if (Object.keys(tokenRecord).length) {
-                return [
-                    new GenericItem({
-                        id: 'pi/signed-in',
-                        label: "Placeholder: Signed in successfully!",
-                        contextValue: 'signedInItem',
-                    }),
-                ];
+            if (await hasAuthTokenRecord()) {
+                const tokenRecord: Record<string, string> = await getAuthTokenRecord();
+                return Object.keys(tokenRecord).map(email => new EmailItem(email));
             } else {
                 return [
                     new LoginItem(),
