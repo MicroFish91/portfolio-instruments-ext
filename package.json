@@ -75,6 +75,10 @@
         {
           "command": "portfolioInstruments.createAccount",
           "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.viewProperties",
+          "when": "never"
         }
       ],
       "view/item/context": [
