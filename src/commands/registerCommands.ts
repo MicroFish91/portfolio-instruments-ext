@@ -4,6 +4,7 @@ import { logout } from "./auth/logout/logout";
 import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
 import { registerCommand } from "./registerCommand";
+import { viewProperties } from "./viewProperties/viewProperties";
 
 export function registerCommands() {
     // Auth
@@ -14,4 +15,7 @@ export function registerCommands() {
 
     // Accounts
     registerCommand('portfolioInstruments.createAccount', createAccount);
+
+    // Other
+    registerCommand('portfolioInstruments.viewProperties', viewProperties);
 }

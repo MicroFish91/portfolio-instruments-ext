@@ -7,6 +7,7 @@ import { EmailItem } from "./auth/EmailItem";
 export interface PiExtTreeItem extends TreeItem {
     getTreeItem(): TreeItem;
     getChildren?(): PiExtTreeItem[] | Promise<PiExtTreeItem[]>;
+    viewProperties?(): string | Promise<string>;
 }
 
 export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {

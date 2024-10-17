@@ -4,5 +4,6 @@
     "portfolioInstruments.login": "Sign in...",
     "portfolioInstruments.logout": "Sign out...",
     "portfolioInstruments.logoutAll": "Sign out all users",
-    "portfolioInstruments.createAccount": "Create account..."
+    "portfolioInstruments.createAccount": "Create account...",
+    "portfolioInstruments.viewProperties": "View Properties"
 }

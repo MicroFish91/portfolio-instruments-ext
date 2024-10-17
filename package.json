@@ -41,6 +41,11 @@
         "command": "portfolioInstruments.createAccount",
         "title": "%portfolioInstruments.createAccount%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.viewProperties",
+        "title": "%portfolioInstruments.viewProperties%",
+        "category": "Portfolio Instruments"
       }
     ],
     "viewsContainers": {
@@ -82,6 +87,11 @@
           "command": "portfolioInstruments.createAccount",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /accountsItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.viewProperties",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /viewProperties/i",
+          "group": "z@1"
         }
       ],
       "view/title": [
