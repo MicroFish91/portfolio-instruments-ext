@@ -1,9 +1,7 @@
+import { AuthContext } from "../../../AuthContext";
 import { Account, TaxShelter } from "../../../sdk/types/accounts";
-import { CommandContext } from "../../registerCommand";
 
-export type AccountCreateContext = CommandContext & {
-    token: string;
-
+export type AccountCreateContext = AuthContext & {
     accountName?: string;
     accountDescription?: string;
     accountInstitution?: string;

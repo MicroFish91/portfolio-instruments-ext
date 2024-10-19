@@ -43,6 +43,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.deleteAccount",
+        "title": "%portfolioInstruments.deleteAccount%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.viewProperties",
         "title": "%portfolioInstruments.viewProperties%",
         "category": "Portfolio Instruments"
@@ -77,6 +82,10 @@
           "when": "never"
         },
         {
+          "command": "portfolioInstruments.deleteAccount",
+          "when": "never"
+        },
+        {
           "command": "portfolioInstruments.viewProperties",
           "when": "never"
         }
@@ -91,6 +100,11 @@
           "command": "portfolioInstruments.createAccount",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /accountsItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.deleteAccount",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /accountItem/i",
+          "group": "2@1"
         },
         {
           "command": "portfolioInstruments.viewProperties",

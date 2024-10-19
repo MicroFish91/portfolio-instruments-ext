@@ -1,4 +1,5 @@
 import { createAccount } from "./accounts/createAccount/createAccount";
+import { deleteAccount } from "./accounts/deleteAccount/deleteAccount";
 import { login } from "./auth/login/login";
 import { logout } from "./auth/logout/logout";
 import { logoutAll } from "./auth/logout/logoutAll";
@@ -15,6 +16,7 @@ export function registerCommands() {
 
     // Accounts
     registerCommand('portfolioInstruments.createAccount', createAccount);
+    registerCommand('portfolioInstruments.deleteAccount', deleteAccount);
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);

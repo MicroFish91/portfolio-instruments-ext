@@ -1,4 +1,4 @@
-import { CancellationToken, InputBoxOptions, QuickPickItem, QuickPickOptions, window } from "vscode";
+import { CancellationToken, InputBoxOptions, MessageOptions, QuickPickItem, QuickPickOptions, window } from "vscode";
 
 /**
  * Injected wrapper for common VS Code UI commands
@@ -10,6 +10,10 @@ export class UserInterface {
 
     showInputBox(options: InputBoxOptions, token?: CancellationToken): Thenable<string | undefined> {
         return window.showInputBox(options, token);
+    }
+
+    showWarningMessage(message: string, options: MessageOptions, ...items: string[]): Thenable<string | undefined> {
+        return window.showWarningMessage(message, options, ...items);
     }
 
     showQuickPick<T extends QuickPickItem>(items: readonly T[] | Thenable<readonly T[]>, options?: QuickPickOptions, token?: CancellationToken): Thenable<T | undefined> {
