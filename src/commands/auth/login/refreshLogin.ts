@@ -8,10 +8,10 @@ import { nonNullProp } from "../../../utils/nonNull";
 import { ext } from "../../../extensionVariables";
 import { EmailItem } from "../../../tree/auth/EmailItem";
 
-export async function refreshLogin(context: CommandContext, emailItem: EmailItem): Promise<void> {
+export async function refreshLogin(context: CommandContext, item: EmailItem): Promise<void> {
     const wizardContext: LoginContext = {
         ...context,
-        email: emailItem.email,
+        email: item.email,
     };
     const wizard: Wizard<LoginContext> = new Wizard(wizardContext, {
         title: l10n.t('Sign in'),
@@ -27,5 +27,5 @@ export async function refreshLogin(context: CommandContext, emailItem: EmailItem
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Successfully logged into "{0}"', nonNullProp(wizardContext, 'email')));
-    ext.portfolioInstrumentsTdp.refresh(emailItem);
+    ext.portfolioInstrumentsTdp.refresh(item);
 }

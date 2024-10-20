@@ -5,7 +5,7 @@ import { getAuthTokenRecord } from "../utils/tokenUtils";
 import { EmailItem } from "./auth/EmailItem";
 
 export interface PiExtTreeItem extends TreeItem {
-    getTreeItem(): TreeItem | Promise<TreeItem>;
+    getTreeItem(): TreeItem;
     getChildren?(): PiExtTreeItem[] | Promise<PiExtTreeItem[]>;
     viewProperties?(): string | Promise<string>;
 }
@@ -14,8 +14,8 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
     private readonly onDidChangeTreeDataEmitter = new EventEmitter<PiExtTreeItem | PiExtTreeItem[] | undefined | null | void>();
     onDidChangeTreeData: Event<PiExtTreeItem | PiExtTreeItem[] | undefined | null | void> = this.onDidChangeTreeDataEmitter.event;
 
-    async getTreeItem(item: PiExtTreeItem): Promise<TreeItem> {
-        return await item.getTreeItem();
+    getTreeItem(item: PiExtTreeItem): TreeItem {
+        return item.getTreeItem();
     }
 
     async getChildren(item?: PiExtTreeItem): Promise<PiExtTreeItem[] | undefined> {

@@ -17,7 +17,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
         this.email = email;
     }
 
-    async getTreeItem(): Promise<TreeItem> {
+    getTreeItem(): TreeItem {
         return {
             id: `/email/${this.label}`,
             label: this.label,
