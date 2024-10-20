@@ -30,5 +30,5 @@ export async function deleteAccount(context: CommandContext, item: AccountItem):
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Deleted account "{0}"', nonNullValueAndProp(wizardContext.account, 'name')));
-    ext.portfolioInstrumentsTdp.refresh();
+    ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

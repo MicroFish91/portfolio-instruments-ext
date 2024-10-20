@@ -4,6 +4,7 @@ import { Account } from "../../sdk/types/accounts";
 import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { capitalize } from "../../utils/textUtils";
+import { AccountsItem } from "./AccountsItem";
 
 export class AccountItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'accountItem';
@@ -11,9 +12,13 @@ export class AccountItem extends TreeItem implements PiExtTreeItem {
 
     id: string;
 
-    constructor(readonly email: string, readonly account: Account) {
+    constructor(
+        readonly parent: AccountsItem,
+        readonly email: string,
+        readonly account: Account,
+    ) {
         super(account.name);
-        this.id = `/email/${this.email}/accounts/${this.account.name}`;
+        this.id = `/email/${email}/accounts/${account.name}`;
     }
 
     getTreeItem(): TreeItem {

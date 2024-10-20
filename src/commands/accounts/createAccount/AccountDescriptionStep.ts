@@ -18,9 +18,11 @@ export class AccountDescriptionStep<T extends AccountCreateContext> extends Prom
 
     private validateInput(value: string): string | undefined {
         value = value.trim();
+        if (!value) {
+            return undefined;
+        }
 
         const tc: validationUtils.RangeConstraints = {
-            lowerLimitIncl: 1,
             upperLimitIncl: 1024,
         };
 

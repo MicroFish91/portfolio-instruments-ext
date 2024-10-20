@@ -26,6 +26,11 @@
         "icon": "$(log-in)"
       },
       {
+        "command": "portfolioInstruments.loginExisting",
+        "title": "%portfolioInstruments.loginExisting%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.logout",
         "title": "%portfolioInstruments.logout%",
         "category": "Portfolio Instruments",
@@ -73,6 +78,10 @@
     },
     "menus": {
       "commandPalette": [
+        {
+          "command": "portfolioInstruments.loginExisting",
+          "when": "never"
+        },
         {
             "command": "portfolioInstruments.logout",
             "when": "never"

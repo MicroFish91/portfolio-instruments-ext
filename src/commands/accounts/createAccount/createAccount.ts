@@ -35,5 +35,5 @@ export async function createAccount(context: CommandContext, item: AccountsItem)
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Created account "{0}"', nonNullValueAndProp(wizardContext.account, 'name')));
-    ext.portfolioInstrumentsTdp.refresh();
+    ext.portfolioInstrumentsTdp.refresh(item);
 }

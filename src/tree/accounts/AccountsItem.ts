@@ -31,7 +31,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
 
     async getChildren(): Promise<PiExtTreeItem[]> {
         const accounts: Account[] = await this.getAccounts();
-        return accounts.map(a => new AccountItem(this.email, a));
+        return accounts.map(a => new AccountItem(this, this.email, a));
     }
 
     private async getAccounts(): Promise<Account[]> {

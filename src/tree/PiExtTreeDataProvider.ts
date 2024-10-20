@@ -1,11 +1,11 @@
 import { Event, EventEmitter, TreeDataProvider, TreeItem } from "vscode";
 import { RegisterItem } from "./auth/RegisterItem";
 import { LoginItem } from "./auth/LoginItem";
-import { getAuthTokenRecord, hasAuthTokenRecord } from "../utils/tokenUtils";
+import { getAuthTokenRecord } from "../utils/tokenUtils";
 import { EmailItem } from "./auth/EmailItem";
 
 export interface PiExtTreeItem extends TreeItem {
-    getTreeItem(): TreeItem;
+    getTreeItem(): TreeItem | Promise<TreeItem>;
     getChildren?(): PiExtTreeItem[] | Promise<PiExtTreeItem[]>;
     viewProperties?(): string | Promise<string>;
 }
@@ -14,17 +14,19 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
     private readonly onDidChangeTreeDataEmitter = new EventEmitter<PiExtTreeItem | PiExtTreeItem[] | undefined | null | void>();
     onDidChangeTreeData: Event<PiExtTreeItem | PiExtTreeItem[] | undefined | null | void> = this.onDidChangeTreeDataEmitter.event;
 
-    getTreeItem(item: PiExtTreeItem): TreeItem {
-        return item.getTreeItem();
+    async getTreeItem(item: PiExtTreeItem): Promise<TreeItem> {
+        return await item.getTreeItem();
     }
 
     async getChildren(item?: PiExtTreeItem): Promise<PiExtTreeItem[] | undefined> {
         if (item) {
             return await item.getChildren?.();
         } else {
-            if (await hasAuthTokenRecord()) {
-                const tokenRecord: Record<string, string> = await getAuthTokenRecord();
-                return Object.keys(tokenRecord).map(email => new EmailItem(email));
+            const tokenRecord: Record<string, string> = await getAuthTokenRecord();
+            const emails: string[] = Object.keys(tokenRecord);
+
+            if (emails.length) {
+                return emails.map(e => new EmailItem(e));
             } else {
                 return [
                     new LoginItem(),
@@ -34,7 +36,7 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
         }
     }
 
-    refresh() {
-        this.onDidChangeTreeDataEmitter.fire(undefined);
+    refresh(item?: PiExtTreeItem) {
+        item ? this.onDidChangeTreeDataEmitter.fire(item) : this.onDidChangeTreeDataEmitter.fire(undefined);
     }
 }
