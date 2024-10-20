@@ -36,12 +36,12 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
         } else {
             return [
                 new GenericItem({
-                    id: `/emails/${this.email}/login`,
-                    label: l10n.t('Credentials are stale, login again to proceed.'),
-                    contextValue: 'emailLoginItem',
+                    id: `/emails/${this.email}/refreshLogin`,
+                    label: l10n.t('Credentials are stale. Refresh login to proceed.'),
+                    contextValue: 'refreshLoginItem',
                     command: {
-                        title: 'Login to existing email',
-                        command: 'portfolioInstruments.loginExisting',
+                        title: 'Refresh login...',
+                        command: 'portfolioInstruments.refreshLogin',
                         arguments: [this],
                     }
                 }),

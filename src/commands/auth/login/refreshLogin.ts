@@ -8,7 +8,7 @@ import { nonNullProp } from "../../../utils/nonNull";
 import { ext } from "../../../extensionVariables";
 import { EmailItem } from "../../../tree/auth/EmailItem";
 
-export async function loginExisting(context: CommandContext, emailItem: EmailItem): Promise<void> {
+export async function refreshLogin(context: CommandContext, emailItem: EmailItem): Promise<void> {
     const wizardContext: LoginContext = {
         ...context,
         email: emailItem.email,

@@ -26,8 +26,8 @@
         "icon": "$(log-in)"
       },
       {
-        "command": "portfolioInstruments.loginExisting",
-        "title": "%portfolioInstruments.loginExisting%",
+        "command": "portfolioInstruments.refreshLogin",
+        "title": "%portfolioInstruments.refreshLogin%",
         "category": "Portfolio Instruments"
       },
       {
@@ -79,7 +79,7 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "portfolioInstruments.loginExisting",
+          "command": "portfolioInstruments.refreshLogin",
           "when": "never"
         },
         {
