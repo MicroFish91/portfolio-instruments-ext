@@ -8,5 +8,6 @@
     "portfolioInstruments.createAccount": "Create account...",
     "portfolioInstruments.deleteAccount": "Delete account...",
     "portfolioInstruments.createHolding": "Create holding...",
+    "portfolioInstruments.deleteHolding": "Delete holding...",
     "portfolioInstruments.viewProperties": "View Properties"
 }
