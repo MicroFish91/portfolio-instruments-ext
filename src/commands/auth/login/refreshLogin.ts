@@ -2,7 +2,7 @@ import { l10n } from "vscode";
 import { Wizard } from "../../../wizard/Wizard";
 import { CommandContext } from "../../registerCommand";
 import { LoginContext } from "./LoginContext";
-import { UserPasswordPromptStep } from "../UserPasswordPromptStep";
+import { UserPasswordStep } from "../UserPasswordStep";
 import { LoginUserExecuteStep } from "./LoginUserExecuteStep";
 import { nonNullProp } from "../../../utils/nonNull";
 import { ext } from "../../../extensionVariables";
@@ -16,7 +16,7 @@ export async function refreshLogin(context: CommandContext, item: EmailItem): Pr
     const wizard: Wizard<LoginContext> = new Wizard(wizardContext, {
         title: l10n.t('Sign in'),
         promptSteps: [
-            new UserPasswordPromptStep(),
+            new UserPasswordStep(),
         ],
         executeSteps: [
             new LoginUserExecuteStep(),

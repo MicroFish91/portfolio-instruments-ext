@@ -3,8 +3,8 @@ import { Wizard } from "../../../wizard/Wizard";
 import { RegisterUserExecuteStep } from "./RegisterUserExecuteStep";
 import { l10n } from "vscode";
 import { nonNullProp } from "../../../utils/nonNull";
-import { UserEmailPromptStep } from "../UserEmailPromptStep";
-import { UserPasswordPromptStep } from "../UserPasswordPromptStep";
+import { UserEmailStep } from "../UserEmailStep";
+import { UserPasswordStep } from "../UserPasswordStep";
 import { RegisterContext } from "./RegisterContext";
 
 export async function register(context: CommandContext): Promise<void> {
@@ -12,8 +12,8 @@ export async function register(context: CommandContext): Promise<void> {
     const wizard: Wizard<RegisterContext> = new Wizard(wizardContext, {
         title: l10n.t("Register a new user"),
         promptSteps: [
-            new UserEmailPromptStep(),
-            new UserPasswordPromptStep(),
+            new UserEmailStep(),
+            new UserPasswordStep(),
         ],
         executeSteps: [
             new RegisterUserExecuteStep(),

@@ -2,8 +2,8 @@ import { l10n } from "vscode";
 import { Wizard } from "../../../wizard/Wizard";
 import { CommandContext } from "../../registerCommand";
 import { LoginContext } from "./LoginContext";
-import { UserEmailPromptStep } from "../UserEmailPromptStep";
-import { UserPasswordPromptStep } from "../UserPasswordPromptStep";
+import { UserEmailStep } from "../UserEmailStep";
+import { UserPasswordStep } from "../UserPasswordStep";
 import { LoginUserExecuteStep } from "./LoginUserExecuteStep";
 import { nonNullProp } from "../../../utils/nonNull";
 import { ext } from "../../../extensionVariables";
@@ -13,8 +13,8 @@ export async function login(context: CommandContext): Promise<void> {
     const wizard: Wizard<LoginContext> = new Wizard(wizardContext, {
         title: l10n.t('Sign in'),
         promptSteps: [
-            new UserEmailPromptStep(),
-            new UserPasswordPromptStep(),
+            new UserEmailStep(),
+            new UserPasswordStep(),
         ],
         executeSteps: [
             new LoginUserExecuteStep(),

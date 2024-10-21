@@ -3,7 +3,7 @@ import { validationUtils } from "../../utils/validationUtils";
 import { PromptStep } from "../../wizard/PromptStep";
 import { RegisterContext } from "./register/RegisterContext";
 
-export class UserEmailPromptStep<T extends RegisterContext> extends PromptStep<T> {
+export class UserEmailStep<T extends RegisterContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
         context.email = (await context.ui.showInputBox({
             title: this.title,

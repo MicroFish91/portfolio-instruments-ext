@@ -3,7 +3,7 @@ import { validationUtils } from "../../utils/validationUtils";
 import { PromptStep } from "../../wizard/PromptStep";
 import { RegisterContext } from "./register/RegisterContext";
 
-export class UserPasswordPromptStep<T extends RegisterContext> extends PromptStep<T> {
+export class UserPasswordStep<T extends RegisterContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
         context.password = (await context.ui.showInputBox({
             title: this.title,
