@@ -103,8 +103,8 @@
           "when": "never"
         },
         {
-            "command": "portfolioInstruments.logout",
-            "when": "never"
+          "command": "portfolioInstruments.logout",
+          "when": "never"
         },
         {
           "command": "portfolioInstruments.createAccount",
@@ -137,9 +137,9 @@
       ],
       "view/item/context": [
         {
-            "command": "portfolioInstruments.logout",
-            "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /emailItem/i",
-            "group": "1@1"
+          "command": "portfolioInstruments.logout",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /emailItem/i",
+          "group": "1@1"
         },
         {
           "command": "portfolioInstruments.createAccount",
@@ -181,12 +181,12 @@
         {
           "command": "portfolioInstruments.login",
           "when": "view == portfolioInstruments.main",
-          "group": "navigation" 
+          "group": "navigation"
         },
         {
           "command": "portfolioInstruments.logoutAll",
           "when": "view == portfolioInstruments.main",
-          "group": "navigation" 
+          "group": "navigation"
         }
       ]
     }
@@ -195,13 +195,10 @@
     "compile": "webpack"
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.8",
     "@types/node": "20.x",
     "@types/vscode": "^1.94.0",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1",
     "eslint": "^9.11.1",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.2",
