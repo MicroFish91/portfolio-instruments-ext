@@ -13,7 +13,7 @@ export class LoginItem extends TreeItem implements PiExtTreeItem {
 
     getTreeItem(): TreeItem {
         return {
-            id: 'pi/login',
+            id: '/login',
             label: this.label,
             description: l10n.t('Login'),
             contextValue: LoginItem.contextValue,

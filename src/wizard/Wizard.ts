@@ -23,12 +23,22 @@ export class Wizard<T extends CommandContext> {
     }
 
     async prompt(): Promise<void> {
-        for (const s of this.promptSteps) {
+        this.promptSteps.reverse();
+
+        while (this.promptSteps.length) {
+            const s = this.promptSteps.pop() as PromptStep<T>;
             if (!s.shouldPrompt(this.context)) {
                 continue;
             }
+
             s.title = this.title;
             await s.prompt(this.context);
+
+            if (s.subWizard) {
+                const { promptSteps, executeSteps } = await s.subWizard?.(this.context) ?? { promptSteps: [], executeSteps: [] };
+                this.promptSteps.push(...(promptSteps ?? []).reverse());
+                this.executeSteps.push(...(executeSteps ?? []));
+            }
         }
     }
 

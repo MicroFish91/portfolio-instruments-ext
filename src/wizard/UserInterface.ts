@@ -1,5 +1,9 @@
 import { CancellationToken, InputBoxOptions, MessageOptions, QuickPickItem, QuickPickOptions, window } from "vscode";
 
+export type PiQuickPickItem<T> = QuickPickItem & {
+    data: T;
+};
+
 /**
  * Injected wrapper for common VS Code UI commands
  */

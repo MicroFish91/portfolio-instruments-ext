@@ -13,7 +13,6 @@ export async function deleteAccount(token: string, accountId: number): Promise<D
     const response = await fetch(`http://localhost:3000/api/v1/accounts/${accountId}`, {
         method: "DELETE",
         headers: {
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
         },
     });

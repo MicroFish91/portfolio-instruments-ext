@@ -5,6 +5,7 @@ import { GetUserByToken, getUserByToken } from "../../sdk/auth/getUserByToken";
 import { nonNullValue } from "../../utils/nonNull";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { GenericItem } from "../GenericItem";
+import { HoldingsItem } from "../holdings/HoldingsItem";
 
 export class EmailItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'emailItem';
@@ -19,7 +20,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
 
     getTreeItem(): TreeItem {
         return {
-            id: `/email/${this.label}`,
+            id: `/emails/${this.label}`,
             label: this.label,
             description: l10n.t('Email'),
             contextValue: EmailItem.contextValue,
@@ -32,6 +33,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
         if (await this.hasVerifiedCredentials()) {
             return [
                 new AccountsItem(this.email),
+                new HoldingsItem(this.email),
             ];
         } else {
             return [

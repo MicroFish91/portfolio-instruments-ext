@@ -13,7 +13,7 @@ export class RegisterItem extends TreeItem implements PiExtTreeItem {
 
     getTreeItem(): TreeItem {
         return {
-            id: 'pi/register',
+            id: '/register',
             label: this.label,
             description: l10n.t('Register'),
             contextValue: RegisterItem.contextValue,

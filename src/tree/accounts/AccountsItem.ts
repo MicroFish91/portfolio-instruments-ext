@@ -16,7 +16,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
 
     constructor(readonly email: string) {
         super(l10n.t('Accounts'));
-        this.id = `/email/${this.email}/accounts`;
+        this.id = `/emails/${email}/accounts`;
     }
 
     getTreeItem(): TreeItem {
@@ -25,7 +25,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
             label: this.label,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.Collapsed,
-            iconPath: new ThemeIcon("home", "white"),
+            iconPath: new ThemeIcon('home', 'white'),
         };
     }
 
@@ -37,7 +37,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
     private async getAccounts(): Promise<Account[]> {
         const response = await getAccounts(nonNullValue(await getAuthToken(this.email)));
         if (response.error) {
-            throw new Error(l10n.t('Could not GET /accounts for email "{0}" - {1}', this.email, response.error));
+            throw new Error(l10n.t('Could not GET /accounts for email "{0}". Reason: {1}', this.email, response.error));
         }
 
         return response.data?.accounts ?? [];

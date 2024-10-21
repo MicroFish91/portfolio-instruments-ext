@@ -7,5 +7,6 @@
     "portfolioInstruments.logoutAll": "Sign out all users",
     "portfolioInstruments.createAccount": "Create account...",
     "portfolioInstruments.deleteAccount": "Delete account...",
+    "portfolioInstruments.createHolding": "Create holding...",
     "portfolioInstruments.viewProperties": "View Properties"
 }

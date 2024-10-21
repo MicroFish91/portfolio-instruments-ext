@@ -18,7 +18,7 @@ export class AccountItem extends TreeItem implements PiExtTreeItem {
         readonly account: Account,
     ) {
         super(account.name);
-        this.id = `/email/${email}/accounts/${account.name}`;
+        this.id = `/emails/${email}/accounts/${account.name}`;
     }
 
     getTreeItem(): TreeItem {
@@ -27,7 +27,7 @@ export class AccountItem extends TreeItem implements PiExtTreeItem {
             label: this.label,
             description: `${capitalize(this.account.institution)}-${capitalize(this.account.tax_shelter)}`,
             contextValue: this.getContextValue(),
-            iconPath: new ThemeIcon("dash", "white"),
+            iconPath: new ThemeIcon('home', 'white'),
         };
     }
 

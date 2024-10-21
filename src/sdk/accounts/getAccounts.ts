@@ -1,9 +1,11 @@
 import { Account } from "../types/accounts";
+import { PaginationMetadata } from "../types/pagination";
 
 export type GetAccountsApiResponse = {
     status: number;
     data?: {
         accounts: Account[];
+        pagination: PaginationMetadata;
     };
     error?: string;
 };

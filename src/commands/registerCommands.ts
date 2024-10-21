@@ -5,6 +5,7 @@ import { refreshLogin } from "./auth/login/refreshLogin";
 import { logout } from "./auth/logout/logout";
 import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
+import { createHolding } from "./holdings/createHolding/createHolding";
 import { registerCommand } from "./registerCommand";
 import { viewProperties } from "./viewProperties/viewProperties";
 
@@ -19,6 +20,9 @@ export function registerCommands() {
     // Accounts
     registerCommand('portfolioInstruments.createAccount', createAccount);
     registerCommand('portfolioInstruments.deleteAccount', deleteAccount);
+
+    // Holdings
+    registerCommand('portfolioInstruments.createHolding', createHolding);
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
