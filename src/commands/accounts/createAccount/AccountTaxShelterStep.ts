@@ -1,27 +1,34 @@
-import { l10n, QuickPickItem } from "vscode";
+import { l10n } from "vscode";
 import { AccountCreateContext } from "./AccountCreateContext";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { TaxShelter } from "../../../sdk/types/accounts";
+import { PiQuickPickItem } from "../../../wizard/UserInterface";
 
 export class AccountTaxShelterStep<T extends AccountCreateContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
-        context.accountTaxShelter = (await context.ui.showQuickPick(this.getPicks(), {
+        context.accountTaxShelter = (await context.ui.showQuickPick(this.getPicks(context), {
             title: this.title,
             placeHolder: l10n.t('Choose a tax shelter type'),
-        }))?.label as TaxShelter;
+        }))?.data;
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.accountTaxShelter && !context.account;
+        return !context.accountTaxShelter;
     }
 
-    private getPicks(): QuickPickItem[] {
+    private getPicks(context: T): PiQuickPickItem<TaxShelter>[] {
+        const current: string = '(current)';
+
+        function isCurrent(taxShelter: TaxShelter): boolean {
+            return context.account?.tax_shelter === taxShelter;
+        }
+
         return [
-            { label: TaxShelter.Taxable },
-            { label: TaxShelter.Roth },
-            { label: TaxShelter.Traditional },
-            { label: TaxShelter.HSA },
-            { label: TaxShelter.FiveTwentyNine },
+            { label: TaxShelter.Taxable, description: isCurrent(TaxShelter.Taxable) ? current : undefined, data: TaxShelter.Taxable },
+            { label: TaxShelter.Roth, description: isCurrent(TaxShelter.Roth) ? current : undefined, data: TaxShelter.Roth },
+            { label: TaxShelter.Traditional, description: isCurrent(TaxShelter.Traditional) ? current : undefined, data: TaxShelter.Traditional },
+            { label: TaxShelter.HSA, description: isCurrent(TaxShelter.HSA) ? current : undefined, data: TaxShelter.HSA },
+            { label: TaxShelter.FiveTwentyNine, description: isCurrent(TaxShelter.FiveTwentyNine) ? current : undefined, data: TaxShelter.FiveTwentyNine },
         ];
     }
 }

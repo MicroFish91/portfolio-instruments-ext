@@ -1,5 +1,6 @@
 import { createAccount } from "./accounts/createAccount/createAccount";
 import { deleteAccount } from "./accounts/deleteAccount/deleteAccount";
+import { updateAccount } from "./accounts/updateAccount/updateAccount";
 import { login } from "./auth/login/login";
 import { refreshLogin } from "./auth/login/refreshLogin";
 import { logout } from "./auth/logout/logout";
@@ -20,6 +21,7 @@ export function registerCommands() {
 
     // Accounts
     registerCommand('portfolioInstruments.createAccount', createAccount);
+    registerCommand('portfolioInstruments.updateAccount', updateAccount);
     registerCommand('portfolioInstruments.deleteAccount', deleteAccount);
 
     // Holdings

@@ -35,7 +35,7 @@ export class AccountItem extends TreeItem implements PiExtTreeItem {
         return createContextValue([AccountItem.contextValue, viewPropertiesContext]);
     }
 
-    viewProperties(): string {
+    async viewProperties(): Promise<string> {
         return JSON.stringify(this.account, undefined, 4);
     }
 }

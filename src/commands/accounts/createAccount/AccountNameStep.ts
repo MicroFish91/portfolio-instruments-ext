@@ -7,13 +7,14 @@ export class AccountNameStep<T extends AccountCreateContext> extends PromptStep<
     async prompt(context: T): Promise<void> {
         context.accountName = (await context.ui.showInputBox({
             title: this.title,
+            value: context.account?.name,
             prompt: l10n.t('Enter the account name'),
             validateInput: this.validateInput,
         }))?.trim();
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.accountName && !context.account;
+        return !context.accountName;
     }
 
     private validateInput(value: string): string | undefined {

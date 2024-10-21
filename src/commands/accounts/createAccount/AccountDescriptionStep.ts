@@ -7,13 +7,14 @@ export class AccountDescriptionStep<T extends AccountCreateContext> extends Prom
     async prompt(context: T): Promise<void> {
         context.accountDescription = (await context.ui.showInputBox({
             title: this.title,
+            value: context.account?.description,
             prompt: l10n.t('Enter an account description'),
             validateInput: this.validateInput,
         }))?.trim();
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.accountDescription && !context.account;
+        return !context.accountDescription;
     }
 
     private validateInput(value: string): string | undefined {
