@@ -7,13 +7,14 @@ export class HoldingInterestRateStep<T extends HoldingCreateContext> extends Pro
     async prompt(context: T): Promise<void> {
         context.holdingInterestRatePct = Number((await context.ui.showInputBox({
             title: this.title,
+            value: String(context.holding?.interest_rate_pct ?? '') || undefined,
             prompt: l10n.t('Enter holding interest rate (%)'),
             validateInput: this.validateInput,
         })));
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.holdingInterestRatePct && !context.holding;
+        return !context.holdingInterestRatePct;
     }
 
     private validateInput(value: string): string | undefined {

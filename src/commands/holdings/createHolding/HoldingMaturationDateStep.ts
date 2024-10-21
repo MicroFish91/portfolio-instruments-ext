@@ -7,13 +7,14 @@ export class HoldingMaturationDateStep<T extends HoldingCreateContext> extends P
     async prompt(context: T): Promise<void> {
         context.holdingMaturationDate = (await context.ui.showInputBox({
             title: this.title,
+            value: context.holding?.maturation_date,
             prompt: l10n.t('Enter holding maturation date (mm/dd/yyyy)'),
             validateInput: this.validateInput,
         }))?.trim();
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.holdingMaturationDate && !context.holding;
+        return !context.holdingMaturationDate;
     }
 
     private validateInput(value: string): string | undefined {

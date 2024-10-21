@@ -7,13 +7,14 @@ export class HoldingNameStep<T extends HoldingCreateContext> extends PromptStep<
     async prompt(context: T): Promise<void> {
         context.holdingName = (await context.ui.showInputBox({
             title: this.title,
+            value: context.holding?.name,
             prompt: l10n.t('Enter holding name'),
             validateInput: this.validateInput,
         }))?.trim();
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.holdingName && !context.holding;
+        return !context.holdingName;
     }
 
     private validateInput(value: string): string | undefined {

@@ -8,6 +8,7 @@ import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
 import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
+import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
 import { viewProperties } from "./viewProperties/viewProperties";
 
@@ -26,6 +27,7 @@ export function registerCommands() {
 
     // Holdings
     registerCommand('portfolioInstruments.createHolding', createHolding);
+    registerCommand('portfolioInstruments.updateHolding', updateHolding);
     registerCommand('portfolioInstruments.deleteHolding', deleteHolding);
 
     // Other

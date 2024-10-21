@@ -7,13 +7,14 @@ export class HoldingExpenseRatioStep<T extends HoldingCreateContext> extends Pro
     async prompt(context: T): Promise<void> {
         context.holdingExpenseRatioPct = Number((await context.ui.showInputBox({
             title: this.title,
+            value: String(context.holding?.expense_ratio_pct ?? '') || undefined,
             prompt: l10n.t('Enter holding expense ratio (%)'),
             validateInput: this.validateInput,
         })));
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.holdingExpenseRatioPct && !context.holding;
+        return !context.holdingExpenseRatioPct;
     }
 
     private validateInput(value: string): string | undefined {

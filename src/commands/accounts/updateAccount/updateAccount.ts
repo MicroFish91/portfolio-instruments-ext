@@ -20,7 +20,7 @@ export async function updateAccount(context: CommandContext, item: AccountItem):
     };
 
     const wizard: Wizard<AccountUpdateContext> = new Wizard(wizardContext, {
-        title: l10n.t('Create a financial account'),
+        title: l10n.t('Update financial account'),
         promptSteps: [
             new AccountNameStep(),
             new AccountDescriptionStep(),

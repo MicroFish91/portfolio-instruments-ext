@@ -7,13 +7,14 @@ export class HoldingTickerStep<T extends HoldingCreateContext> extends PromptSte
     async prompt(context: T): Promise<void> {
         context.holdingTicker = (await context.ui.showInputBox({
             title: this.title,
+            value: context.holding?.ticker,
             prompt: l10n.t('Enter holding ticker'),
             validateInput: this.validateInput,
         }))?.trim();
     }
 
     shouldPrompt(context: T): boolean {
-        return !context.holdingTicker && !context.holding;
+        return !context.holdingTicker;
     }
 
     private validateInput(value: string): string | undefined {
