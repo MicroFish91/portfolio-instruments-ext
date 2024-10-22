@@ -9,7 +9,7 @@ export enum TaxShelter {
 export type Account = {
     account_id: number;
     name: string;
-    description: string;
+    description?: string;
     tax_shelter: TaxShelter;
     institution: string;
     is_deprecated: boolean;

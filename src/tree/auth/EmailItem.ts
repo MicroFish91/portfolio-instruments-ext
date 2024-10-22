@@ -6,6 +6,7 @@ import { nonNullValue } from "../../utils/nonNull";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { GenericItem } from "../GenericItem";
 import { HoldingsItem } from "../holdings/HoldingsItem";
+import { BenchmarksItem } from "../benchmarks/BenchmarksItem";
 
 export class EmailItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'emailItem';
@@ -34,6 +35,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
             return [
                 new AccountsItem(this.email),
                 new HoldingsItem(this.email),
+                new BenchmarksItem(this.email),
             ];
         } else {
             return [

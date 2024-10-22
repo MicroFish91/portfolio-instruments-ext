@@ -32,11 +32,11 @@ export enum AssetCategory {
 export type Holding = {
     holding_id: number;
     name: string;
-    ticker: string;
+    ticker?: string;
     asset_category: AssetCategory;
-    expense_ratio_pct: number;
-    maturation_date: string;
-    interest_rate_pct: number;
+    expense_ratio_pct?: number;
+    maturation_date?: string;
+    interest_rate_pct?: number;
     is_deprecated: boolean;
     user_id: number;
     created_at: string;

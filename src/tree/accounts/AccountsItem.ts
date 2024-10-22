@@ -36,10 +36,6 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
 
     private async getAccounts(): Promise<Account[]> {
         const response = await getAccounts(nonNullValue(await getAuthToken(this.email)));
-        if (response.error) {
-            throw new Error(l10n.t('Could not GET /accounts for email "{0}". Reason: {1}', this.email, response.error));
-        }
-
         return response.data?.accounts ?? [];
     }
 

@@ -40,9 +40,6 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
 
     private async getHoldings(): Promise<Holding[]> {
         const response = await getHoldings(nonNullValue(await getAuthToken(this.email)));
-        if (response.error) {
-            throw new Error(l10n.t('Could not GET /holdings for email "{0}". Reason: {1}', this.email, response.error));
-        }
         return response.data?.holdings ?? [];
     }
 
