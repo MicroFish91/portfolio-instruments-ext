@@ -28,7 +28,7 @@ export class BenchmarkDrawdownYearsStep<T extends BenchmarkCreateContext> extend
         }
 
         const pattern: RegExp = /^\d+$/;
-        if (pattern.test(value)) {
+        if (!pattern.test(value)) {
             return l10n.t('Value must be a positive whole number.');
         }
 

@@ -12,5 +12,6 @@
     "portfolioInstruments.updateHolding": "Update holding...",
     "portfolioInstruments.deleteHolding": "Delete holding...",
     "portfolioInstruments.createBenchmark": "Create benchmark...",
+    "portfolioInstruments.deleteBenchmark": "Delete benchmark...",
     "portfolioInstruments.viewProperties": "View Properties"
 }

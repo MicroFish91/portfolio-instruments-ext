@@ -7,6 +7,7 @@ import { logout } from "./auth/logout/logout";
 import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
 import { createBenchmark } from "./benchmarks/createBenchmark/createBenchmark";
+import { deleteBenchmark } from "./benchmarks/deleteBenchmark/deleteBenchmark";
 import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
@@ -33,6 +34,7 @@ export function registerCommands() {
 
     // Benchmarks 
     registerCommand('portfolioInstruments.createBenchmark', createBenchmark);
+    registerCommand('portfolioInstruments.deleteBenchmark', deleteBenchmark);
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
