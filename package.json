@@ -73,6 +73,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.createBenchmark",
+        "title": "%portfolioInstruments.createBenchmark%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.viewProperties",
         "title": "%portfolioInstruments.viewProperties%",
         "category": "Portfolio Instruments"
@@ -127,6 +132,10 @@
           "when": "never"
         },
         {
+          "command": "portfolioInstruments.createBenchmark",
+          "when": "never"
+        },
+        {
           "command": "portfolioInstruments.deleteHolding",
           "when": "never"
         },
@@ -170,6 +179,11 @@
           "command": "portfolioInstruments.deleteHolding",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /holdingItem/i",
           "group": "1@2"
+        },
+        {
+          "command": "portfolioInstruments.createBenchmark",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /benchmarksItem/i",
+          "group": "1@1"
         },
         {
           "command": "portfolioInstruments.viewProperties",
