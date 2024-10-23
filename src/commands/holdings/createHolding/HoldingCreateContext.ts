@@ -1,4 +1,4 @@
-import { AuthContext } from "../../../AuthContext";
+import { AuthContext } from "../../AuthContext";
 import { AssetCategory, Holding } from "../../../sdk/types/holdings";
 import { HoldingType } from "./HoldingTypeListStep";
 

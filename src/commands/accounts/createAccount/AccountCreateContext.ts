@@ -1,4 +1,4 @@
-import { AuthContext } from "../../../AuthContext";
+import { AuthContext } from "../../AuthContext";
 import { Account, TaxShelter } from "../../../sdk/types/accounts";
 
 export type AccountCreateContext = AuthContext & {
