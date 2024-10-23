@@ -14,12 +14,11 @@ export class BenchmarkCreateStep<T extends BenchmarkCreateContext> extends Execu
 
         const benchmarkAssets: AssetCategory[] = nonNullProp(context, 'benchmarkAssets');
         const benchmarkAssetAmounts: number[] = nonNullProp(context, 'benchmarkAssetAmounts');
-
-        const assetAllocation: AssetAllocationPct[] = [];
         if (benchmarkAssets.length !== benchmarkAssetAmounts.length) {
             throw new Error(l10n.t('Invalid benchmark asset allocation provided.'));
         }
 
+        const assetAllocation: AssetAllocationPct[] = [];
         for (let i = 0; i < benchmarkAssets.length; i++) {
             assetAllocation.push({
                 category: benchmarkAssets[i],

@@ -1,5 +1,4 @@
-import { Benchmark } from "../types/benchmarks";
-import { AssetCategory } from "../types/holdings";
+import { AssetAllocationPct, Benchmark } from "../types/benchmarks";
 
 export type CreateBenchmarkPayload = {
     name: string;
@@ -18,12 +17,6 @@ export type CreateBenchmarkApiResponse = {
     };
     error?: string;
 };
-
-export type AssetAllocationPct = {
-    category: AssetCategory;
-    percent: number;
-};
-
 
 export async function createBenchmark(token: string, payload: CreateBenchmarkPayload): Promise<CreateBenchmarkApiResponse> {
     const response = await fetch("http://localhost:3000/api/v1/benchmarks", {
