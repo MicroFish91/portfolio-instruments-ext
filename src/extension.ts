@@ -3,6 +3,7 @@ import { ext } from './extensionVariables';
 import { PiExtTreeDataProvider } from './tree/PiExtTreeDataProvider';
 import { registerCommands } from './commands/registerCommands';
 import { ReadOnlyContentProvider } from './commands/viewProperties/ReadOnlyContentProvider';
+import { SnapshotDraftFileSystem } from './commands/snapshots/SnapshotDraftFileSystem';
 
 export function activate(context: ExtensionContext) {
 	ext.context = context;
@@ -12,6 +13,9 @@ export function activate(context: ExtensionContext) {
 
 	ext.readOnlyProvider = new ReadOnlyContentProvider();
 	context.subscriptions.push(workspace.registerTextDocumentContentProvider(ReadOnlyContentProvider.scheme, ext.readOnlyProvider));
+
+	ext.snapshotDraftFileSystem = new SnapshotDraftFileSystem();
+	context.subscriptions.push(workspace.registerFileSystemProvider(SnapshotDraftFileSystem.scheme, ext.snapshotDraftFileSystem));
 
 	registerCommands();
 }

@@ -12,6 +12,7 @@ import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
+import { createSnapshot } from "./snapshots/createSnapshot/createSnapshot";
 import { viewProperties } from "./viewProperties/viewProperties";
 
 export function registerCommands() {
@@ -35,6 +36,9 @@ export function registerCommands() {
     // Benchmarks 
     registerCommand('portfolioInstruments.createBenchmark', createBenchmark);
     registerCommand('portfolioInstruments.deleteBenchmark', deleteBenchmark);
+
+    // Snapshots
+    registerCommand('portfolioInstruments.createSnapshot', createSnapshot);
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
