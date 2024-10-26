@@ -29,6 +29,7 @@ export function registerCommands() {
 
     // Settings
     registerCommand('portfolioInstruments.updateBenchmarkSettings', updateBenchmarkSettings);
+    // Todo: Update rebalance threshold
 
     // Accounts
     registerCommand('portfolioInstruments.createAccount', createAccount);
@@ -42,6 +43,7 @@ export function registerCommands() {
 
     // Benchmarks 
     registerCommand('portfolioInstruments.createBenchmark', createBenchmark);
+    // Todo: Update benchmark
     registerCommand('portfolioInstruments.deleteBenchmark', deleteBenchmark);
 
     // Snapshot draft
@@ -50,6 +52,16 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.discardSnapshotDraft', discardSnapshotDraft);
     registerCommand('portfolioInstruments.deploySnapshotDraft', deploySnapshotDraft);
 
+    // Snapshots
+    // Todo: View Rebalance
+    // Todo: View Breakdowns by ___....
+
+    // Snapshot values
+    // Todo: Add snapshot value entry
+    // Todo: Update snapshot value entry
+    // Todo: Delete snapshot value entry
+
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
+    // Todo: Add ability to quickly scaffold snapshot value while in edit mode...
 }
