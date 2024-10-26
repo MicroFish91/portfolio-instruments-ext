@@ -30,12 +30,12 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const benchmarks: Benchmark[] = await this.getBenchmarks();
+        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
         return benchmarks.map(b => new BenchmarkItem(this, this.email, b));
     }
 
-    private async getBenchmarks(): Promise<Benchmark[]> {
-        const response = await getBenchmarks(nonNullValue(await getAuthToken(this.email)));
+    static async getBenchmarks(email: string): Promise<Benchmark[]> {
+        const response = await getBenchmarks(nonNullValue(await getAuthToken(email)));
         return response.data?.benchmarks ?? [];
     }
 
@@ -44,7 +44,7 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     }
 
     async viewProperties(): Promise<string> {
-        const benchmarks: Benchmark[] = await this.getBenchmarks();
+        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
         return JSON.stringify(benchmarks, undefined, 4);
     }
 }

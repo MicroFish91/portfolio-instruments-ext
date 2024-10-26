@@ -33,7 +33,9 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        if (await this.hasVerifiedCredentials()) {
+        const response: GetUserByToken = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
+
+        if (response.data) {
             return [
                 new SnapshotsItem(this.email),
                 new AccountsItem(this.email),
@@ -55,10 +57,5 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
                 }),
             ];
         }
-    }
-
-    private async hasVerifiedCredentials(): Promise<boolean> {
-        const response: GetUserByToken = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
-        return response.error ? false : true;
     }
 }

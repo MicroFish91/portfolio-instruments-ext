@@ -103,6 +103,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.updateBenchmarkSettings",
+        "title": "%portfolioInstruments.updateBenchmarkSettings%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.viewProperties",
         "title": "%portfolioInstruments.viewProperties%",
         "category": "Portfolio Instruments"
@@ -185,6 +190,10 @@
           "when": "never"
         },
         {
+          "command": "portfolioInstruments.updateBenchmarkSettings",
+          "when": "never"
+        },
+        {
           "command": "portfolioInstruments.viewProperties",
           "when": "never"
         }
@@ -254,6 +263,11 @@
           "command": "portfolioInstruments.discardSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "2@1"
+        },
+        {
+          "command": "portfolioInstruments.updateBenchmarkSettings",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /benchmarkSettingsItem/i",
+          "group": "1@1"
         },
         {
           "command": "portfolioInstruments.viewProperties",
