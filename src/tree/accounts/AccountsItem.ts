@@ -30,12 +30,12 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const accounts: Account[] = await this.getAccounts();
+        const accounts: Account[] = await AccountsItem.getAccounts(this.email);
         return accounts.map(a => new AccountItem(this, this.email, a));
     }
 
-    private async getAccounts(): Promise<Account[]> {
-        const response = await getAccounts(nonNullValue(await getAuthToken(this.email)));
+    static async getAccounts(email: string): Promise<Account[]> {
+        const response = await getAccounts(nonNullValue(await getAuthToken(email)));
         return response.data?.accounts ?? [];
     }
 
@@ -44,7 +44,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async viewProperties(): Promise<string> {
-        const accounts: Account[] = await this.getAccounts();
+        const accounts: Account[] = await AccountsItem.getAccounts(this.email);
         return JSON.stringify(accounts, undefined, 4);
     }
 }

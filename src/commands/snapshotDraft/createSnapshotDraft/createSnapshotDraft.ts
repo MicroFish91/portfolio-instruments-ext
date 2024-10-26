@@ -1,25 +1,27 @@
 import { l10n } from "vscode";
 import { CommandContext } from "../../registerCommand";
 import { SnapshotsItem } from "../../../tree/snapshots/SnapshotsItem";
-import { SnapshotCreateContext } from "./SnapshotCreateContext";
+import { SnapshotDraftCreateContext } from "./SnapshotDraftCreateContext";
 import { getAuthToken } from "../../../utils/tokenUtils";
 import { nonNullValue } from "../../../utils/nonNull";
 import { Wizard } from "../../../wizard/Wizard";
 import { ext } from "../../../extensionVariables";
 
-export async function createSnapshot(context: CommandContext, item: SnapshotsItem): Promise<void> {
-    const wizardContext: SnapshotCreateContext = {
+export async function createSnapshotDraft(context: CommandContext, item: SnapshotsItem): Promise<void> {
+    const wizardContext: SnapshotDraftCreateContext = {
         ...context,
         token: nonNullValue(await getAuthToken(item.email)),
     };
 
-    const wizard: Wizard<SnapshotCreateContext> = new Wizard(wizardContext, {
+    const wizard: Wizard<SnapshotDraftCreateContext> = new Wizard(wizardContext, {
         title: l10n.t('Create a snapshot'),
         promptSteps: [
-            //
+            // Prompt snapshot date
+            // Prompt snapshot description
+            // Prompt snapshot benchmark 
         ],
         executeSteps: [
-            //
+            // Create snapshot draft
         ],
     });
 

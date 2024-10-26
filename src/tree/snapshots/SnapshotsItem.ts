@@ -9,7 +9,7 @@ import { getSnapshots, GetSnapshotsApiResponse } from "../../sdk/snapshots/getSn
 import { SnapshotItem } from "./SnapshotItem";
 import { ext } from "../../extensionVariables";
 import { CreateSnapshotPayload } from "../../sdk/snapshots/createSnapshot";
-import { SnapshotDraftItem } from "./SnapshotDraftItem";
+import { SnapshotDraftItem } from "./draft/SnapshotDraftItem";
 
 export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotsItem';

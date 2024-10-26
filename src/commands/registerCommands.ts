@@ -12,7 +12,10 @@ import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
-import { createSnapshot } from "./snapshots/createSnapshot/createSnapshot";
+import { createSnapshotDraft } from "./snapshotDraft/createSnapshotDraft/createSnapshotDraft";
+import { deploySnapshotDraft } from "./snapshotDraft/deploySnapshotDraft/deploySnapshotDraft";
+import { discardSnapshotDraft } from "./snapshotDraft/discardSnapshotDraft";
+import { editSnapshotDraft } from "./snapshotDraft/editSnapshotDraft";
 import { viewProperties } from "./viewProperties/viewProperties";
 
 export function registerCommands() {
@@ -37,8 +40,11 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.createBenchmark', createBenchmark);
     registerCommand('portfolioInstruments.deleteBenchmark', deleteBenchmark);
 
-    // Snapshots
-    registerCommand('portfolioInstruments.createSnapshot', createSnapshot);
+    // Snapshot draft
+    registerCommand('portfolioInstruments.createSnapshotDraft', createSnapshotDraft);
+    registerCommand('portfolioInstruments.editSnapshotDraft', editSnapshotDraft);
+    registerCommand('portfolioInstruments.discardSnapshotDraft', discardSnapshotDraft);
+    registerCommand('portfolioInstruments.deploySnapshotDraft', deploySnapshotDraft);
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);

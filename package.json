@@ -83,8 +83,23 @@
         "category": "Portfolio Instruments"
       },
       {
-        "command": "portfolioInstruments.createSnapshot",
-        "title": "%portfolioInstruments.createSnapshot%",
+        "command": "portfolioInstruments.createSnapshotDraft",
+        "title": "%portfolioInstruments.createSnapshotDraft%",
+        "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.editSnapshotDraft",
+        "title": "%portfolioInstruments.editSnapshotDraft%",
+        "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.discardSnapshotDraft",
+        "title": "%portfolioInstruments.discardSnapshotDraft%",
+        "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.deploySnapshotDraft",
+        "title": "%portfolioInstruments.deploySnapshotDraft%",
         "category": "Portfolio Instruments"
       },
       {
@@ -154,7 +169,19 @@
           "when": "never"
         },
         {
-          "command": "portfolioInstruments.createSnapshot",
+          "command": "portfolioInstruments.createSnapshotDraft",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.editSnapshotDraft",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.discardSnapshotDraft",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.deploySnapshotDraft",
           "when": "never"
         },
         {
@@ -209,9 +236,24 @@
           "group": "1@2"
         },
         {
-          "command": "portfolioInstruments.createSnapshot",
+          "command": "portfolioInstruments.createSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.editSnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
+          "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.deploySnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
+          "group": "1@2"
+        },
+        {
+          "command": "portfolioInstruments.discardSnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
+          "group": "2@1"
         },
         {
           "command": "portfolioInstruments.viewProperties",

@@ -34,17 +34,17 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const holdings: Holding[] = await this.getHoldings();
+        const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
         return holdings.map(h => new HoldingItem(this, this.email, h));
     }
 
-    private async getHoldings(): Promise<Holding[]> {
-        const response = await getHoldings(nonNullValue(await getAuthToken(this.email)));
+    static async getHoldings(email: string): Promise<Holding[]> {
+        const response = await getHoldings(nonNullValue(await getAuthToken(email)));
         return response.data?.holdings ?? [];
     }
 
     async viewProperties(): Promise<string> {
-        const holdings: Holding[] = await this.getHoldings();
+        const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
         return JSON.stringify(holdings, undefined, 4);
     }
 }

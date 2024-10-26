@@ -7,7 +7,7 @@ import { Disposable, EventEmitter, FileChangeType, FileType, l10n, window, works
 import { ext } from "../../extensionVariables";
 import { SnapshotsItem } from "../../tree/snapshots/SnapshotsItem";
 import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../sdk/snapshots/createSnapshot";
-import { SnapshotDraftItem } from "../../tree/snapshots/SnapshotDraftItem";
+import { SnapshotDraftItem } from "../../tree/snapshots/draft/SnapshotDraftItem";
 import { nonNullValue } from "../../utils/nonNull";
 
 const notSupported: string = l10n.t('This operation is not currently supported.');
@@ -171,12 +171,13 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
         this.writeFile(uri, newContent);
     }
 
-    discardSnapshotDraft(email: string): void {
-        const uri: Uri = this.buildUri(email);
+    discardSnapshotDraft(item: SnapshotDraftItem): void {
+        const uri: Uri = this.buildUri(item.email);
         if (!this.draftStore.has(uri.path)) {
             return;
         }
         this.delete(uri);
+        ext.portfolioInstrumentsTdp.refresh(item.parent);
     }
 
     delete(uri: Uri): void {
