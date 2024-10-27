@@ -17,6 +17,7 @@
     "portfolioInstruments.editSnapshotDraft": "Edit Draft...",
     "portfolioInstruments.discardSnapshotDraft": "Discard Draft...",
     "portfolioInstruments.deploySnapshotDraft": "Deploy Draft...",
+    "portfolioInstruments.deleteSnapshot": "Delete Snapshot...",
     "portfolioInstruments.updateBenchmarkSettings": "Update Benchmark Target...",
     "portfolioInstruments.viewProperties": "View Properties"
 }
