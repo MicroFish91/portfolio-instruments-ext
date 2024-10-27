@@ -9,6 +9,8 @@ import { SnapshotsItem } from "../../tree/snapshots/SnapshotsItem";
 import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "../../tree/snapshots/draft/SnapshotDraftItem";
 import { nonNullValue } from "../../utils/nonNull";
+import { getSnapshotLatest } from "../../sdk/snapshots/getSnapshot";
+import { getAuthToken } from "../../utils/tokenUtils";
 
 const notSupported: string = l10n.t('This operation is not currently supported.');
 
@@ -58,14 +60,14 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
 
     private draftStore: Map<string, SnapshotDraftFile> = new Map();
 
-    createSnapshotDraft(parentItem: SnapshotsItem, snapshotPayload: Omit<CreateSnapshotPayload, 'snapshot_values'>): void {
+    createSnapshotDraft(parentItem: SnapshotsItem, snapshotPayload: Omit<CreateSnapshotPayload, 'snapshot_values'>, snapshotValuesPayload: CreateSnapshotValuePayload[]): void {
         const uri: Uri = this.buildUri(parentItem.email);
         if (this.draftStore.has(uri.path)) {
             return;
         }
 
         const file: SnapshotDraftFile = new SnapshotDraftFile(
-            Buffer.from(JSON.stringify([], undefined, 4)),
+            Buffer.from(JSON.stringify(snapshotValuesPayload, undefined, 4)),
             parentItem,
             snapshotPayload
         );
@@ -119,10 +121,11 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
     async editSnapshotDraft(item: SnapshotDraftItem): Promise<void> {
         const uri: Uri = this.buildUri(item.email);
         if (!this.draftStore.has(uri.path)) {
-            this.createSnapshotDraft(item.parent, {
-                ...item.snapshotPayload,
-                snapshot_values: undefined,
-            } as Omit<CreateSnapshotPayload, 'snapshot_values'>);
+            this.createSnapshotDraft(
+                item.parent,
+                item.snapshotPayload,
+                (await getSnapshotLatest(nonNullValue(await getAuthToken(item.email)))).data?.snapshot_values ?? [],
+            );
         }
 
         const textDoc: TextDocument = await workspace.openTextDocument(uri);
@@ -145,26 +148,28 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
         ext.portfolioInstrumentsTdp.refresh(file.parentItem);
     }
 
-    updateSnapshotDraft(item: SnapshotDraftItem, snapshot: Omit<CreateSnapshotPayload, "snapshot_values">): void {
+    async updateSnapshotDraft(item: SnapshotDraftItem, snapshot: Omit<CreateSnapshotPayload, "snapshot_values">): Promise<void> {
         const uri: Uri = this.buildUri(item.email);
         if (!this.draftStore.has(uri.path)) {
-            this.createSnapshotDraft(item.parent, {
-                ...item.snapshotPayload,
-                snapshot_values: undefined,
-            } as Omit<CreateSnapshotPayload, 'snapshot_values'>);
+            this.createSnapshotDraft(
+                item.parent,
+                item.snapshotPayload,
+                (await getSnapshotLatest(nonNullValue(await getAuthToken(item.email)))).data?.snapshot_values ?? [],
+            );
         }
 
         const file: SnapshotDraftFile = nonNullValue(this.draftStore.get(uri.path));
         file.snapshotPayload = snapshot;
     }
 
-    updateSnapshotValuesDraft(item: SnapshotDraftItem, snapshotValues: CreateSnapshotValuePayload[]): void {
+    async updateSnapshotValuesDraft(item: SnapshotDraftItem, snapshotValues: CreateSnapshotValuePayload[]): Promise<void> {
         const uri: Uri = this.buildUri(item.email);
         if (!this.draftStore.has(uri.path)) {
-            this.createSnapshotDraft(item.parent, {
-                ...item.snapshotPayload,
-                snapshot_values: undefined,
-            } as Omit<CreateSnapshotPayload, 'snapshot_values'>);
+            this.createSnapshotDraft(
+                item.parent,
+                item.snapshotPayload,
+                (await getSnapshotLatest(nonNullValue(await getAuthToken(item.email)))).data?.snapshot_values ?? [],
+            );
         }
 
         const newContent: Uint8Array = Buffer.from(JSON.stringify(snapshotValues, undefined, 4));

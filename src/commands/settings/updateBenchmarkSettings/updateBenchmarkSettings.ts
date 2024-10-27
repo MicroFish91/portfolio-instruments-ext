@@ -18,7 +18,7 @@ export async function updateBenchmarkSettings(context: BenchmarkSettingsUpdateCo
     const wizard: Wizard<BenchmarkSettingsUpdateContext> = new Wizard(wizardContext, {
         title: l10n.t('Update benchmark target'),
         promptSteps: [
-            new BenchmarkTargetStep(),
+            new BenchmarkTargetStep({ suppressSkip: true }),
         ],
         executeSteps: [
             new BenchmarkSettingsUpdateStep(),

@@ -37,7 +37,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
 
         if (response.data) {
             return [
-                new SnapshotsItem(this.email),
+                new SnapshotsItem(this.email, response.data.settings),
                 new AccountsItem(this.email),
                 new HoldingsItem(this.email),
                 new BenchmarksItem(this.email),

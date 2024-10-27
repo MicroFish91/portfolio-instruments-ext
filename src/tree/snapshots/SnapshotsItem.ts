@@ -10,17 +10,18 @@ import { SnapshotItem } from "./SnapshotItem";
 import { ext } from "../../extensionVariables";
 import { CreateSnapshotPayload } from "../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "./draft/SnapshotDraftItem";
+import { Settings } from "../../sdk/types/settings";
 
 export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotsItem';
     static readonly regExp: RegExp = new RegExp(SnapshotsItem.contextValue);
 
-    readonly email: string;
-
-    constructor(email: string) {
+    constructor(
+        readonly email: string,
+        readonly settings: Settings,
+    ) {
         super(l10n.t('Snapshots'));
-        this.email = email;
-        this.id = `/emails/${this.email}/snapshots`;
+        this.email = email; this.id = `/emails/${email}/snapshots`;
     }
 
     getTreeItem(): TreeItem {
