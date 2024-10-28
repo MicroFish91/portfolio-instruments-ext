@@ -37,6 +37,6 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
     }
 
     refresh(item?: PiExtTreeItem) {
-        item ? this.onDidChangeTreeDataEmitter.fire(item) : this.onDidChangeTreeDataEmitter.fire(undefined);
+        this.onDidChangeTreeDataEmitter.fire(item);
     }
 }

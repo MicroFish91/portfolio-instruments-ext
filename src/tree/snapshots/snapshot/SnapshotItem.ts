@@ -60,6 +60,8 @@ export class SnapshotItem extends TreeItem implements PiExtTreeItem {
 
     static async getSnapshot(email: string, snapshotId: number) {
         const response = await getSnapshot(nonNullValue(await getAuthToken(email)), snapshotId);
+
+        // Explicitly build the object out so that it can be easily destructured as needed
         return {
             snapshot: response.data?.snapshot,
             snapshot_values: response.data?.snapshot_values,
