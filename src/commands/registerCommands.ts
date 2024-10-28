@@ -18,6 +18,7 @@ import { deploySnapshotDraft } from "./snapshotDraft/deploySnapshotDraft/deployS
 import { discardSnapshotDraft } from "./snapshotDraft/discardSnapshotDraft";
 import { editSnapshotDraft } from "./snapshotDraft/editSnapshotDraft";
 import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
+import { updateSnapshot } from "./snapshots/updateSnapshot/updateSnapshot";
 import { viewProperties } from "./viewProperties/viewProperties";
 
 export function registerCommands() {
@@ -54,9 +55,10 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.deploySnapshotDraft', deploySnapshotDraft);
 
     // Snapshots
-    registerCommand('portfolioInstruments.deleteSnapshot', deleteSnapshot);
     // Todo: View Rebalance
     // Todo: View Breakdowns by ___....
+    registerCommand('portfolioInstruments.updateSnapshot', updateSnapshot);
+    registerCommand('portfolioInstruments.deleteSnapshot', deleteSnapshot);
 
     // Snapshot values
     // Todo: Add snapshot value entry

@@ -14,6 +14,16 @@ export type GetSnapshotApiResponse = {
     error?: string;
 };
 
+export async function getSnapshot(token: string, snapshotId: number): Promise<GetSnapshotApiResponse> {
+    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}`, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    return await response.json() as GetSnapshotApiResponse;
+}
+
 export async function getSnapshotLatest(token: string): Promise<GetSnapshotApiResponse> {
     const snapshotsResponse: GetSnapshotsApiResponse = await getSnapshotsLatest(token);
     if (snapshotsResponse.error) {
@@ -23,12 +33,5 @@ export async function getSnapshotLatest(token: string): Promise<GetSnapshotApiRe
             error: snapshotsResponse.error,
         };
     }
-
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotsResponse.data?.snapshots[0].snap_id}`, {
-        method: "GET",
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    });
-    return await response.json() as GetSnapshotApiResponse;
+    return await getSnapshot(token, snapshotsResponse.data?.snapshots?.[0].snap_id ?? 0);
 }

@@ -1,7 +1,7 @@
 import { l10n } from "vscode";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { validationUtils } from "../../../utils/validationUtils";
-import { SnapshotCreateContext } from "./SnapshotDraftCreateContext";
+import { SnapshotCreateContext } from "../../snapshots/SnapshotCreateContext";
 
 export class SnapshotDateStep<T extends SnapshotCreateContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
