@@ -8,6 +8,7 @@ import { SnapshotDataItem } from "./SnapshotDataItem";
 import { nonNullValue } from "../../../utils/nonNull";
 import { getAuthToken } from "../../../utils/tokenUtils";
 import { getSnapshot } from "../../../sdk/snapshots/getSnapshot";
+import { SnapshotValuesItem } from "./SnapshotValuesItem";
 
 export class SnapshotItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotItem';
@@ -46,7 +47,7 @@ export class SnapshotItem extends TreeItem implements PiExtTreeItem {
     getChildren(): PiExtTreeItem[] | Promise<PiExtTreeItem[]> {
         return [
             new SnapshotDataItem(this, this.email, this.snapshot),
-            // Add snapshotValuesItem
+            new SnapshotValuesItem(this, this.email, this.snapshot, this.snapshotValues),
         ];
     }
 
