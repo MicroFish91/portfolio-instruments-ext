@@ -1,5 +1,5 @@
 import { l10n } from "vscode";
-import { SnapshotItem } from "../../../tree/snapshots/SnapshotItem";
+import { SnapshotItem } from "../../../tree/snapshots/snapshot/SnapshotItem";
 import { nonNullValue, nonNullValueAndProp } from "../../../utils/nonNull";
 import { getAuthToken } from "../../../utils/tokenUtils";
 import { Wizard } from "../../../wizard/Wizard";

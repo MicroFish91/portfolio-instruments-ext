@@ -34,7 +34,7 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
         };
     }
 
-    getChildren(): PiExtTreeItem[] | Promise<PiExtTreeItem[]> {
+    getChildren(): PiExtTreeItem[] {
         return [
             new SnapshotPayloadItem(this, this.email, this.snapshotPayload),
             new SnapshotValuesPayloadItem(this, this.email, this.snapshotValues),

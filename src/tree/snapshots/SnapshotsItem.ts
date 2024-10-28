@@ -6,7 +6,7 @@ import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { Snapshot } from "../../sdk/types/snapshots";
 import { getSnapshots, GetSnapshotsApiResponse } from "../../sdk/snapshots/getSnapshots";
-import { SnapshotItem } from "./SnapshotItem";
+import { SnapshotItem } from "./snapshot/SnapshotItem";
 import { ext } from "../../extensionVariables";
 import { CreateSnapshotPayload } from "../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "./draft/SnapshotDraftItem";
