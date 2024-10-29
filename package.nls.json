@@ -19,6 +19,7 @@
     "portfolioInstruments.deploySnapshotDraft": "Deploy Draft...",
     "portfolioInstruments.updateSnapshot": "Update Field...",
     "portfolioInstruments.deleteSnapshot": "Delete Snapshot...",
+    "portfolioInstruments.createSnapshotValue": "Create Snapshot Value...",
     "portfolioInstruments.updateBenchmarkSettings": "Update Benchmark Target...",
     "portfolioInstruments.viewProperties": "View Properties"
 }
