@@ -7,9 +7,9 @@ import { nonNullProp, nonNullValue } from "../../../utils/nonNull";
 import { Wizard } from "../../../wizard/Wizard";
 import { SnapshotDateStep } from "./SnapshotDateStep";
 import { SnapshotDescriptionStep } from "./SnapshotDescriptionStep";
-import { BenchmarkTargetStep } from "../../settings/updateBenchmarkSettings/BenchmarkTargetStep";
 import { SnapshotDraftCreateStep } from "./SnapshotDraftCreateStep";
 import { ext } from "../../../extensionVariables";
+import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
 
 export async function createSnapshotDraft(context: CommandContext, item: SnapshotsItem): Promise<void> {
     if (ext.snapshotDraftFileSystem.hasSnapshotDraft(item.email)) {
@@ -28,7 +28,7 @@ export async function createSnapshotDraft(context: CommandContext, item: Snapsho
         promptSteps: [
             new SnapshotDateStep(),
             new SnapshotDescriptionStep(),
-            new BenchmarkTargetStep(),
+            new BenchmarkListStep({ currentId: item.settings.benchmark_id }),
         ],
         executeSteps: [
             new SnapshotDraftCreateStep(item),

@@ -8,8 +8,8 @@ import { SnapshotDataKeyItem } from "../../../tree/snapshots/snapshot/SnapshotDa
 import { SnapshotUpdateContext } from "./SnapshotUpdateContext";
 import { SnapshotDateStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDateStep";
 import { SnapshotDescriptionStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDescriptionStep";
-import { BenchmarkTargetStep } from "../../settings/updateBenchmarkSettings/BenchmarkTargetStep";
 import { SnapshotUpdateStep } from "./SnapshotUpdateStep";
+import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
 
 export async function updateSnapshot(context: CommandContext, item: SnapshotDataKeyItem) {
     const wizardContext: SnapshotUpdateContext = {
@@ -26,7 +26,7 @@ export async function updateSnapshot(context: CommandContext, item: SnapshotData
         promptSteps: [
             new SnapshotDateStep(),
             new SnapshotDescriptionStep(),
-            new BenchmarkTargetStep({ suppressSkip: true }),
+            new BenchmarkListStep({ currentId: item.key === 'benchmark' ? undefined : item.parent.snapshot.benchmark_id, suppressSkip: true }),
         ],
         executeSteps: [
             new SnapshotUpdateStep(),

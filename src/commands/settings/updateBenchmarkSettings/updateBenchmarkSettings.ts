@@ -4,9 +4,9 @@ import { BenchmarkSettingsItem } from "../../../tree/settings/BenchmarkSettingsI
 import { getAuthToken } from "../../../utils/tokenUtils";
 import { nonNullValue } from "../../../utils/nonNull";
 import { Wizard } from "../../../wizard/Wizard";
-import { BenchmarkTargetStep } from "./BenchmarkTargetStep";
 import { BenchmarkSettingsUpdateStep } from "./BenchmarkSettingsUpdateStep";
 import { ext } from "../../../extensionVariables";
+import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
 
 export async function updateBenchmarkSettings(context: BenchmarkSettingsUpdateContext, item: BenchmarkSettingsItem): Promise<void> {
     const wizardContext: BenchmarkSettingsUpdateContext = {
@@ -18,7 +18,7 @@ export async function updateBenchmarkSettings(context: BenchmarkSettingsUpdateCo
     const wizard: Wizard<BenchmarkSettingsUpdateContext> = new Wizard(wizardContext, {
         title: l10n.t('Update benchmark target'),
         promptSteps: [
-            new BenchmarkTargetStep({ suppressSkip: true }),
+            new BenchmarkListStep({ currentId: item.settings.benchmark_id, suppressSkip: true }),
         ],
         executeSteps: [
             new BenchmarkSettingsUpdateStep(),
