@@ -118,6 +118,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.updateSnapshotValue",
+        "title": "%portfolioInstruments.updateSnapshotValue%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.deleteSnapshotValue",
         "title": "%portfolioInstruments.deleteSnapshotValue%",
         "category": "Portfolio Instruments"
@@ -222,6 +227,10 @@
           "when": "never"
         },
         {
+          "command": "portfolioInstruments.updateSnapshotValue",
+          "when": "never"
+        },
+        {
           "command": "portfolioInstruments.deleteSnapshotValue",
           "when": "never"
         },
@@ -313,6 +322,11 @@
         {
           "command": "portfolioInstruments.createSnapshotValue",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotValuesItem/i",
+          "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.updateSnapshotValue",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotValueItem/i",
           "group": "1@1"
         },
         {

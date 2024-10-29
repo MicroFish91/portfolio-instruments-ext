@@ -21,6 +21,7 @@ import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
 import { updateSnapshot } from "./snapshots/updateSnapshot/updateSnapshot";
 import { createSnapshotValue } from "./snapshotValues/createSnapshotValue/createSnapshotValue";
 import { deleteSnapshotValue } from "./snapshotValues/deleteSnapshotValue/deleteSnapshotValue";
+import { updateSnapshotValue } from "./snapshotValues/updateSnapshotValue/updateSnapshotValue";
 import { viewProperties } from "./viewProperties/viewProperties";
 
 export function registerCommands() {
@@ -64,7 +65,7 @@ export function registerCommands() {
 
     // Snapshot values
     registerCommand('portfolioInstruments.createSnapshotValue', createSnapshotValue);
-    // Todo: Update snapshot value entry
+    registerCommand('portfolioInstruments.updateSnapshotValue', updateSnapshotValue);
     registerCommand('portfolioInstruments.deleteSnapshotValue', deleteSnapshotValue);
 
     // Other

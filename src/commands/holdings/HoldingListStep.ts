@@ -6,7 +6,15 @@ import { getHoldings, GetHoldingsApiResponse } from "../../sdk/holdings/getHoldi
 import { nonNullValueAndProp } from "../../utils/nonNull";
 import { Holding } from "../../sdk/types/holdings";
 
+export type HoldingListStepOptions = {
+    currentId?: number;
+};
+
 export class HoldingListStep<T extends AuthContext & { holdingId?: number }> extends PromptStep<T> {
+    constructor(readonly options?: HoldingListStepOptions) {
+        super();
+    }
+
     async prompt(context: T): Promise<void> {
         context.holdingId = (await context.ui.showQuickPick(this.getPicks(context), {
             title: this.title,
@@ -28,9 +36,13 @@ export class HoldingListStep<T extends AuthContext & { holdingId?: number }> ext
         return holdings.map(holding => {
             return {
                 label: holding.name,
-                description: holding.asset_category,
+                description: this.getDescription(holding.holding_id, holding.asset_category),
                 data: holding.holding_id,
             };
         });
+    }
+
+    private getDescription(holdingId: number, descriptionBase: string): string {
+        return holdingId === this.options?.currentId ? `${descriptionBase} (current)` : descriptionBase;
     }
 }

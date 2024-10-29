@@ -8,10 +8,12 @@ export class SnapshotValueSkipRebalanceStep<T extends SnapshotValueCreateContext
         const items: PiQuickPickItem<boolean>[] = [
             {
                 label: l10n.t('Yes'),
+                description: context.snapshotValue?.skip_rebalance === false ? l10n.t('(current)') : undefined,
                 data: false,
             },
             {
                 label: l10n.t('No'),
+                description: context.snapshotValue?.skip_rebalance === true ? l10n.t('(current)') : undefined,
                 data: true,
             },
         ];

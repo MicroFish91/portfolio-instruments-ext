@@ -6,7 +6,15 @@ import { nonNullValueAndProp } from "../../utils/nonNull";
 import { getAccounts, GetAccountsApiResponse } from "../../sdk/accounts/getAccounts";
 import { Account } from "../../sdk/types/accounts";
 
+export type AccountListStepOptions = {
+    currentId?: number;
+};
+
 export class AccountListStep<T extends AuthContext & { accountId?: number }> extends PromptStep<T> {
+    constructor(readonly options?: AccountListStepOptions) {
+        super();
+    }
+
     async prompt(context: T): Promise<void> {
         context.accountId = (await context.ui.showQuickPick(this.getPicks(context), {
             title: this.title,
@@ -28,10 +36,14 @@ export class AccountListStep<T extends AuthContext & { accountId?: number }> ext
         return accounts.map(account => {
             return {
                 label: account.name,
-                description: `${account.institution}-${account.tax_shelter}`,
+                description: this.getDescription(account.account_id, `${account.institution}-${account.tax_shelter}`),
                 detail: account.description,
                 data: account.account_id,
             };
         });
+    }
+
+    private getDescription(accountId: number, descriptionBase: string): string {
+        return accountId === this.options?.currentId ? `${descriptionBase} (current)` : descriptionBase;
     }
 }

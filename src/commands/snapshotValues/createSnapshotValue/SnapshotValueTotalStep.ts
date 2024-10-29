@@ -7,6 +7,7 @@ export class SnapshotValueTotalStep<T extends SnapshotValueCreateContext> extend
     async prompt(context: T): Promise<void> {
         context.total = Number((await context.ui.showInputBox({
             title: this.title,
+            value: context.snapshotValue?.total.toString(),
             prompt: l10n.t('Enter a snapshot value amount ($)'),
             validateInput: this.validateInput,
         }))?.trim());

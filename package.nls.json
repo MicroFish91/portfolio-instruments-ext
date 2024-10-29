@@ -20,6 +20,7 @@
     "portfolioInstruments.updateSnapshot": "Update Field...",
     "portfolioInstruments.deleteSnapshot": "Delete Snapshot...",
     "portfolioInstruments.createSnapshotValue": "Create Snapshot Value...",
+    "portfolioInstruments.updateSnapshotValue": "Update Snapshot Value...",
     "portfolioInstruments.deleteSnapshotValue": "Delete Snapshot Value...",
     "portfolioInstruments.updateBenchmarkSettings": "Update Benchmark Target...",
     "portfolioInstruments.viewProperties": "View Properties"
