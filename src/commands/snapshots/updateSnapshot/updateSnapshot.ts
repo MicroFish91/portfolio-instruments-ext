@@ -10,6 +10,7 @@ import { SnapshotDateStep } from "../../snapshotDraft/createSnapshotDraft/Snapsh
 import { SnapshotDescriptionStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDescriptionStep";
 import { SnapshotUpdateStep } from "./SnapshotUpdateStep";
 import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
+import { PromptStep } from "../../../wizard/PromptStep";
 
 export async function updateSnapshot(context: CommandContext, item: SnapshotDataKeyItem) {
     const wizardContext: SnapshotUpdateContext = {
@@ -21,13 +22,23 @@ export async function updateSnapshot(context: CommandContext, item: SnapshotData
         snapshot: item.parent.snapshot,
     };
 
+    const promptSteps: PromptStep<SnapshotUpdateContext>[] = [];
+    switch (item.key) {
+        case 'snap_date':
+            promptSteps.push(new SnapshotDateStep({ defaultDate: item.parent.snapshot.snap_date }));
+            break;
+        case 'description':
+            promptSteps.push(new SnapshotDescriptionStep());
+            break;
+        case 'benchmark':
+            promptSteps.push(new BenchmarkListStep({ suppressSkip: true }));
+            break;
+        default:
+    }
+
     const wizard: Wizard<SnapshotUpdateContext> = new Wizard(wizardContext, {
         title: l10n.t('Update snapshot'),
-        promptSteps: [
-            new SnapshotDateStep(),
-            new SnapshotDescriptionStep(),
-            new BenchmarkListStep({ currentId: item.key === 'benchmark' ? undefined : item.parent.snapshot.benchmark_id, suppressSkip: true }),
-        ],
+        promptSteps,
         executeSteps: [
             new SnapshotUpdateStep(),
         ],
