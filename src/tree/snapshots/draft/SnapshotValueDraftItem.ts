@@ -8,22 +8,23 @@ import { Account } from "../../../sdk/types/accounts";
 import { Holding } from "../../../sdk/types/holdings";
 import { capitalize } from "../../../utils/textUtils";
 
-export class SVPayloadItem extends TreeItem implements PiExtTreeItem {
-    static readonly contextValue: string = 'svPayloadItem';
-    static readonly regExp: RegExp = new RegExp(SVPayloadItem.contextValue);
+export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem {
+    static readonly contextValue: string = 'snapshotValueDraftItem';
+    static readonly regExp: RegExp = new RegExp(SnapshotValueDraftItem.contextValue);
 
     id: string;
 
     constructor(
-        readonly draftItem: SnapshotDraftItem,
+        readonly parent: SnapshotDraftItem,
         readonly email: string,
+
         readonly svIdx: number,
         readonly snapshotValue: CreateSnapshotValuePayload,
         readonly account: Account,
         readonly holding: Holding,
     ) {
         super(holding.name);
-        this.id = `/emails/${email}/snapshots/draft/${svIdx}`;
+        this.id = `/emails/${email}/snapshots/draft/snapshotValues/${svIdx}`;
     }
 
     getTreeItem(): TreeItem {
@@ -38,7 +39,7 @@ export class SVPayloadItem extends TreeItem implements PiExtTreeItem {
     }
 
     private getContextValues(): string {
-        return createContextValue([SVPayloadItem.contextValue, viewPropertiesContext]);
+        return createContextValue([SnapshotValueDraftItem.contextValue, viewPropertiesContext]);
     }
 
     viewProperties(): string {

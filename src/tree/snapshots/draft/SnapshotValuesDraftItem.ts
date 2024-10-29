@@ -4,22 +4,23 @@ import { CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapsho
 import { createContextValue } from "../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../constants";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
-import { SVPayloadItem } from "./SVPayloadItem";
+import { SnapshotValueDraftItem } from "./SnapshotValueDraftItem";
 import { AccountsItem } from "../../accounts/AccountsItem";
 import { Account } from "../../../sdk/types/accounts";
 import { Holding } from "../../../sdk/types/holdings";
 import { HoldingsItem } from "../../holdings/HoldingsItem";
 import { nonNullValue } from "../../../utils/nonNull";
 
-export class SnapshotValuesPayloadItem extends TreeItem implements PiExtTreeItem {
-    static readonly contextValue: string = 'snapshotValuesPayloadItem';
-    static readonly regExp: RegExp = new RegExp(SnapshotValuesPayloadItem.contextValue);
+export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem {
+    static readonly contextValue: string = 'snapshotValuesDraftItem';
+    static readonly regExp: RegExp = new RegExp(SnapshotValuesDraftItem.contextValue);
 
     id: string;
 
     constructor(
-        readonly draftItem: SnapshotDraftItem,
+        readonly parent: SnapshotDraftItem,
         readonly email: string,
+
         readonly snapshotValues: CreateSnapshotValuePayload[],
     ) {
         super('Values');
@@ -51,8 +52,8 @@ export class SnapshotValuesPayloadItem extends TreeItem implements PiExtTreeItem
             holdingsMap.set(holding.holding_id, holding);
         }
 
-        return this.snapshotValues.map((sv, i) => new SVPayloadItem(
-            this.draftItem,
+        return this.snapshotValues.map((sv, i) => new SnapshotValueDraftItem(
+            this.parent,
             this.email,
             i,
             sv,
@@ -62,7 +63,7 @@ export class SnapshotValuesPayloadItem extends TreeItem implements PiExtTreeItem
     }
 
     private getContextValues(): string {
-        return createContextValue([SnapshotValuesPayloadItem.contextValue, viewPropertiesContext]);
+        return createContextValue([SnapshotValuesDraftItem.contextValue, viewPropertiesContext]);
     }
 
     viewProperties(): string {

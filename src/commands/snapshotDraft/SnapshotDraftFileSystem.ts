@@ -25,7 +25,7 @@ export class SnapshotDraftFile implements FileStat {
     constructor(
         contents: Uint8Array, // snapshot_values
         readonly parentItem: SnapshotsItem,
-        private _snapshotPayload: Omit<CreateSnapshotPayload, 'snapshot_values'>,
+        private _snapshotData: Omit<CreateSnapshotPayload, 'snapshot_values'>,
     ) {
         this.contents = contents;
         this.size = contents.byteLength;
@@ -33,12 +33,12 @@ export class SnapshotDraftFile implements FileStat {
         this.mtime = Date.now();
     }
 
-    get snapshotPayload(): Omit<CreateSnapshotPayload, 'snapshot_values'> {
-        return this._snapshotPayload;
+    get snapshotData(): Omit<CreateSnapshotPayload, 'snapshot_values'> {
+        return this._snapshotData;
     }
 
-    set snapshotPayload(payload: Omit<CreateSnapshotPayload, 'snapshot_values'>) {
-        this._snapshotPayload = payload;
+    set snapshotData(payload: Omit<CreateSnapshotPayload, 'snapshot_values'>) {
+        this._snapshotData = payload;
     }
 }
 
@@ -84,7 +84,7 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
         }
 
         const file: SnapshotDraftFile = nonNullValue(this.draftStore.get(uri.path));
-        const partialSnapshotPayload: Omit<CreateSnapshotPayload, "snapshot_values"> = file.snapshotPayload;
+        const partialSnapshotPayload: Omit<CreateSnapshotPayload, "snapshot_values"> = file.snapshotData;
         return { ...partialSnapshotPayload, snapshot_values: JSON.parse(this.readFile(uri).toString()) as CreateSnapshotValuePayload[] };
     }
 
@@ -123,7 +123,7 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
         if (!this.draftStore.has(uri.path)) {
             this.createSnapshotDraft(
                 item.parent,
-                item.snapshotPayload,
+                item.snapshotData,
                 (await getSnapshotLatest(nonNullValue(await getAuthToken(item.email)))).data?.snapshot_values ?? [],
             );
         }
@@ -153,13 +153,13 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
         if (!this.draftStore.has(uri.path)) {
             this.createSnapshotDraft(
                 item.parent,
-                item.snapshotPayload,
+                item.snapshotData,
                 (await getSnapshotLatest(nonNullValue(await getAuthToken(item.email)))).data?.snapshot_values ?? [],
             );
         }
 
         const file: SnapshotDraftFile = nonNullValue(this.draftStore.get(uri.path));
-        file.snapshotPayload = snapshot;
+        file.snapshotData = snapshot;
     }
 
     async updateSnapshotValuesDraft(item: SnapshotDraftItem, snapshotValues: CreateSnapshotValuePayload[]): Promise<void> {
@@ -167,7 +167,7 @@ export class SnapshotDraftFileSystem implements FileSystemProvider {
         if (!this.draftStore.has(uri.path)) {
             this.createSnapshotDraft(
                 item.parent,
-                item.snapshotPayload,
+                item.snapshotData,
                 (await getSnapshotLatest(nonNullValue(await getAuthToken(item.email)))).data?.snapshot_values ?? [],
             );
         }

@@ -3,11 +3,19 @@ import { PromptStep } from "../../../wizard/PromptStep";
 import { validationUtils } from "../../../utils/validationUtils";
 import { SnapshotCreateContext } from "../../snapshots/SnapshotCreateContext";
 
+export type SnapshotDateStepOptions = {
+    defaultDate?: string;
+};
+
 export class SnapshotDateStep<T extends SnapshotCreateContext> extends PromptStep<T> {
+    constructor(readonly options?: SnapshotDateStepOptions) {
+        super();
+    }
+
     async prompt(context: T): Promise<void> {
         context.snapDate = (await context.ui.showInputBox({
             title: this.title,
-            value: this.getTodaysDateFormatted(),
+            value: this.options?.defaultDate ?? this.getTodaysDateFormatted(),
             prompt: l10n.t('Enter holding maturation date (mm/dd/yyyy)'),
             validateInput: this.validateInput,
         }))?.trim();

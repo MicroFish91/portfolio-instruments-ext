@@ -4,8 +4,9 @@ import { SnapshotsItem } from "../SnapshotsItem";
 import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapshot";
 import { createContextValue } from "../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../constants";
-import { SnapshotValuesPayloadItem } from "./SnapshotValuesPayloadItem";
-import { SnapshotPayloadItem } from "./SnapshotPayloadItem";
+import { SnapshotDataDraftItem } from "./SnapshotDataDraftItem";
+import { SnapshotValuesDraftItem } from "./SnapshotValuesDraftItem";
+import { ext } from "../../../extensionVariables";
 
 export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDraftItem';
@@ -16,18 +17,28 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
     constructor(
         readonly parent: SnapshotsItem,
         readonly email: string,
-        readonly snapshotPayload: Omit<CreateSnapshotPayload, 'snapshot_values'>,
-        readonly snapshotValues: CreateSnapshotValuePayload[],
+
+        public snapshotData: Omit<CreateSnapshotPayload, 'snapshot_values'>,
+        public snapshotValues: CreateSnapshotValuePayload[],
     ) {
-        super(snapshotPayload.snap_date);
+        super(snapshotData.snap_date);
         this.id = `/emails/${email}/snapshots/draft`;
     }
 
     getTreeItem(): TreeItem {
+        let snapshotDraft: CreateSnapshotPayload | undefined;
+        if (ext.snapshotDraftFileSystem.hasSnapshotDraft(this.email)) {
+            snapshotDraft = ext.snapshotDraftFileSystem.parseSnapshotDraft(this.email);
+        }
+
+        this.snapshotData = { ...snapshotDraft, snapshot_values: undefined } as Omit<CreateSnapshotPayload, 'snapshot_values'>;
+        this.snapshotValues = snapshotDraft?.snapshot_values ?? [];
+
+        const total: number = this.snapshotValues.reduce((cur, sv) => cur + sv.total, 0);
         return {
             id: this.id,
-            label: this.label,
-            description: l10n.t('Draft'),
+            label: l10n.t('Draft'),
+            description: `$${total}`,
             contextValue: this.getContextValues(),
             collapsibleState: TreeItemCollapsibleState.Expanded,
             iconPath: new ThemeIcon("device-camera", "white"),
@@ -36,8 +47,8 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
 
     getChildren(): PiExtTreeItem[] {
         return [
-            new SnapshotPayloadItem(this, this.email, this.snapshotPayload),
-            new SnapshotValuesPayloadItem(this, this.email, this.snapshotValues),
+            new SnapshotDataDraftItem(this, this.email, this.snapshotData),
+            new SnapshotValuesDraftItem(this, this.email, this.snapshotValues),
         ];
     }
 
@@ -47,7 +58,7 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
 
     viewProperties(): string {
         return JSON.stringify(
-            { ...this.snapshotPayload, snapshot_values: this.snapshotValues },
+            { ...this.snapshotData, snapshot_values: this.snapshotValues },
             undefined,
             4,
         );

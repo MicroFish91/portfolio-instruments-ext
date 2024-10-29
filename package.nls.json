@@ -16,6 +16,7 @@
     "portfolioInstruments.createSnapshotDraft": "Create Snapshot...",
     "portfolioInstruments.editSnapshotDraft": "Edit Draft...",
     "portfolioInstruments.discardSnapshotDraft": "Discard Draft...",
+    "portfolioInstruments.updateSnapshotDraft": "Update Field...",
     "portfolioInstruments.deploySnapshotDraft": "Deploy Draft...",
     "portfolioInstruments.updateSnapshot": "Update Field...",
     "portfolioInstruments.deleteSnapshot": "Delete Snapshot...",

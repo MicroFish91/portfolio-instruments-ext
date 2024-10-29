@@ -17,6 +17,7 @@ import { createSnapshotDraft } from "./snapshotDraft/createSnapshotDraft/createS
 import { deploySnapshotDraft } from "./snapshotDraft/deploySnapshotDraft/deploySnapshotDraft";
 import { discardSnapshotDraft } from "./snapshotDraft/discardSnapshotDraft";
 import { editSnapshotDraft } from "./snapshotDraft/editSnapshotDraft";
+import { updateSnapshotDraft } from "./snapshotDraft/updateSnapshotDraft/updateSnapshotDraft";
 import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
 import { updateSnapshot } from "./snapshots/updateSnapshot/updateSnapshot";
 import { createSnapshotValue } from "./snapshotValues/createSnapshotValue/createSnapshotValue";
@@ -55,6 +56,7 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.createSnapshotDraft', createSnapshotDraft);
     registerCommand('portfolioInstruments.editSnapshotDraft', editSnapshotDraft);
     registerCommand('portfolioInstruments.discardSnapshotDraft', discardSnapshotDraft);
+    registerCommand('portfolioInstruments.updateSnapshotDraft', updateSnapshotDraft);
     registerCommand('portfolioInstruments.deploySnapshotDraft', deploySnapshotDraft);
 
     // Snapshots
