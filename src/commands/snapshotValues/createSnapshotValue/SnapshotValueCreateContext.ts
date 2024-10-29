@@ -7,6 +7,7 @@ export type SnapshotValueCreateContext = AuthContext & {
     accountId?: number;
     holdingId?: number;
     total?: number;
+    skipRebalance?: boolean;
 
     snapshotValue?: SnapshotValue;
 }

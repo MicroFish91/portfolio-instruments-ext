@@ -10,6 +10,7 @@ import { AccountListStep } from "../../accounts/AccountListStep";
 import { SnapshotValueTotalStep } from "./SnapshotValueTotalStep";
 import { SnapshotValueCreateStep } from "./SnapshotValueCreateStep";
 import { ext } from "../../../extensionVariables";
+import { SnapshotValueSkipRebalanceStep } from "./SnapshotValueSkipRebalanceStep";
 
 export async function createSnapshotValue(context: CommandContext, item: SnapshotValuesItem) {
     const wizardContext: SnapshotValueCreateContext = {
@@ -24,6 +25,7 @@ export async function createSnapshotValue(context: CommandContext, item: Snapsho
             new AccountListStep(),
             new HoldingListStep(),
             new SnapshotValueTotalStep(),
+            new SnapshotValueSkipRebalanceStep(),
         ],
         executeSteps: [
             new SnapshotValueCreateStep(),

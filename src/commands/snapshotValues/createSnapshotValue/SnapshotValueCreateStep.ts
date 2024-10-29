@@ -13,7 +13,7 @@ export class SnapshotValueCreateStep<T extends SnapshotValueCreateContext> {
             account_id: nonNullProp(context, 'accountId'),
             holding_id: nonNullProp(context, 'holdingId'),
             total: nonNullProp(context, 'total'),
-            skip_rebalance: false,
+            skip_rebalance: context.skipRebalance,
         });
         if (response.error) {
             throw new Error(response.error);
