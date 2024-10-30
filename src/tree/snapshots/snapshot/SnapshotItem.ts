@@ -36,7 +36,7 @@ export class SnapshotItem extends TreeItem implements PiExtTreeItem {
 
         return {
             id: this.id,
-            label: this.label,
+            label: this.snapshot.snap_date,
             description: `$${this.snapshot.total}`,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.Collapsed,

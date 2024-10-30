@@ -26,11 +26,7 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
     }
 
     getTreeItem(): TreeItem {
-        let snapshotDraft: CreateSnapshotPayload | undefined;
-        if (ext.snapshotDraftFileSystem.hasSnapshotDraft(this.email)) {
-            snapshotDraft = ext.snapshotDraftFileSystem.parseSnapshotDraft(this.email);
-        }
-
+        const snapshotDraft: CreateSnapshotPayload | undefined = ext.snapshotDraftFileSystem.parseSnapshotDraft(this.email);
         this.snapshotData = { ...snapshotDraft, snapshot_values: undefined } as Omit<CreateSnapshotPayload, 'snapshot_values'>;
         this.snapshotValues = snapshotDraft?.snapshot_values ?? [];
 
