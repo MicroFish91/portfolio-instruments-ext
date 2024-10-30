@@ -15,6 +15,7 @@ import { editSnapshotDraft } from "./draft/snapshot/editSnapshotDraft";
 import { updateSnapshotDraft } from "./draft/snapshot/updateSnapshotDraft/updateSnapshotDraft";
 import { createSnapshotValueDraft } from "./draft/snapshotValue/createSnapshotValueDraft/createSnapshotValueDraft";
 import { deleteSnapshotValueDraft } from "./draft/snapshotValue/deleteSnapshotValueDraft/deleteSnapshotValueDraft";
+import { updateSnapshotValueDraft } from "./draft/snapshotValue/updateSnapshotValueDraft/updateSnapshotValueDraft";
 import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
@@ -63,6 +64,7 @@ export function registerCommands() {
 
     // Snapshot values draft
     registerCommand('portfolioInstruments.createSnapshotValueDraft', createSnapshotValueDraft);
+    registerCommand('portfolioInstruments.updateSnapshotValueDraft', updateSnapshotValueDraft);
     registerCommand('portfolioInstruments.deleteSnapshotValueDraft', deleteSnapshotValueDraft);
 
     // Snapshots

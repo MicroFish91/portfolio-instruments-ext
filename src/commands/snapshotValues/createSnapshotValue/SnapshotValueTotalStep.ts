@@ -1,13 +1,22 @@
 import { l10n } from "vscode";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { validationUtils } from "../../../utils/validationUtils";
-import { SnapshotValueCreateContext } from "./SnapshotValueCreateContext";
+import { SnapshotValue } from "../../../sdk/types/snapshots";
+import { CommandContext } from "../../registerCommand";
 
-export class SnapshotValueTotalStep<T extends SnapshotValueCreateContext> extends PromptStep<T> {
+export type SnapshotValueTotalStepOptions = {
+    defaultValue?: number;
+};
+
+export class SnapshotValueTotalStep<T extends CommandContext & { snapshotValue?: SnapshotValue, total?: number }> extends PromptStep<T> {
+    constructor(readonly options?: SnapshotValueTotalStepOptions) {
+        super();
+    }
+
     async prompt(context: T): Promise<void> {
         context.total = Number((await context.ui.showInputBox({
             title: this.title,
-            value: context.snapshotValue?.total.toString(),
+            value: this.options?.defaultValue?.toString() ?? context.snapshotValue?.total.toString(),
             prompt: l10n.t('Enter a snapshot value amount ($)'),
             validateInput: this.validateInput,
         }))?.trim());
