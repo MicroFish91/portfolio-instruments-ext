@@ -1,6 +1,6 @@
 import { l10n } from "vscode";
-import { PromptStep } from "../../../wizard/PromptStep";
 import { SnapshotDraftDeployContext } from "./SnapshotDraftDeployContext";
+import { PromptStep } from "../../../../wizard/PromptStep";
 
 export class SnapshotDraftDeployConfirmStep<T extends SnapshotDraftDeployContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {

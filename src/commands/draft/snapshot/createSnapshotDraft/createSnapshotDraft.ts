@@ -1,15 +1,15 @@
 import { l10n } from "vscode";
-import { CommandContext } from "../../registerCommand";
-import { SnapshotsItem } from "../../../tree/snapshots/SnapshotsItem";
+import { CommandContext } from "../../../registerCommand";
+import { SnapshotsItem } from "../../../../tree/snapshots/SnapshotsItem";
+import { ext } from "../../../../extensionVariables";
 import { SnapshotDraftCreateContext } from "./SnapshotDraftCreateContext";
-import { getAuthToken } from "../../../utils/tokenUtils";
-import { nonNullProp, nonNullValue } from "../../../utils/nonNull";
-import { Wizard } from "../../../wizard/Wizard";
+import { nonNullProp, nonNullValue } from "../../../../utils/nonNull";
+import { getAuthToken } from "../../../../utils/tokenUtils";
+import { Wizard } from "../../../../wizard/Wizard";
 import { SnapshotDateStep } from "./SnapshotDateStep";
 import { SnapshotDescriptionStep } from "./SnapshotDescriptionStep";
+import { BenchmarkListStep } from "../../../benchmarks/BenchmarkListStep";
 import { SnapshotDraftCreateStep } from "./SnapshotDraftCreateStep";
-import { ext } from "../../../extensionVariables";
-import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
 
 export async function createSnapshotDraft(context: CommandContext, item: SnapshotsItem): Promise<void> {
     if (ext.snapshotDraftFileSystem.hasSnapshotDraft(item.email)) {

@@ -1,13 +1,13 @@
 import { l10n } from "vscode";
-import { ext } from "../../../extensionVariables";
-import { SnapshotDraftItem } from "../../../tree/snapshots/draft/SnapshotDraftItem";
-import { nonNullValue, nonNullValueAndProp } from "../../../utils/nonNull";
-import { getAuthToken } from "../../../utils/tokenUtils";
-import { CommandContext } from "../../registerCommand";
-import { SnapshotDraftDeployContext } from "./SnapshotDraftDeployContext";
-import { Wizard } from "../../../wizard/Wizard";
 import { SnapshotDraftDeployConfirmStep } from "./SnapshotDraftDeployConfirmStep";
 import { SnapshotDraftDeployStep } from "./SnapshotDraftDeployStep";
+import { SnapshotDraftItem } from "../../../../tree/snapshots/draft/SnapshotDraftItem";
+import { CommandContext } from "../../../registerCommand";
+import { ext } from "../../../../extensionVariables";
+import { SnapshotDraftDeployContext } from "./SnapshotDraftDeployContext";
+import { nonNullValue, nonNullValueAndProp } from "../../../../utils/nonNull";
+import { getAuthToken } from "../../../../utils/tokenUtils";
+import { Wizard } from "../../../../wizard/Wizard";
 
 export async function deploySnapshotDraft(context: CommandContext, item: SnapshotDraftItem) {
     if (!ext.snapshotDraftFileSystem.hasSnapshotDraft(item.email)) {

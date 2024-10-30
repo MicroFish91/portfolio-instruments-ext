@@ -6,11 +6,11 @@ import { CommandContext } from "../../registerCommand";
 import { ext } from "../../../extensionVariables";
 import { SnapshotDataKeyItem } from "../../../tree/snapshots/snapshot/SnapshotDataKeyItem";
 import { SnapshotUpdateContext } from "./SnapshotUpdateContext";
-import { SnapshotDateStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDateStep";
-import { SnapshotDescriptionStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDescriptionStep";
 import { SnapshotUpdateStep } from "./SnapshotUpdateStep";
 import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
 import { PromptStep } from "../../../wizard/PromptStep";
+import { SnapshotDateStep } from "../../draft/snapshot/createSnapshotDraft/SnapshotDateStep";
+import { SnapshotDescriptionStep } from "../../draft/snapshot/createSnapshotDraft/SnapshotDescriptionStep";
 
 export async function updateSnapshot(context: CommandContext, item: SnapshotDataKeyItem) {
     const wizardContext: SnapshotUpdateContext = {

@@ -1,10 +1,10 @@
 import { Progress } from "vscode";
-import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { SnapshotDraftCreateContext } from "./SnapshotDraftCreateContext";
-import { ext } from "../../../extensionVariables";
-import { SnapshotsItem } from "../../../tree/snapshots/SnapshotsItem";
-import { nonNullProp } from "../../../utils/nonNull";
-import { getSnapshotLatest } from "../../../sdk/snapshots/getSnapshot";
+import { ExecuteStep } from "../../../../wizard/ExecuteStep";
+import { SnapshotsItem } from "../../../../tree/snapshots/SnapshotsItem";
+import { ext } from "../../../../extensionVariables";
+import { nonNullProp } from "../../../../utils/nonNull";
+import { getSnapshotLatest } from "../../../../sdk/snapshots/getSnapshot";
 
 export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> extends ExecuteStep<T> {
     priority: 200;

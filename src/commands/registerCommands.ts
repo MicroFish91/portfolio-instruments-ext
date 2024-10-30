@@ -8,16 +8,17 @@ import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
 import { createBenchmark } from "./benchmarks/createBenchmark/createBenchmark";
 import { deleteBenchmark } from "./benchmarks/deleteBenchmark/deleteBenchmark";
+import { createSnapshotDraft } from "./draft/snapshot/createSnapshotDraft/createSnapshotDraft";
+import { deploySnapshotDraft } from "./draft/snapshot/deploySnapshotDraft/deploySnapshotDraft";
+import { discardSnapshotDraft } from "./draft/snapshot/discardSnapshotDraft";
+import { editSnapshotDraft } from "./draft/snapshot/editSnapshotDraft";
+import { updateSnapshotDraft } from "./draft/snapshot/updateSnapshotDraft/updateSnapshotDraft";
+import { createSnapshotValueDraft } from "./draft/snapshotValue/createSnapshotValueDraft/createSnapshotValueDraft";
 import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
 import { updateBenchmarkSettings } from "./settings/updateBenchmarkSettings/updateBenchmarkSettings";
-import { createSnapshotDraft } from "./snapshotDraft/createSnapshotDraft/createSnapshotDraft";
-import { deploySnapshotDraft } from "./snapshotDraft/deploySnapshotDraft/deploySnapshotDraft";
-import { discardSnapshotDraft } from "./snapshotDraft/discardSnapshotDraft";
-import { editSnapshotDraft } from "./snapshotDraft/editSnapshotDraft";
-import { updateSnapshotDraft } from "./snapshotDraft/updateSnapshotDraft/updateSnapshotDraft";
 import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
 import { updateSnapshot } from "./snapshots/updateSnapshot/updateSnapshot";
 import { createSnapshotValue } from "./snapshotValues/createSnapshotValue/createSnapshotValue";
@@ -58,6 +59,9 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.discardSnapshotDraft', discardSnapshotDraft);
     registerCommand('portfolioInstruments.updateSnapshotDraft', updateSnapshotDraft);
     registerCommand('portfolioInstruments.deploySnapshotDraft', deploySnapshotDraft);
+
+    // Snapshot values draft
+    registerCommand('portfolioInstruments.createSnapshotValueDraft', createSnapshotValueDraft);
 
     // Snapshots
     // Todo: View Rebalance

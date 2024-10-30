@@ -3,7 +3,7 @@ import { ext } from './extensionVariables';
 import { PiExtTreeDataProvider } from './tree/PiExtTreeDataProvider';
 import { registerCommands } from './commands/registerCommands';
 import { ReadOnlyContentProvider } from './commands/viewProperties/ReadOnlyContentProvider';
-import { SnapshotDraftFileSystem } from './commands/snapshotDraft/SnapshotDraftFileSystem';
+import { SnapshotDraftFileSystem } from './commands/draft/SnapshotDraftFileSystem';
 
 export function activate(context: ExtensionContext) {
 	ext.context = context;

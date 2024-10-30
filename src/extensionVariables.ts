@@ -1,7 +1,7 @@
 import { ExtensionContext } from "vscode";
 import { PiExtTreeDataProvider } from "./tree/PiExtTreeDataProvider";
 import { ReadOnlyContentProvider } from "./commands/viewProperties/ReadOnlyContentProvider";
-import { SnapshotDraftFileSystem } from "./commands/snapshotDraft/SnapshotDraftFileSystem";
+import { SnapshotDraftFileSystem } from "./commands/draft/SnapshotDraftFileSystem";
 
 export namespace ext {
     export let context: ExtensionContext;

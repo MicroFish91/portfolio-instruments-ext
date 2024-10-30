@@ -1,16 +1,16 @@
 import { l10n } from "vscode";
-import { nonNullValue } from "../../../utils/nonNull";
-import { getAuthToken } from "../../../utils/tokenUtils";
-import { Wizard } from "../../../wizard/Wizard";
-import { CommandContext } from "../../registerCommand";
-import { ext } from "../../../extensionVariables";
-import { SnapshotDateStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDateStep";
-import { SnapshotDescriptionStep } from "../../snapshotDraft/createSnapshotDraft/SnapshotDescriptionStep";
-import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
-import { SnapshotDataKeyDraftItem } from "../../../tree/snapshots/draft/SnapshotDataKeyDraftItem";
-import { SnapshotDraftUpdateContext } from "./SnapshotDraftUpdateContext";
-import { PromptStep } from "../../../wizard/PromptStep";
 import { SnapshotDraftUpdateStep } from "./SnapshotDraftUpdateStep";
+import { CommandContext } from "../../../registerCommand";
+import { SnapshotDataKeyDraftItem } from "../../../../tree/snapshots/draft/SnapshotDataKeyDraftItem";
+import { SnapshotDraftUpdateContext } from "./SnapshotDraftUpdateContext";
+import { getAuthToken } from "../../../../utils/tokenUtils";
+import { nonNullValue } from "../../../../utils/nonNull";
+import { PromptStep } from "../../../../wizard/PromptStep";
+import { SnapshotDateStep } from "../createSnapshotDraft/SnapshotDateStep";
+import { SnapshotDescriptionStep } from "../createSnapshotDraft/SnapshotDescriptionStep";
+import { BenchmarkListStep } from "../../../benchmarks/BenchmarkListStep";
+import { Wizard } from "../../../../wizard/Wizard";
+import { ext } from "../../../../extensionVariables";
 
 export async function updateSnapshotDraft(context: CommandContext, item: SnapshotDataKeyDraftItem) {
     const wizardContext: SnapshotDraftUpdateContext = {

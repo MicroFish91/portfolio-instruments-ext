@@ -1,8 +1,8 @@
 import { l10n, Progress } from "vscode";
 import { SnapshotDraftUpdateContext } from "./SnapshotDraftUpdateContext";
-import { ext } from "../../../extensionVariables";
-import { SnapshotDraftItem } from "../../../tree/snapshots/draft/SnapshotDraftItem";
-import { nonNullProp } from "../../../utils/nonNull";
+import { SnapshotDraftItem } from "../../../../tree/snapshots/draft/SnapshotDraftItem";
+import { ext } from "../../../../extensionVariables";
+import { nonNullProp } from "../../../../utils/nonNull";
 
 export class SnapshotDraftUpdateStep<T extends SnapshotDraftUpdateContext> {
     priority: 200;

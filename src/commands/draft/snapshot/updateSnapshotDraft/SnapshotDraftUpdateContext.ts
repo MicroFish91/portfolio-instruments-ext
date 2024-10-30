@@ -1,5 +1,5 @@
-import { CreateSnapshotPayload } from "../../../sdk/snapshots/createSnapshot";
-import { AuthContext } from "../../AuthContext";
+import { CreateSnapshotPayload } from "../../../../sdk/snapshots/createSnapshot";
+import { AuthContext } from "../../../AuthContext";
 
 export type SnapshotDraftUpdateContext = AuthContext & {
     snapDate?: string;

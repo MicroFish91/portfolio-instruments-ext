@@ -1,7 +1,7 @@
 import { l10n } from "vscode";
-import { PromptStep } from "../../../wizard/PromptStep";
-import { validationUtils } from "../../../utils/validationUtils";
-import { SnapshotCreateContext } from "../../snapshots/SnapshotCreateContext";
+import { SnapshotCreateContext } from "../../../snapshots/SnapshotCreateContext";
+import { PromptStep } from "../../../../wizard/PromptStep";
+import { validationUtils } from "../../../../utils/validationUtils";
 
 export type SnapshotDateStepOptions = {
     defaultDate?: string;

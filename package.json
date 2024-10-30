@@ -108,6 +108,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.createSnapshotValueDraft",
+        "title": "%portfolioInstruments.createSnapshotValueDraft%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.updateSnapshot",
         "title": "%portfolioInstruments.updateSnapshot%",
         "category": "Portfolio Instruments"
@@ -224,6 +229,10 @@
           "when": "never"
         },
         {
+          "command": "portfolioInstruments.createSnapshotValueDraft",
+          "when": "never"
+        },
+        {
           "command": "portfolioInstruments.updateSnapshot",
           "when": "never"
         },
@@ -317,6 +326,11 @@
           "command": "portfolioInstruments.deploySnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "1@2"
+        },
+        {
+          "command": "portfolioInstruments.createSnapshotValueDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotValuesDraftItem/i",
+          "group": "1@1"
         },
         {
           "command": "portfolioInstruments.updateSnapshot",

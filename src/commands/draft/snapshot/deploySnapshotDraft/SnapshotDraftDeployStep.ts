@@ -1,7 +1,7 @@
 import { Progress } from "vscode";
-import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { SnapshotDraftDeployContext } from "./SnapshotDraftDeployContext";
-import { createSnapshot, CreateSnapshotApiResponse } from "../../../sdk/snapshots/createSnapshot";
+import { createSnapshot, CreateSnapshotApiResponse } from "../../../../sdk/snapshots/createSnapshot";
+import { ExecuteStep } from "../../../../wizard/ExecuteStep";
 
 export class SnapshotDraftDeployStep<T extends SnapshotDraftDeployContext> extends ExecuteStep<T> {
     priority: 200;
