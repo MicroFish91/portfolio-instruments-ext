@@ -1,6 +1,6 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
-import { GetUserByToken, getUserByToken } from "../../sdk/auth/getUserByToken";
+import { GetUserByTokenApiResponse, getUserByToken } from "../../sdk/auth/getUserByToken";
 import { nonNullValue, nonNullValueAndProp } from "../../utils/nonNull";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { createContextValue } from "../../utils/contextUtils";
@@ -10,6 +10,7 @@ import { BenchmarksItem } from "../benchmarks/BenchmarksItem";
 import { BenchmarkSettingsItem } from "./BenchmarkSettingsItem";
 import { RebalanceSettingsItem } from "./RebalanceSettingsItem";
 import { Settings } from "../../sdk/types/settings";
+import { EmailItem } from "../auth/EmailItem";
 
 export class SettingsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'settingsItem';
@@ -33,7 +34,7 @@ export class SettingsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const response: GetUserByToken = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
+        const response: GetUserByTokenApiResponse = await EmailItem.getUserByToken(this.email);
         const settings: Settings = nonNullValueAndProp(response.data, 'settings');
 
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
@@ -63,7 +64,7 @@ export class SettingsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async viewProperties(): Promise<string> {
-        const response: GetUserByToken = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
+        const response: GetUserByTokenApiResponse = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
         return JSON.stringify(response.data?.settings ?? {}, undefined, 4);
     }
 }

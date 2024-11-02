@@ -21,3 +21,8 @@ export type SnapshotValue = {
     created_at: string;
     updated_at: string;
 };
+
+export type AssetAllocation = {
+    category: string;
+    value: number;
+};

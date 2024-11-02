@@ -1,7 +1,7 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { AccountsItem } from "../accounts/AccountsItem";
-import { GetUserByToken, getUserByToken } from "../../sdk/auth/getUserByToken";
+import { GetUserByTokenApiResponse, getUserByToken } from "../../sdk/auth/getUserByToken";
 import { nonNullValue } from "../../utils/nonNull";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { GenericItem } from "../GenericItem";
@@ -33,7 +33,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const response: GetUserByToken = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
+        const response: GetUserByTokenApiResponse = await EmailItem.getUserByToken(this.email);
 
         if (response.data) {
             return [
@@ -57,5 +57,9 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
                 }),
             ];
         }
+    }
+
+    static async getUserByToken(email: string): Promise<GetUserByTokenApiResponse> {
+        return await getUserByToken(nonNullValue(await getAuthToken(email)));
     }
 }
