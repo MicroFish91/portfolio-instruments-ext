@@ -15,6 +15,7 @@ import { ext } from "../../../extensionVariables";
 export async function createAccount(context: CommandContext, item: AccountsItem): Promise<void> {
     const wizardContext: AccountCreateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
     };
 
@@ -35,5 +36,6 @@ export async function createAccount(context: CommandContext, item: AccountsItem)
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Created account "{0}"', nonNullValueAndProp(wizardContext.account, 'name')));
+    ext.resourceCache.delete(AccountsItem.generatePiExtAccountsId(wizardContext.email));
     ext.portfolioInstrumentsTdp.refresh(item);
 }

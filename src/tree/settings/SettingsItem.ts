@@ -1,16 +1,13 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
-import { GetUserByTokenApiResponse, getUserByToken } from "../../sdk/auth/getUserByToken";
-import { nonNullValue, nonNullValueAndProp } from "../../utils/nonNull";
-import { getAuthToken } from "../../utils/tokenUtils";
 import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { Benchmark } from "../../sdk/types/benchmarks";
 import { BenchmarksItem } from "../benchmarks/BenchmarksItem";
 import { BenchmarkSettingsItem } from "./BenchmarkSettingsItem";
 import { RebalanceSettingsItem } from "./RebalanceSettingsItem";
-import { Settings } from "../../sdk/types/settings";
 import { EmailItem } from "../auth/EmailItem";
+import { ext } from "../../extensionVariables";
 
 export class SettingsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'settingsItem';
@@ -34,10 +31,10 @@ export class SettingsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const response: GetUserByTokenApiResponse = await EmailItem.getUserByToken(this.email);
-        const settings: Settings = nonNullValueAndProp(response.data, 'settings');
+        const { settings } = await EmailItem.getUserAndSettings(this.email);
+        ext.resourceCache.set(SettingsItem.generatePiExtSettingsId(this.email), settings);
 
-        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
+        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
         const benchmarksMap = new Map<number, Benchmark>();
 
         for (const benchmark of benchmarks) {
@@ -64,7 +61,11 @@ export class SettingsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async viewProperties(): Promise<string> {
-        const response: GetUserByTokenApiResponse = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
-        return JSON.stringify(response.data?.settings ?? {}, undefined, 4);
+        const { settings } = await EmailItem.getUserAndSettingsWithCache(this.email);
+        return JSON.stringify(settings, undefined, 4);
+    }
+
+    static generatePiExtSettingsId(email: string): string {
+        return `/settings/${email}`;
     }
 }

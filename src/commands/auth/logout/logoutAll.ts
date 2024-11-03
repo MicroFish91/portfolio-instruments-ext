@@ -10,5 +10,6 @@ export async function logoutAll(context: CommandContext): Promise<void> {
 
     await removeAuthTokenRecord();
     void context.ui.showInformationMessage(l10n.t('Successfully signed out.'));
+    ext.resourceCache = new Map<string, {}>();  // Reset / reallocate the cache entirely
     ext.portfolioInstrumentsTdp.refresh();
 }

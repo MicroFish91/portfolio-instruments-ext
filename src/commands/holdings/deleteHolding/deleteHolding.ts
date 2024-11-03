@@ -8,10 +8,12 @@ import { HoldingDeleteContext } from "./HoldingDeleteContext";
 import { HoldingItem } from "../../../tree/holdings/HoldingItem";
 import { HoldingDeleteConfirmStep } from "./HoldingDeleteConfirmStep";
 import { HoldingDeleteStep } from "./HoldingDeleteStep";
+import { HoldingsItem } from "../../../tree/holdings/HoldingsItem";
 
 export async function deleteHolding(context: CommandContext, item: HoldingItem): Promise<void> {
     const wizardContext: HoldingDeleteContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         holding: item.holding,
     };
@@ -30,5 +32,6 @@ export async function deleteHolding(context: CommandContext, item: HoldingItem):
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Deleted holding "{0}"', nonNullValueAndProp(wizardContext.holding, 'name')));
+    ext.resourceCache.delete(HoldingsItem.generatePiExtHoldingsId(item.email));
     ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

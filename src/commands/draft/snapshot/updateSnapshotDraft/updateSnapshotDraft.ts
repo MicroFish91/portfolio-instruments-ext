@@ -15,6 +15,7 @@ import { ext } from "../../../../extensionVariables";
 export async function updateSnapshotDraft(context: CommandContext, item: SnapshotDataKeyDraftItem) {
     const wizardContext: SnapshotDraftUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         snapDate: item.key === 'snap_date' ? undefined : item.snapshotData.snap_date,
         snapDescription: item.key === 'description' ? undefined : item.snapshotData.description,

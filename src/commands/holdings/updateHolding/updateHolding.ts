@@ -10,10 +10,12 @@ import { HoldingNameStep } from "../createHolding/HoldingNameStep";
 import { HoldingAssetCategoryStep } from "../createHolding/HoldingAssetCategoryStep";
 import { HoldingTypeListStep } from "../createHolding/HoldingTypeListStep";
 import { HoldingUpdateStep } from "./HoldingUpdateStep";
+import { HoldingsItem } from "../../../tree/holdings/HoldingsItem";
 
 export async function updateHolding(context: CommandContext, item: HoldingItem): Promise<void> {
     const wizardContext: HoldingUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         holding: item.holding,
     };
@@ -34,5 +36,6 @@ export async function updateHolding(context: CommandContext, item: HoldingItem):
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Update holding "{0}"', nonNullValueAndProp(wizardContext.updatedHolding, 'name')));
+    ext.resourceCache.delete(HoldingsItem.generatePiExtHoldingsId(item.email));
     ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

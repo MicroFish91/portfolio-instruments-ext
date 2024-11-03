@@ -1,7 +1,7 @@
 import { Progress } from "vscode";
 import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { BenchmarkSettingsUpdateContext } from "./BenchmarkSettingsUpdateContext";
-import { updateSettings, UpdateSettingsApiResponse } from "../../../sdk/settings/updateSetting";
+import { updateSettings, UpdateSettingsApiResponse } from "../../../sdk/settings/updateSettings";
 
 export class BenchmarkSettingsUpdateStep<T extends BenchmarkSettingsUpdateContext> extends ExecuteStep<T> {
     priority: 200;

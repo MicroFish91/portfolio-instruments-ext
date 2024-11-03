@@ -2,9 +2,8 @@ import { l10n } from "vscode";
 import { AuthContext } from "../AuthContext";
 import { PromptStep } from "../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../wizard/UserInterface";
-import { getHoldings, GetHoldingsApiResponse } from "../../sdk/holdings/getHoldings";
-import { nonNullValueAndProp } from "../../utils/nonNull";
 import { Holding } from "../../sdk/types/holdings";
+import { HoldingsItem } from "../../tree/holdings/HoldingsItem";
 
 export type HoldingListStepOptions = {
     currentId?: number;
@@ -27,12 +26,11 @@ export class HoldingListStep<T extends AuthContext & { holdingId?: number }> ext
     }
 
     private async getPicks(context: T): Promise<PiQuickPickItem<number | undefined>[]> {
-        const response: GetHoldingsApiResponse = await getHoldings(context.token);
-        if (response.error) {
-            throw new Error(l10n.t('No holdings available - please create a holding first.'));
+        const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(context.email);
+        if (!holdings.length) {
+            throw new Error(l10n.t('No holdings found, create a holding first to proceed'));
         }
 
-        const holdings: Holding[] = nonNullValueAndProp(response.data, 'holdings');
         return holdings.map(holding => {
             return {
                 label: holding.name,

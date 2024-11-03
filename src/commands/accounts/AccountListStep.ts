@@ -2,9 +2,8 @@ import { l10n } from "vscode";
 import { AuthContext } from "../AuthContext";
 import { PromptStep } from "../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../wizard/UserInterface";
-import { nonNullValueAndProp } from "../../utils/nonNull";
-import { getAccounts, GetAccountsApiResponse } from "../../sdk/accounts/getAccounts";
 import { Account } from "../../sdk/types/accounts";
+import { AccountsItem } from "../../tree/accounts/AccountsItem";
 
 export type AccountListStepOptions = {
     currentId?: number;
@@ -27,12 +26,11 @@ export class AccountListStep<T extends AuthContext & { accountId?: number }> ext
     }
 
     private async getPicks(context: T): Promise<PiQuickPickItem<number | undefined>[]> {
-        const response: GetAccountsApiResponse = await getAccounts(context.token);
-        if (response.error) {
-            throw new Error(l10n.t('No accounts available - please create an account first.'));
+        const accounts: Account[] = await AccountsItem.getAccountsWithCache(context.email);
+        if (!accounts.length) {
+            throw new Error(l10n.t('No accounts found, create an account first to proceed'));
         }
 
-        const accounts: Account[] = nonNullValueAndProp(response.data, 'accounts');
         return accounts.map(account => {
             return {
                 label: account.name,

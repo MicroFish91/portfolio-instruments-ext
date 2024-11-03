@@ -16,6 +16,7 @@ export async function deploySnapshotDraft(context: CommandContext, item: Snapsho
 
     const wizardContext: SnapshotDraftDeployContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         snapshotPayload: nonNullValue(ext.snapshotDraftFileSystem.parseSnapshotDraft(item.email)),
     };

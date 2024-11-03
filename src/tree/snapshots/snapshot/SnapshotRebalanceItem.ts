@@ -4,13 +4,11 @@ import { SnapshotItem } from "./SnapshotItem";
 import { Snapshot } from "../../../sdk/types/snapshots";
 import { getSnapshotRebalance, GetSnapshotRebalanceApiResponse } from "../../../sdk/snapshots/getSnapshotRebalance";
 import { getAuthToken } from "../../../utils/tokenUtils";
-import { nonNullValue, nonNullValueAndProp } from "../../../utils/nonNull";
+import { nonNullValue } from "../../../utils/nonNull";
 import { createContextValue } from "../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../constants";
 import { GenericItem } from "../../GenericItem";
 import { EmailItem } from "../../auth/EmailItem";
-import { GetUserByTokenApiResponse } from "../../../sdk/auth/getUserByToken";
-import { Settings } from "../../../sdk/types/settings";
 
 export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotRebalanceItem';
@@ -27,6 +25,10 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
         this.id = `/snapshots/${snapshotData.snap_id}/dashboard/rebalance`;
     }
 
+    private getContextValue(): string {
+        return createContextValue([SnapshotRebalanceItem.contextValue, viewPropertiesContext]);
+    }
+
     getTreeItem(): TreeItem {
         return {
             id: this.id,
@@ -37,21 +39,8 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
         };
     }
 
-    private getContextValue(): string {
-        return createContextValue([SnapshotRebalanceItem.contextValue, viewPropertiesContext]);
-    }
-
-    async viewProperties(): Promise<string> {
-        const response: GetSnapshotRebalanceApiResponse = await getSnapshotRebalance(
-            nonNullValue(await getAuthToken(this.email)),
-            this.snapshotData.snap_id,
-        );
-        return JSON.stringify(response.data ?? {}, undefined, 4);
-    }
-
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const userByTokenResponse: GetUserByTokenApiResponse = await EmailItem.getUserByToken(this.email);
-        const settings: Settings = nonNullValueAndProp(userByTokenResponse.data, 'settings');
+        const { settings } = await EmailItem.getUserAndSettingsWithCache(this.email);
 
         const response: GetSnapshotRebalanceApiResponse = await getSnapshotRebalance(
             nonNullValue(await getAuthToken(this.email)),
@@ -99,5 +88,13 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
                     new ThemeIcon('pass', 'white')
             }),
         ];
+    }
+
+    async viewProperties(): Promise<string> {
+        const response: GetSnapshotRebalanceApiResponse = await getSnapshotRebalance(
+            nonNullValue(await getAuthToken(this.email)),
+            this.snapshotData.snap_id,
+        );
+        return JSON.stringify(response.data ?? {}, undefined, 4);
     }
 }

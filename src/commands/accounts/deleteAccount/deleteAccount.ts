@@ -8,10 +8,12 @@ import { AccountDeleteContext } from "./AccountDeleteContext";
 import { AccountDeleteConfirmStep } from "./AccountDeleteConfirmStep";
 import { AccountDeleteStep } from "./AccountDeleteStep";
 import { ext } from "../../../extensionVariables";
+import { AccountsItem } from "../../../tree/accounts/AccountsItem";
 
 export async function deleteAccount(context: CommandContext, item: AccountItem): Promise<void> {
     const wizardContext: AccountDeleteContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         account: item.account,
     };
@@ -30,5 +32,6 @@ export async function deleteAccount(context: CommandContext, item: AccountItem):
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Deleted account "{0}"', nonNullValueAndProp(wizardContext.account, 'name')));
+    ext.resourceCache.delete(AccountsItem.generatePiExtAccountsId(wizardContext.email));
     ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

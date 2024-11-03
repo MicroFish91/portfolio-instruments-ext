@@ -15,6 +15,7 @@ import { SnapshotValueSkipRebalanceStep } from "../../../snapshotValues/createSn
 export async function updateSnapshotValueDraft(context: CommandContext, item: SnapshotValueDraftItem): Promise<void> {
     const wizardContext: SnapshotValueDraftUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         svIdx: item.svIdx,
         snapshotValueDraft: item.snapshotValue,

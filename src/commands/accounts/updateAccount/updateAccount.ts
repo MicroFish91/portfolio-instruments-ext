@@ -11,10 +11,12 @@ import { AccountDescriptionStep } from "../createAccount/AccountDescriptionStep"
 import { AccountInstitutionStep } from "../createAccount/AccountInstitutionStep";
 import { AccountTaxShelterStep } from "../createAccount/AccountTaxShelterStep";
 import { AccountUpdateStep } from "./AccountUpdateStep";
+import { AccountsItem } from "../../../tree/accounts/AccountsItem";
 
 export async function updateAccount(context: CommandContext, item: AccountItem): Promise<void> {
     const wizardContext: AccountUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         account: item.account,
     };
@@ -36,5 +38,6 @@ export async function updateAccount(context: CommandContext, item: AccountItem):
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Updated account "{0}"', nonNullValueAndProp(wizardContext.updatedAccount, 'name')));
+    ext.resourceCache.delete(AccountsItem.generatePiExtAccountsId(wizardContext.email));
     ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

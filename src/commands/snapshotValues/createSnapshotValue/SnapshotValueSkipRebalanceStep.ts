@@ -9,7 +9,7 @@ export class SnapshotValueSkipRebalanceStep<T extends CommandContext & { snapsho
         const items: PiQuickPickItem<boolean>[] = [
             {
                 label: l10n.t('Yes'),
-                description: context.snapshotValue?.skip_rebalance === false ? l10n.t('(current)') : undefined,
+                description: context.snapshotValue?.skip_rebalance === false ? l10n.t('(current)') : l10n.t('(recommended)'),
                 data: false,
             },
             {

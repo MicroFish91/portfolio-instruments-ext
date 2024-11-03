@@ -12,6 +12,7 @@ import { ext } from "../../../../extensionVariables";
 export async function deleteSnapshotValueDraft(context: CommandContext, item: SnapshotValueDraftItem): Promise<void> {
     const wizardContext: SnapshotValueDraftDeleteContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         svIdx: item.svIdx,
         snapshotValueDraft: item.snapshotValue,

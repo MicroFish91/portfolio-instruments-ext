@@ -34,8 +34,7 @@ export class SnapshotDataItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
-
+        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
         return [
             new SnapshotDataKeyItem(this.parent, this.email, 'snap_date', this.snapshotData.snap_date),
             new SnapshotDataKeyItem(this.parent, this.email, 'description', this.snapshotData.description ?? ''),

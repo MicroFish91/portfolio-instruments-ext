@@ -1,12 +1,11 @@
 import { l10n } from "vscode";
-import { getBenchmarks, GetBenchmarksApiResponse } from "../../sdk/benchmarks/getBenchmarks";
 import { Settings } from "../../sdk/types/settings";
 import { PromptStep } from "../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../wizard/UserInterface";
 import { AuthContext } from "../AuthContext";
 import { Benchmark } from "../../sdk/types/benchmarks";
-import { nonNullValueAndProp } from "../../utils/nonNull";
 import { capitalize } from "../../utils/textUtils";
+import { BenchmarksItem } from "../../tree/benchmarks/BenchmarksItem";
 
 export type BenchmarkTargetStepOptions = {
     currentId?: number;
@@ -30,12 +29,11 @@ export class BenchmarkListStep<T extends AuthContext & { settings?: Settings; be
     }
 
     private async getPicks(context: T): Promise<PiQuickPickItem<number | undefined>[]> {
-        const response: GetBenchmarksApiResponse = await getBenchmarks(context.token);
-        if (response.error) {
-            throw new Error(l10n.t('No target benchmarks available - please create a benchmark first.'));
+        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(context.email);
+        if (!benchmarks.length) {
+            throw new Error(l10n.t('No benchmarks found, create a benchmark first to proceed'));
         }
 
-        const benchmarks: Benchmark[] = nonNullValueAndProp(response.data, 'benchmarks');
         const picks: PiQuickPickItem<number | undefined>[] = benchmarks.map(benchmark => {
             const isDefault: boolean = this.options?.currentId === benchmark.benchmark_id;
             return {

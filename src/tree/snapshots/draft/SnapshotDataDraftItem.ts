@@ -17,7 +17,6 @@ export class SnapshotDataDraftItem extends TreeItem implements PiExtTreeItem {
     constructor(
         readonly parent: SnapshotDraftItem,
         readonly email: string,
-
         readonly snapshotData: Omit<CreateSnapshotPayload, 'snapshot_values'>,
     ) {
         super('Data');
@@ -35,8 +34,7 @@ export class SnapshotDataDraftItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
-
+        const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
         return [
             new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'snap_date', this.snapshotData.snap_date),
             new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'description', this.snapshotData.description ?? ''),

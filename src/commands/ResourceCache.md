@@ -1,0 +1,5 @@
+## Resource Cache
+
+In an effort to lighten the number of requests made to the server, I have decided to implement a lightweight client resource cache (basically just a map).  We will keep it fairly simple so as to not run into issues with stale data.
+
+Primary resources tied to the view such as the `User`, `Settings`, `Benchmarks`, `Accounts`, and `Holdings` will often have two command implementations - `get<Resource>` and `get<Resource>WithCache`.  Generally, you should use `getResourceWithCache` in the vast majority of cases which handles the cache gets and sets automatically.  The only common place to not use it would be in the primary tree item resource's `getChildren` method as this is what typically would force a cache sync with the view.  Also, whenever there is a known change to resources due to command execution, it is recommended to delete the affected resources in the cache to force a refresh.

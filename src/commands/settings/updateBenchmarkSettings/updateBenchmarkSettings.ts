@@ -7,10 +7,12 @@ import { Wizard } from "../../../wizard/Wizard";
 import { BenchmarkSettingsUpdateStep } from "./BenchmarkSettingsUpdateStep";
 import { ext } from "../../../extensionVariables";
 import { BenchmarkListStep } from "../../benchmarks/BenchmarkListStep";
+import { SettingsItem } from "../../../tree/settings/SettingsItem";
 
 export async function updateBenchmarkSettings(context: BenchmarkSettingsUpdateContext, item: BenchmarkSettingsItem): Promise<void> {
     const wizardContext: BenchmarkSettingsUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         settings: item.settings,
     };
@@ -29,5 +31,6 @@ export async function updateBenchmarkSettings(context: BenchmarkSettingsUpdateCo
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Update benchmark target.'));
+    ext.resourceCache.delete(SettingsItem.generatePiExtSettingsId(wizardContext.email));
     ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

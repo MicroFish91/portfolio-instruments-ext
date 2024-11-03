@@ -18,6 +18,7 @@ import { BenchmarkCreateStep } from "./BenchmarkCreateStep";
 export async function createBenchmark(context: CommandContext, item: BenchmarksItem): Promise<void> {
     const wizardContext: BenchmarkCreateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
     };
 
@@ -41,5 +42,6 @@ export async function createBenchmark(context: CommandContext, item: BenchmarksI
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Created benchmark "{0}"', nonNullValueAndProp(wizardContext.benchmark, 'name')));
+    ext.resourceCache.delete(BenchmarksItem.generatePiExtBenchmarksId(wizardContext.email));
     ext.portfolioInstrumentsTdp.refresh(item);
 }

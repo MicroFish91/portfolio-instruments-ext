@@ -7,6 +7,7 @@ import { getHoldings } from "../../sdk/holdings/getHoldings";
 import { HoldingItem } from "./HoldingItem";
 import { viewPropertiesContext } from "../../constants";
 import { createContextValue } from "../../utils/contextUtils";
+import { ext } from "../../extensionVariables";
 
 export class HoldingsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'holdingsItem';
@@ -35,7 +36,13 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
 
     async getChildren(): Promise<PiExtTreeItem[]> {
         const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
+        ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), holdings);
         return holdings.map(h => new HoldingItem(this, this.email, h));
+    }
+
+    async viewProperties(): Promise<string> {
+        const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
+        return JSON.stringify(holdings, undefined, 4);
     }
 
     static async getHoldings(email: string): Promise<Holding[]> {
@@ -43,8 +50,18 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
         return response.data?.holdings ?? [];
     }
 
-    async viewProperties(): Promise<string> {
-        const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
-        return JSON.stringify(holdings, undefined, 4);
+    static async getHoldingsWithCache(email: string): Promise<Holding[]> {
+        const cachedHoldings: Holding[] | undefined = ext.resourceCache.get(HoldingsItem.generatePiExtHoldingsId(email));
+        const holdings: Holding[] = cachedHoldings ?? await HoldingsItem.getHoldings(email);
+
+        if (!cachedHoldings) {
+            ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(email), holdings);
+        }
+
+        return holdings;
+    }
+
+    static generatePiExtHoldingsId(email: string): string {
+        return `/users/${email}/holdings`;
     }
 }

@@ -15,6 +15,7 @@ import { SnapshotValueDraftCreateStep } from "./SnapshotValueDraftCreateStep";
 export async function createSnapshotValueDraft(context: CommandContext, item: SnapshotValuesDraftItem) {
     const wizardContext: SnapshotValueDraftCreateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
     };
 

@@ -14,6 +14,7 @@ import { ext } from "../../../extensionVariables";
 export async function createHolding(context: CommandContext, item: HoldingsItem): Promise<void> {
     const wizardContext: HoldingCreateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
     };
 
@@ -33,5 +34,6 @@ export async function createHolding(context: CommandContext, item: HoldingsItem)
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Created holding "{0}"', nonNullValueAndProp(wizardContext.holding, 'name')));
+    ext.resourceCache.delete(HoldingsItem.generatePiExtHoldingsId(item.email));
     ext.portfolioInstrumentsTdp.refresh(item);
 }

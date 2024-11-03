@@ -8,4 +8,5 @@ export namespace ext {
     export let portfolioInstrumentsTdp: PiExtTreeDataProvider;
     export let readOnlyProvider: ReadOnlyContentProvider;
     export let snapshotDraftFileSystem: SnapshotDraftFileSystem;
+    export let resourceCache: Map<string, any>;
 }

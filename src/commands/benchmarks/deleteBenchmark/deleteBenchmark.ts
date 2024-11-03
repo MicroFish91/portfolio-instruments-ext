@@ -8,10 +8,12 @@ import { BenchmarkDeleteContext } from "./BenchmarkDeleteContext";
 import { BenchmarkItem } from "../../../tree/benchmarks/BenchmarkItem";
 import { BenchmarkDeleteConfirmStep } from "./BenchmarkDeleteConfirmStep";
 import { BenchmarkDeleteStep } from "./BenchmarkDeleteStep";
+import { BenchmarksItem } from "../../../tree/benchmarks/BenchmarksItem";
 
 export async function deleteBenchmark(context: CommandContext, item: BenchmarkItem): Promise<void> {
     const wizardContext: BenchmarkDeleteContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         benchmark: item.benchmark,
     };
@@ -30,5 +32,6 @@ export async function deleteBenchmark(context: CommandContext, item: BenchmarkIt
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Deleted benchmark "{0}"', nonNullValueAndProp(wizardContext.benchmark, 'name')));
+    ext.resourceCache.delete(BenchmarksItem.generatePiExtBenchmarksId(wizardContext.email));
     ext.portfolioInstrumentsTdp.refresh(item.parent);
 }

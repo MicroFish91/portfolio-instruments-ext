@@ -38,14 +38,14 @@ export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const accounts: Account[] = await AccountsItem.getAccounts(this.email);
+        const accounts: Account[] = await AccountsItem.getAccountsWithCache(this.email);
         const accountsMap = new Map<number, Account>();
 
         for (const account of accounts) {
             accountsMap.set(account.account_id, account);
         }
 
-        const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
+        const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
         const holdingsMap = new Map<number, Holding>();
 
         for (const holding of holdings) {

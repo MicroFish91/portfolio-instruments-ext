@@ -15,6 +15,7 @@ import { ext } from "../../../extensionVariables";
 export async function updateSnapshotValue(context: CommandContext, item: SnapshotValueItem) {
     const wizardContext: SnapshotValueUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         snapshotId: item.snapshotValue.snap_id,
         snapshotValue: item.snapshotValue,

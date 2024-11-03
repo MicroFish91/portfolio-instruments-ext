@@ -7,6 +7,7 @@ import { SnapshotDraftFileSystem } from './commands/draft/SnapshotDraftFileSyste
 
 export function activate(context: ExtensionContext) {
 	ext.context = context;
+	ext.resourceCache = new Map<string, any>();
 
 	ext.portfolioInstrumentsTdp = new PiExtTreeDataProvider();
 	context.subscriptions.push(window.createTreeView('portfolioInstruments.main', { treeDataProvider: ext.portfolioInstrumentsTdp }));

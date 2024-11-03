@@ -15,6 +15,7 @@ import { SnapshotDescriptionStep } from "../../draft/snapshot/createSnapshotDraf
 export async function updateSnapshot(context: CommandContext, item: SnapshotDataKeyItem) {
     const wizardContext: SnapshotUpdateContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         snapDate: item.key === 'snap_date' ? undefined : item.parent.snapshot.snap_date,
         snapDescription: item.key === 'description' ? undefined : item.parent.snapshot.description,

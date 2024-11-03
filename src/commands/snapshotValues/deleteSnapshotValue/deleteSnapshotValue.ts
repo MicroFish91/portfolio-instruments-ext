@@ -12,6 +12,7 @@ import { SnapshotValueDeleteStep } from "./SnapshotValueDeleteStep";
 export async function deleteSnapshotValue(context: CommandContext, item: SnapshotValueItem): Promise<void> {
     const wizardContext: SnapshotValueDeleteContext = {
         ...context,
+        email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         snapshotId: item.parent.snapshot.snap_id,
         snapshotValue: item.snapshotValue,
