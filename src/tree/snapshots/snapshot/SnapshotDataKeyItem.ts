@@ -21,8 +21,9 @@ export class SnapshotDataKeyItem extends TreeItem implements PiExtTreeItem {
         readonly value: string,
         readonly updateable: boolean = true,
     ) {
-        super(`${key}=${value}`);
+        super(value);
         this.id = `/snapshots/${parent.snapshot.snap_id}/snapshotData/${key}`;
+        this.description = key;
 
         this.contextValuesToAdd = [
             SnapshotDataKeyItem.contextValue,
@@ -34,6 +35,7 @@ export class SnapshotDataKeyItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.label,
+            description: this.description,
             contextValue: this.getContextValues(),
             collapsibleState: TreeItemCollapsibleState.None,
             iconPath: new ThemeIcon("dash", "white"),

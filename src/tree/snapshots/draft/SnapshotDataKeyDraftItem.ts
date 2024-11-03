@@ -17,14 +17,16 @@ export class SnapshotDataKeyDraftItem extends TreeItem implements PiExtTreeItem 
         readonly key: string,
         readonly value: string,
     ) {
-        super(`${key}=${value}`);
+        super(value);
         this.id = `/emails/${email}/snapshots/draft/snapshotData/${key}`;
+        this.description = key;
     }
 
     getTreeItem(): TreeItem {
         return {
             id: this.id,
             label: this.label,
+            description: this.description,
             contextValue: SnapshotDataKeyDraftItem.contextValue,
             collapsibleState: TreeItemCollapsibleState.None,
             iconPath: new ThemeIcon("dash", "white"),

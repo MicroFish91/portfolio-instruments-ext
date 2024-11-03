@@ -37,8 +37,8 @@ export class SnapshotDataDraftItem extends TreeItem implements PiExtTreeItem {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
         return [
             new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'snap_date', this.snapshotData.snap_date),
-            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'description', this.snapshotData.description ?? ''),
-            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'benchmark', benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? ''),
+            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'description', this.snapshotData.description || '""'),
+            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'benchmark', benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? '""'),
         ];
     }
 

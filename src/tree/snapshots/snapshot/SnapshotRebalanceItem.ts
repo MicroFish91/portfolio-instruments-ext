@@ -51,7 +51,7 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
         }
 
         const rebalanceItems: GenericItem[] = response.data?.change_required.map(alloc => {
-            const changeRequired: string = alloc.value > 0 ? `+${alloc.value}` : `${alloc.value}`;
+            const changeRequired: string = alloc.value > 0 ? `+${alloc.value.toFixed(2)}` : `${alloc.value.toFixed(2)}`;
             return new GenericItem({
                 id: `${this.id}/${alloc.category}`,
                 label: alloc.category,
@@ -66,7 +66,7 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
             ...rebalanceItems,
             new GenericItem({
                 id: `${this.id}/total`,
-                label: `$${String(response.data?.snapshot_total_omit_skips)}`,
+                label: `$${String(response.data?.snapshot_total_omit_skips.toFixed(2))}`,
                 description: l10n.t('Total'),
                 contextValue: 'rebalanceTotalItem',
                 collapsibleState: TreeItemCollapsibleState.None,

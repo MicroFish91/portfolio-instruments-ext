@@ -34,7 +34,7 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: l10n.t('Draft'),
-            description: `$${total}`,
+            description: `$${total.toFixed(2)}`,
             contextValue: this.getContextValues(),
             collapsibleState: TreeItemCollapsibleState.Expanded,
             iconPath: new ThemeIcon("device-camera", "white"),

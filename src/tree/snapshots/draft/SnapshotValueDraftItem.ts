@@ -30,8 +30,8 @@ export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem {
     getTreeItem(): TreeItem {
         return {
             id: this.id,
-            label: `${capitalize(this.holding.name)} ($${this.snapshotValue.total})`,
-            description: `${capitalize(this.account.institution)}-${capitalize(this.account.tax_shelter)}`,
+            label: this.holding.name,
+            description: `${capitalize(this.account.institution)}:${capitalize(this.account.tax_shelter)} (${this.holding.asset_category}) $${this.snapshotValue.total.toFixed(2)}`,
             contextValue: this.getContextValues(),
             collapsibleState: TreeItemCollapsibleState.None,
             iconPath: new ThemeIcon("variable", "white"),

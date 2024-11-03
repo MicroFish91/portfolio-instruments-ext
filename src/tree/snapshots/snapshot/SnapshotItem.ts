@@ -38,7 +38,7 @@ export class SnapshotItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.snapshot.snap_date,
-            description: `$${this.snapshot.total}`,
+            description: `$${this.snapshot.total.toFixed(2)}`,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.Collapsed,
             iconPath: new ThemeIcon("device-camera", "white"),
