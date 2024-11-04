@@ -9,7 +9,7 @@ import { nonNullValue } from "../../../utils/nonNull";
 import { getAuthToken } from "../../../utils/tokenUtils";
 import { getSnapshot } from "../../../sdk/snapshots/getSnapshot";
 import { SnapshotValuesItem } from "./SnapshotValuesItem";
-import { SnapshotDashboardItem } from "./SnapshotDashboardItem";
+import { SnapshotDashboardItem } from "./dashboard/SnapshotDashboardItem";
 
 export class SnapshotItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotItem';
@@ -47,7 +47,7 @@ export class SnapshotItem extends TreeItem implements PiExtTreeItem {
 
     getChildren(): PiExtTreeItem[] {
         return [
-            new SnapshotDashboardItem(this, this.email, this.snapshot),
+            new SnapshotDashboardItem(this, this.email, this.snapshot, this.snapshotValues),
             new SnapshotDataItem(this, this.email, this.snapshot),
             new SnapshotValuesItem(this, this.email, this.snapshot, this.snapshotValues),
         ];

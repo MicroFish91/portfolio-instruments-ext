@@ -26,3 +26,8 @@ export type AssetAllocation = {
     category: string;
     value: number;
 };
+
+export type ResourcesGrouped = {
+    fields: string[];
+    total: number[];
+};
