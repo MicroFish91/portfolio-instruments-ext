@@ -29,7 +29,7 @@ export class SnapshotDashboardItem extends TreeItem implements PiExtTreeItem {
             label: this.label,
             contextValue: SnapshotDashboardItem.contextValue,
             collapsibleState: TreeItemCollapsibleState.Collapsed,
-            iconPath: new ThemeIcon("graph", "white"),
+            iconPath: new ThemeIcon("dashboard", "white"),
         };
     }
 
