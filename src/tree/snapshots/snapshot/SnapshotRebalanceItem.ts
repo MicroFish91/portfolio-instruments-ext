@@ -9,6 +9,7 @@ import { createContextValue } from "../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../constants";
 import { GenericItem } from "../../GenericItem";
 import { EmailItem } from "../../auth/EmailItem";
+import * as crypto from "crypto";
 
 export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotRebalanceItem';
@@ -47,6 +48,16 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
             this.snapshotData.snap_id,
         );
         if (response.error) {
+            if (/must include a target benchmark/i.test(response.error)) {
+                return [
+                    new GenericItem({
+                        id: crypto.randomUUID(),
+                        label: l10n.t('Add a snapshot benchmark to get rebalance suggestions.'),
+                        contextValue: 'addSnapshotBenchmarkItem',
+                        iconPath: new ThemeIcon('info', 'white'),
+                    }),
+                ];
+            }
             return [];
         }
 
