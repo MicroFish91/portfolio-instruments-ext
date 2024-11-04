@@ -35,7 +35,7 @@ export class SnapshotByTaxShelterItem extends TreeItem implements PiExtTreeItem 
             label: this.label,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.Collapsed,
-            iconPath: new ThemeIcon("graph-line", "white"),
+            iconPath: new ThemeIcon("graph", "white"),
         };
     }
 
