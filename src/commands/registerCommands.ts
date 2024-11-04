@@ -68,8 +68,6 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.deleteSnapshotValueDraft', deleteSnapshotValueDraft);
 
     // Snapshots
-    // Todo: View Rebalance
-    // Todo: View Breakdowns by ___....
     registerCommand('portfolioInstruments.updateSnapshot', updateSnapshot);
     registerCommand('portfolioInstruments.deleteSnapshot', deleteSnapshot);
 
@@ -80,5 +78,4 @@ export function registerCommands() {
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
-    // Todo: Add ability to quickly scaffold snapshot value while in edit mode...
 }
