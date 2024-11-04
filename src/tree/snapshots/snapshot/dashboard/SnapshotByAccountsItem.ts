@@ -9,9 +9,9 @@ import { viewPropertiesContext } from "../../../../constants";
 import { getSnapshotByAccount, GetSnapshotByAccountApiResponse } from "../../../../sdk/snapshots/getSnapshotByAccount";
 import { GenericItem } from "../../../GenericItem";
 
-export class SnapshotAccountsItem extends TreeItem implements PiExtTreeItem {
+export class SnapshotByAccountsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotAccountsItem';
-    static readonly regExp: RegExp = new RegExp(SnapshotAccountsItem.contextValue);
+    static readonly regExp: RegExp = new RegExp(SnapshotByAccountsItem.contextValue);
 
     id: string;
 
@@ -26,7 +26,7 @@ export class SnapshotAccountsItem extends TreeItem implements PiExtTreeItem {
     }
 
     private getContextValue(): string {
-        return createContextValue([SnapshotAccountsItem.contextValue, viewPropertiesContext]);
+        return createContextValue([SnapshotByAccountsItem.contextValue, viewPropertiesContext]);
     }
 
     getTreeItem(): TreeItem {
@@ -40,7 +40,7 @@ export class SnapshotAccountsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const { fields: accountInstitutions, total: totals } = nonNullValue(await SnapshotAccountsItem.getSnapshotByAccount(this.email, this.snapshotData.snap_id));
+        const { fields: accountInstitutions, total: totals } = nonNullValue(await SnapshotByAccountsItem.getSnapshotByAccount(this.email, this.snapshotData.snap_id));
         return accountInstitutions.map((acc, i) => {
             const percent: number = Math.round(totals[i] / this.snapshotData.total * 100);
             return new GenericItem({
@@ -59,7 +59,7 @@ export class SnapshotAccountsItem extends TreeItem implements PiExtTreeItem {
     }
 
     async viewProperties(): Promise<string> {
-        const response = await SnapshotAccountsItem.getSnapshotByAccount(this.email, this.snapshotData.snap_id);
+        const response = await SnapshotByAccountsItem.getSnapshotByAccount(this.email, this.snapshotData.snap_id);
         return JSON.stringify(response ?? {}, undefined, 4);
     }
 }

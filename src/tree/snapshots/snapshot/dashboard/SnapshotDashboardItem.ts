@@ -3,7 +3,8 @@ import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../SnapshotItem";
 import { Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
 import { SnapshotRebalanceItem } from "./SnapshotRebalanceItem";
-import { SnapshotAccountsItem } from "./SnapshotAccountsItem";
+import { SnapshotByAccountsItem } from "./SnapshotByAccountsItem";
+import { SnapshotByTaxShelterItem } from "./SnapshotByTaxShelterItem";
 
 export class SnapshotDashboardItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDashboardItem';
@@ -32,10 +33,10 @@ export class SnapshotDashboardItem extends TreeItem implements PiExtTreeItem {
     }
 
     getChildren(): PiExtTreeItem[] {
-        // Get by Tax Shelter
         // Get by Asset Category
         return [
-            new SnapshotAccountsItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
+            new SnapshotByAccountsItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
+            new SnapshotByTaxShelterItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
             new SnapshotRebalanceItem(this.parent, this.email, this.snapshotData),
         ];
     }
