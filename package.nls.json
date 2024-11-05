@@ -23,6 +23,7 @@
     "portfolioInstruments.deleteSnapshotValueDraft": "Delete Snapshot Value (Draft)...",
     "portfolioInstruments.updateSnapshot": "Update Field...",
     "portfolioInstruments.deleteSnapshot": "Delete Snapshot...",
+    "portfolioInstruments.updateMaturationStart": "Update start date...",
     "portfolioInstruments.createSnapshotValue": "Create Snapshot Value...",
     "portfolioInstruments.updateSnapshotValue": "Update Snapshot Value...",
     "portfolioInstruments.deleteSnapshotValue": "Delete Snapshot Value...",

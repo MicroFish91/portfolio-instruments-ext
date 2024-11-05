@@ -22,6 +22,7 @@ import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
 import { updateBenchmarkSettings } from "./settings/updateBenchmarkSettings/updateBenchmarkSettings";
 import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
+import { updateMaturationStart } from "./snapshots/maturationDate/updateMaturationStart/updateMaturationStart";
 import { updateSnapshot } from "./snapshots/updateSnapshot/updateSnapshot";
 import { createSnapshotValue } from "./snapshotValues/createSnapshotValue/createSnapshotValue";
 import { deleteSnapshotValue } from "./snapshotValues/deleteSnapshotValue/deleteSnapshotValue";
@@ -70,6 +71,7 @@ export function registerCommands() {
     // Snapshots
     registerCommand('portfolioInstruments.updateSnapshot', updateSnapshot);
     registerCommand('portfolioInstruments.deleteSnapshot', deleteSnapshot);
+    registerCommand('portfolioInstruments.updateMaturationStart', updateMaturationStart);
 
     // Snapshot values
     registerCommand('portfolioInstruments.createSnapshotValue', createSnapshotValue);

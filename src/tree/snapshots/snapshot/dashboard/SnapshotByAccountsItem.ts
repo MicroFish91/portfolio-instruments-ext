@@ -10,7 +10,7 @@ import { getSnapshotByAccount, GetSnapshotByAccountApiResponse } from "../../../
 import { GenericItem } from "../../../GenericItem";
 
 export class SnapshotByAccountsItem extends TreeItem implements PiExtTreeItem {
-    static readonly contextValue: string = 'snapshotAccountsItem';
+    static readonly contextValue: string = 'snapshotByAccountInstitutionsItem';
     static readonly regExp: RegExp = new RegExp(SnapshotByAccountsItem.contextValue);
 
     id: string;

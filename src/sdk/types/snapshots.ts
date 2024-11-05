@@ -31,3 +31,13 @@ export type ResourcesGrouped = {
     fields: string[];
     total: number[];
 };
+
+export type MaturationDateResource = {
+    account_name: string;
+    holding_name: string;
+    asset_category: string;
+    interest_rate_pct: number;
+    maturation_date: string;
+    total: number;
+    skip_rebalance: boolean;
+}

@@ -133,6 +133,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.updateMaturationStart",
+        "title": "%portfolioInstruments.updateMaturationStart%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.createSnapshotValue",
         "title": "%portfolioInstruments.createSnapshotValue%",
         "category": "Portfolio Instruments"
@@ -259,6 +264,10 @@
           "when": "never"
         },
         {
+          "command": "portfolioInstruments.updateMaturationStart",
+          "when": "never"
+        },
+        {
           "command": "portfolioInstruments.createSnapshotValue",
           "when": "never"
         },
@@ -371,6 +380,11 @@
           "group": "1@1"
         },
         {
+          "command": "portfolioInstruments.updateMaturationStart",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotMaturationStartItem/i",
+          "group": "1@1"
+        },
+        {
           "command": "portfolioInstruments.discardSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "2@1"
@@ -430,6 +444,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "isomorphic-fetch": "^3.0.0"
   }
 }
