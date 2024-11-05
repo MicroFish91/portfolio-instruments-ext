@@ -1,8 +1,3 @@
-/*---------------------------------------------------------------------------------------------
-*  Copyright (c) Microsoft Corporation. All rights reserved.
-*  Licensed under the MIT License. See License.txt in the project root for license information.
-*--------------------------------------------------------------------------------------------*/
-
 import { Disposable, EventEmitter, FileChangeType, FileType, l10n, window, workspace, type Event, type FileChangeEvent, type FileStat, type FileSystemProvider, type TextDocument, Uri } from "vscode";
 import { ext } from "../../extensionVariables";
 import { SnapshotsItem } from "../../tree/snapshots/SnapshotsItem";
