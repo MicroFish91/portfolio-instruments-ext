@@ -1,14 +1,14 @@
 import { l10n } from "vscode";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { validationUtils } from "../../../utils/validationUtils";
-import { CommandContext } from "../../registerCommand";
+import { MaturationUpdateContext } from "./MaturationUpdateContext";
 
 export type MaturationDatePromptStepOptions = {
     prompt: string;
     default?: string;
 };
 
-export class MaturationDatePromptStep<T extends CommandContext & { maturationDate?: string }> extends PromptStep<T> {
+export class MaturationDatePromptStep<T extends MaturationUpdateContext> extends PromptStep<T> {
     constructor(readonly options: MaturationDatePromptStepOptions) {
         super();
     }

@@ -4,20 +4,20 @@ import { getAuthToken } from "../../../../utils/tokenUtils";
 import { Wizard } from "../../../../wizard/Wizard";
 import { CommandContext } from "../../../registerCommand";
 import { ext } from "../../../../extensionVariables";
-import { MaturationStartUpdateContext } from "./MaturationStartUpdateContext";
 import { SnapshotMaturationStartItem } from "../../../../tree/snapshots/snapshot/dashboard/maturationDate/SnapshotMaturationStartItem";
 import { MaturationDatePromptStep } from "../MaturationDatePromptStep";
 import { MaturationStartUpdateStep } from "./MaturationStartUpdateStep";
+import { MaturationUpdateContext } from "../MaturationUpdateContext";
 
 export async function updateMaturationStart(context: CommandContext, item: SnapshotMaturationStartItem) {
-    const wizardContext: MaturationStartUpdateContext = {
+    const wizardContext: MaturationUpdateContext = {
         ...context,
         email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
         snapshotId: item.snapshotData.snap_id,
     };
 
-    const wizard: Wizard<MaturationStartUpdateContext> = new Wizard(wizardContext, {
+    const wizard: Wizard<MaturationUpdateContext> = new Wizard(wizardContext, {
         title: l10n.t('Update maturation start date'),
         promptSteps: [
             new MaturationDatePromptStep({

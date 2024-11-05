@@ -39,7 +39,7 @@ export class SnapshotMaturationEndItem extends TreeItem implements PiExtTreeItem
         return ext.context.globalState.get(SnapshotMaturationEndItem.generatePiExtMaturationEndId(email, snapId));
     }
 
-    static setMaturationEnd(email: string, snapId: number, maturationEnd: string): void {
+    static setMaturationEnd(email: string, snapId: number, maturationEnd: string | undefined): void {
         ext.context.globalState.update(SnapshotMaturationEndItem.generatePiExtMaturationEndId(email, snapId), maturationEnd);
     }
 }

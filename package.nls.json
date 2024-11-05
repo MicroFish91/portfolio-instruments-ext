@@ -24,6 +24,7 @@
     "portfolioInstruments.updateSnapshot": "Update Field...",
     "portfolioInstruments.deleteSnapshot": "Delete Snapshot...",
     "portfolioInstruments.updateMaturationStart": "Update start date...",
+    "portfolioInstruments.updateMaturationEnd": "Update end date...",
     "portfolioInstruments.createSnapshotValue": "Create Snapshot Value...",
     "portfolioInstruments.updateSnapshotValue": "Update Snapshot Value...",
     "portfolioInstruments.deleteSnapshotValue": "Delete Snapshot Value...",
