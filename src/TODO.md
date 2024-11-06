@@ -1,6 +1,7 @@
 1. Better maturation date validation (API)
 2. Make holding names unique? (API)
 
+4. update benchmark
 5. Make sure errors thrown cause command cancellations to be handled correctly / gracefully
 6. Add proper snapshot pagination + controls
 7. Show account totals summary in tree during draft editing
@@ -9,3 +10,4 @@
 10. If user not verified yet, check to see how view looks.
 11. README
 12. Changelog + first pass release
+13. Don't show resources that have is_deprecated = true

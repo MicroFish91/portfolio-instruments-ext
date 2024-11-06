@@ -24,6 +24,7 @@ export class BenchmarkItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.label,
+            description: this.benchmark.asset_allocation.map(a => a.percent).sort((a, b) => b - a).join('% / ') + '%',
             contextValue: this.getContextValue(),
             iconPath: new ThemeIcon('pie-chart', 'white'),
         };

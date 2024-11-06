@@ -16,6 +16,7 @@ export class BenchmarkAssetAmountsStep<T extends BenchmarkCreateContext> extends
         const assetAmounts: string | undefined = (await context.ui.showInputBox({
             title: this.title,
             prompt: l10n.t('Enter benchmark asset amounts as comma-separated integers (%)'),
+            value: context.benchmark?.asset_allocation.map(a => a.percent).join(','),
             placeHolder: l10n.t('e.g. 25,25,25,25'),
             validateInput: this.validateInput.bind(this),
         }))?.trim();

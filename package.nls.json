@@ -12,6 +12,7 @@
     "portfolioInstruments.updateHolding": "Update Holding...",
     "portfolioInstruments.deleteHolding": "Delete Holding...",
     "portfolioInstruments.createBenchmark": "Create Benchmark...",
+    "portfolioInstruments.updateBenchmark": "Update Benchmark...",
     "portfolioInstruments.deleteBenchmark": "Delete Benchmark...",
     "portfolioInstruments.createSnapshotDraft": "Create Snapshot (Draft)...",
     "portfolioInstruments.editSnapshotDraft": "Edit Draft...",

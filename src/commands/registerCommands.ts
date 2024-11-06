@@ -8,6 +8,7 @@ import { logoutAll } from "./auth/logout/logoutAll";
 import { register } from "./auth/register/register";
 import { createBenchmark } from "./benchmarks/createBenchmark/createBenchmark";
 import { deleteBenchmark } from "./benchmarks/deleteBenchmark/deleteBenchmark";
+import { updateBenchmark } from "./benchmarks/updateBenchmark/updateBenchmark";
 import { createSnapshotDraft } from "./draft/snapshot/createSnapshotDraft/createSnapshotDraft";
 import { deploySnapshotDraft } from "./draft/snapshot/deploySnapshotDraft/deploySnapshotDraft";
 import { discardSnapshotDraft } from "./draft/snapshot/discardSnapshotDraft";
@@ -55,7 +56,7 @@ export function registerCommands() {
 
     // Benchmarks 
     registerCommand('portfolioInstruments.createBenchmark', createBenchmark);
-    // Todo: Update benchmark
+    registerCommand('portfolioInstruments.updateBenchmark', updateBenchmark);
     registerCommand('portfolioInstruments.deleteBenchmark', deleteBenchmark);
 
     // Snapshot draft
