@@ -1,7 +1,6 @@
 1. Better maturation date validation (API)
 2. Make holding names unique? (API)
 
-4. update benchmark
 5. Make sure errors thrown cause command cancellations to be handled correctly / gracefully
 6. Add proper snapshot pagination + controls
 7. Show account totals summary in tree during draft editing
