@@ -163,6 +163,11 @@
         "category": "Portfolio Instruments"
       },
       {
+        "command": "portfolioInstruments.updateRebalanceSettings",
+        "title": "%portfolioInstruments.updateRebalanceSettings%",
+        "category": "Portfolio Instruments"
+      },
+      {
         "command": "portfolioInstruments.viewProperties",
         "title": "%portfolioInstruments.viewProperties%",
         "category": "Portfolio Instruments"
@@ -290,6 +295,10 @@
         },
         {
           "command": "portfolioInstruments.updateBenchmarkSettings",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.updateRebalanceSettings",
           "when": "never"
         },
         {
@@ -421,6 +430,11 @@
         {
           "command": "portfolioInstruments.updateBenchmarkSettings",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /benchmarkSettingsItem/i",
+          "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.updateRebalanceSettings",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /rebalanceSettingsItem/i",
           "group": "1@1"
         },
         {

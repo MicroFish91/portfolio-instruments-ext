@@ -21,6 +21,7 @@ import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
 import { updateBenchmarkSettings } from "./settings/updateBenchmarkSettings/updateBenchmarkSettings";
+import { updateRebalanceSettings } from "./settings/updateRebalanceSettings/updateRebalanceSettings";
 import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
 import { updateMaturationEnd } from "./snapshots/updateMaturationDate/updateMaturationEnd/updateMaturationEnd";
 import { updateMaturationStart } from "./snapshots/updateMaturationDate/updateMaturationStart/updateMaturationStart";
@@ -40,7 +41,7 @@ export function registerCommands() {
 
     // Settings
     registerCommand('portfolioInstruments.updateBenchmarkSettings', updateBenchmarkSettings);
-    // Todo: Update rebalance threshold
+    registerCommand('portfolioInstruments.updateRebalanceSettings', updateRebalanceSettings);
 
     // Accounts
     registerCommand('portfolioInstruments.createAccount', createAccount);

@@ -29,5 +29,6 @@
     "portfolioInstruments.updateSnapshotValue": "Update Snapshot Value...",
     "portfolioInstruments.deleteSnapshotValue": "Delete Snapshot Value...",
     "portfolioInstruments.updateBenchmarkSettings": "Update Benchmark Target...",
+    "portfolioInstruments.updateRebalanceSettings": "Update Rebalance Threshold...",
     "portfolioInstruments.viewProperties": "View Properties"
 }
