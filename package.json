@@ -85,17 +85,20 @@
       {
         "command": "portfolioInstruments.createSnapshotDraft",
         "title": "%portfolioInstruments.createSnapshotDraft%",
-        "category": "Portfolio Instruments"
+        "category": "Portfolio Instruments",
+        "icon": "$(add)"
       },
       {
         "command": "portfolioInstruments.editSnapshotDraft",
         "title": "%portfolioInstruments.editSnapshotDraft%",
-        "category": "Portfolio Instruments"
+        "category": "Portfolio Instruments",
+        "icon": "$(pencil)"
       },
       {
         "command": "portfolioInstruments.discardSnapshotDraft",
         "title": "%portfolioInstruments.discardSnapshotDraft%",
-        "category": "Portfolio Instruments"
+        "category": "Portfolio Instruments",
+        "icon": "$(discard)"
       },
       {
         "command": "portfolioInstruments.updateSnapshotDraft",
@@ -105,7 +108,8 @@
       {
         "command": "portfolioInstruments.deploySnapshotDraft",
         "title": "%portfolioInstruments.deploySnapshotDraft%",
-        "category": "Portfolio Instruments"
+        "category": "Portfolio Instruments",
+        "icon": "$(cloud-upload)"
       },
       {
         "command": "portfolioInstruments.createSnapshotValueDraft",
@@ -358,9 +362,19 @@
           "group": "1@1"
         },
         {
+          "command": "portfolioInstruments.createSnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
+          "group": "inline@1"
+        },
+        {
           "command": "portfolioInstruments.editSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.editSnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
+          "group": "inline@2"
         },
         {
           "command": "portfolioInstruments.updateSnapshotDraft",
@@ -371,6 +385,11 @@
           "command": "portfolioInstruments.deploySnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "1@2"
+        },
+        {
+          "command": "portfolioInstruments.deploySnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
+          "group": "inline@3"
         },
         {
           "command": "portfolioInstruments.createSnapshotValueDraft",
@@ -411,6 +430,11 @@
           "command": "portfolioInstruments.discardSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "2@1"
+        },
+        {
+          "command": "portfolioInstruments.discardSnapshotDraft",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
+          "group": "inline@1"
         },
         {
           "command": "portfolioInstruments.createSnapshotValue",

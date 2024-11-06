@@ -1,8 +1,6 @@
 1. Better maturation date validation (API)
 2. Make holding names unique? (API)
 
-3. Finish update rebalance threshold settings
-4. Add deploy and edit draft icons with command hookup
 5. Make sure errors thrown cause command cancellations to be handled correctly / gracefully
 6. Add proper snapshot pagination + controls
 7. Show account totals summary in tree during draft editing
