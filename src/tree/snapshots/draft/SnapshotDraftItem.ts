@@ -7,6 +7,7 @@ import { viewPropertiesContext } from "../../../constants";
 import { SnapshotDataDraftItem } from "./SnapshotDataDraftItem";
 import { SnapshotValuesDraftItem } from "./SnapshotValuesDraftItem";
 import { ext } from "../../../extensionVariables";
+import { SnapshotByAccountsDraftItem } from "./SnapshotByAccountsDraftItem";
 
 export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDraftItem';
@@ -43,6 +44,7 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
 
     getChildren(): PiExtTreeItem[] {
         return [
+            new SnapshotByAccountsDraftItem(this, this.email, this.snapshotData, this.snapshotValues),
             new SnapshotDataDraftItem(this, this.email, this.snapshotData),
             new SnapshotValuesDraftItem(this, this.email, this.snapshotValues),
         ];

@@ -3,7 +3,7 @@ import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../SnapshotItem";
 import { Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
 import { SnapshotRebalanceItem } from "./SnapshotRebalanceItem";
-import { SnapshotByAccountsItem } from "./SnapshotByAccountsItem";
+import { SnapshotByInstitutionsItem } from "./SnapshotByInstitutionsItem";
 import { SnapshotByTaxShelterItem } from "./SnapshotByTaxShelterItem";
 import { SnapshotByAssetCategoryItem } from "./SnapshotByAssetCategoryItem";
 import { SnapshotByMaturationDateItem } from "./maturationDate/SnapshotByMaturationDateItem";
@@ -36,7 +36,7 @@ export class SnapshotDashboardItem extends TreeItem implements PiExtTreeItem {
 
     getChildren(): PiExtTreeItem[] {
         return [
-            new SnapshotByAccountsItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
+            new SnapshotByInstitutionsItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
             new SnapshotByTaxShelterItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
             new SnapshotByMaturationDateItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
             new SnapshotByAssetCategoryItem(this.parent, this.email, this.snapshotData, this.snapshotValues),
