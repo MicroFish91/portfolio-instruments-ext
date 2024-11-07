@@ -17,7 +17,7 @@ export class HoldingItem extends TreeItem implements PiExtTreeItem {
         readonly holding: Holding,
     ) {
         super(holding.name);
-        this.id = `/emails/${email}/holdings/${holding.holding_id}`;
+        this.id = `/users/${email}/holdings/${holding.holding_id}`;
     }
 
     getTreeItem(): TreeItem {

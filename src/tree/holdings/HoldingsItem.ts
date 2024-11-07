@@ -17,7 +17,7 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
 
     constructor(readonly email: string) {
         super(l10n.t('Holdings'));
-        this.id = `/emails/${email}/holdings`;
+        this.id = `/users/${email}/holdings`;
     }
 
     getTreeItem(): TreeItem {

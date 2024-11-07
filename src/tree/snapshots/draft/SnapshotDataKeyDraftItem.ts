@@ -18,7 +18,7 @@ export class SnapshotDataKeyDraftItem extends TreeItem implements PiExtTreeItem 
         readonly value: string,
     ) {
         super(value);
-        this.id = `/emails/${email}/snapshots/draft/snapshotData/${key}`;
+        this.id = `/users/${email}/snapshots/draft/snapshotData/${key}`;
         this.description = key;
     }
 

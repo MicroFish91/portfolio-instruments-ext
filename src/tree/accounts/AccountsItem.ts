@@ -17,7 +17,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
 
     constructor(readonly email: string) {
         super(l10n.t('Accounts'));
-        this.id = `/emails/${email}/accounts`;
+        this.id = `/users/${email}/accounts`;
     }
 
     getTreeItem(): TreeItem {

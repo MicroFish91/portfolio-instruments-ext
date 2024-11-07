@@ -22,7 +22,7 @@ export class SnapshotDraftItem extends TreeItem implements PiExtTreeItem {
         public snapshotValues: CreateSnapshotValuePayload[],
     ) {
         super(snapshotData.snap_date);
-        this.id = `/emails/${email}/snapshots/draft`;
+        this.id = `/users/${email}/snapshots/draft`;
     }
 
     getTreeItem(): TreeItem {

@@ -17,7 +17,7 @@ export class SettingsItem extends TreeItem implements PiExtTreeItem {
         readonly email: string,
     ) {
         super(l10n.t('Settings'));
-        this.id = `/emails/${email}/settings`;
+        this.id = `/users/${email}/settings`;
     }
 
     getTreeItem(): TreeItem {

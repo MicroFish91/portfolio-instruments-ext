@@ -26,7 +26,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
 
     getTreeItem(): TreeItem {
         return {
-            id: `/emails/${this.label}`,
+            id: `/users/${this.label}`,
             label: this.label,
             description: l10n.t('Email'),
             contextValue: EmailItem.contextValue,
@@ -52,7 +52,7 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
         } else {
             return [
                 new GenericItem({
-                    id: `/emails/${this.email}/refreshLogin`,
+                    id: `/users/${this.email}/refreshLogin`,
                     label: l10n.t('Credentials are stale. Refresh login to proceed.'),
                     contextValue: 'refreshLoginItem',
                     command: {

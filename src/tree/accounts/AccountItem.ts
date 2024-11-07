@@ -18,7 +18,7 @@ export class AccountItem extends TreeItem implements PiExtTreeItem {
         readonly account: Account,
     ) {
         super(account.name);
-        this.id = `/emails/${email}/accounts/${account.account_id}`;
+        this.id = `/users/${email}/accounts/${account.account_id}`;
     }
 
     getTreeItem(): TreeItem {

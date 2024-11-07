@@ -13,7 +13,7 @@ export class RebalanceSettingsItem extends TreeItem implements PiExtTreeItem {
         readonly settings: Settings,
     ) {
         super(l10n.t(`Rebalance threshold=${settings.reb_thresh_pct}%`));
-        this.id = `/emails/${email}/settings/rebalanceThreshold`;
+        this.id = `/users/${email}/settings/rebalanceThreshold`;
     }
 
     getTreeItem(): TreeItem {

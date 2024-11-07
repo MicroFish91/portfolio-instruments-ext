@@ -14,7 +14,7 @@ export class BenchmarkSettingsItem extends TreeItem implements PiExtTreeItem {
         readonly benchmarkName: string,
     ) {
         super(`Benchmark target=${benchmarkName}`);
-        this.id = `/emails/${this.email}/settings/benchmark`;
+        this.id = `/users/${this.email}/settings/benchmark`;
     }
 
     getTreeItem(): TreeItem {

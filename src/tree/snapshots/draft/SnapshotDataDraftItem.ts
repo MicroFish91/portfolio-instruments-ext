@@ -20,7 +20,7 @@ export class SnapshotDataDraftItem extends TreeItem implements PiExtTreeItem {
         readonly snapshotData: Omit<CreateSnapshotPayload, 'snapshot_values'>,
     ) {
         super('Data');
-        this.id = `/emails/${email}/snapshots/draft/snapshotData`;
+        this.id = `/users/${email}/snapshots/draft/snapshotData`;
     }
 
     getTreeItem(): TreeItem {

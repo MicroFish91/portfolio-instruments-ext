@@ -17,7 +17,7 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
 
     constructor(readonly email: string) {
         super(l10n.t('Benchmarks'));
-        this.id = `/emails/${email}/benchmarks`;
+        this.id = `/users/${email}/benchmarks`;
     }
 
     getTreeItem(): TreeItem {

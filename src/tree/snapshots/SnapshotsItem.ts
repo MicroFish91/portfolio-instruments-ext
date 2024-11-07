@@ -21,7 +21,8 @@ export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
         readonly settings: Settings,
     ) {
         super(l10n.t('Snapshots'));
-        this.email = email; this.id = `/emails/${email}/snapshots`;
+        this.email = email;
+        this.id = `/users/${email}/snapshots`;
     }
 
     getTreeItem(): TreeItem {

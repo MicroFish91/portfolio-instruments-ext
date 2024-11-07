@@ -24,7 +24,7 @@ export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem {
         readonly holding: Holding,
     ) {
         super(holding.name);
-        this.id = `/emails/${email}/snapshots/draft/snapshotValues/${svIdx}`;
+        this.id = `/users/${email}/snapshots/draft/snapshotValues/${svIdx}`;
     }
 
     getTreeItem(): TreeItem {
