@@ -16,19 +16,26 @@ export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotsItem';
     static readonly regExp: RegExp = new RegExp(SnapshotsItem.contextValue);
 
+    private page: number;
+
     constructor(
         readonly email: string,
         readonly settings: Settings,
     ) {
         super(l10n.t('Snapshots'));
+
         this.email = email;
         this.id = `/users/${email}/snapshots`;
+        this.page = Number(ext.context.globalState.get(SnapshotsItem.generatePiExtSnapshotId(this.email)) ?? 1);
     }
 
     getTreeItem(): TreeItem {
+        this.page = Number(ext.context.globalState.get(SnapshotsItem.generatePiExtSnapshotId(this.email)) ?? 1);
+
         return {
             id: this.id,
             label: this.label,
+            description: `Page ${this.page}`,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.Collapsed,
             iconPath: new ThemeIcon("device-camera", "white"),
@@ -54,13 +61,36 @@ export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
         return createContextValue([SnapshotsItem.contextValue, viewPropertiesContext]);
     }
 
+    private async getSnapshots(): Promise<Snapshot[]> {
+        const response: GetSnapshotsApiResponse = await getSnapshots(nonNullValue(await getAuthToken(this.email)), this.page);
+        return response.data?.snapshots ?? [];
+    }
+
     async viewProperties(): Promise<string> {
         const snapshots: Snapshot[] = await this.getSnapshots();
         return JSON.stringify(snapshots, undefined, 4);
     }
 
-    private async getSnapshots(): Promise<Snapshot[]> {
-        const response: GetSnapshotsApiResponse = await getSnapshots(nonNullValue(await getAuthToken(this.email)));
-        return response.data?.snapshots ?? [];
+    incrementPage(): number {
+        const page: number = (Number(ext.context.globalState.get(SnapshotsItem.generatePiExtSnapshotId(this.email)) ?? 1)) + 1;
+        ext.context.globalState.update(SnapshotsItem.generatePiExtSnapshotId(this.email), page);
+        ext.portfolioInstrumentsTdp.refresh(this);
+        return page;
+    }
+
+    decrementPage(): number {
+        let page: number = Number(ext.context.globalState.get(SnapshotsItem.generatePiExtSnapshotId(this.email)) ?? 1);
+        if (page === 1) {
+            return page;
+        }
+
+        page -= 1;
+        ext.context.globalState.update(SnapshotsItem.generatePiExtSnapshotId(this.email), page);
+        ext.portfolioInstrumentsTdp.refresh(this);
+        return page;
+    }
+
+    static generatePiExtSnapshotId(email: string): string {
+        return `/users/${email}/snapshots`;
     }
 }

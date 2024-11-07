@@ -90,8 +90,7 @@
       {
         "command": "portfolioInstruments.createSnapshotDraft",
         "title": "%portfolioInstruments.createSnapshotDraft%",
-        "category": "Portfolio Instruments",
-        "icon": "$(add)"
+        "category": "Portfolio Instruments"
       },
       {
         "command": "portfolioInstruments.editSnapshotDraft",
@@ -150,6 +149,18 @@
         "command": "portfolioInstruments.updateMaturationEnd",
         "title": "%portfolioInstruments.updateMaturationEnd%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.incrementSnapshotPage",
+        "title": "%portfolioInstruments.incrementSnapshotPage%",
+        "category": "Portfolio Instruments",
+        "icon": "$(add)"
+      },
+      {
+        "command": "portfolioInstruments.decrementSnapshotPage",
+        "title": "%portfolioInstruments.decrementSnapshotPage%",
+        "category": "Portfolio Instruments",
+        "icon": "$(chrome-minimize)"
       },
       {
         "command": "portfolioInstruments.createSnapshotValue",
@@ -376,11 +387,6 @@
           "group": "1@1"
         },
         {
-          "command": "portfolioInstruments.createSnapshotDraft",
-          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
-          "group": "inline@1"
-        },
-        {
           "command": "portfolioInstruments.editSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotDraftItem/i",
           "group": "1@1"
@@ -439,6 +445,16 @@
           "command": "portfolioInstruments.updateMaturationEnd",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotMaturationEndItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.incrementSnapshotPage",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
+          "group": "inline@2"
+        },
+        {
+          "command": "portfolioInstruments.decrementSnapshotPage",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
+          "group": "inline@1"
         },
         {
           "command": "portfolioInstruments.discardSnapshotDraft",

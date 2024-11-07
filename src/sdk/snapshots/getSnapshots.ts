@@ -10,8 +10,8 @@ export type GetSnapshotsApiResponse = {
     error?: string;
 };
 
-export async function getSnapshots(token: string): Promise<GetSnapshotsApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/snapshots?order_date_by=DESC", {
+export async function getSnapshots(token: string, page: number): Promise<GetSnapshotsApiResponse> {
+    const response = await fetch(`http://localhost:3000/api/v1/snapshots?order_date_by=DESC&current_page=${page}&page_size=20`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

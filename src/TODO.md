@@ -2,7 +2,6 @@
 2. Make holding names unique? (API)
 
 5. Make sure errors thrown cause command cancellations to be handled correctly / gracefully
-6. Add proper snapshot pagination + controls
 7. Show account totals summary in tree during draft editing
 8. Investigate if it's possible to show in-line editor recommendations during draft mode
 9. Add intellisense for draft mode
