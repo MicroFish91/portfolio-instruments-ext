@@ -1,6 +1,7 @@
 1. Better maturation date validation (API)
 2. Make holding names unique? (API)
 
+4. Figure out if theres an easy way for us to display snapshots in given times periods through a graphical interface
 5. Make sure errors thrown cause command cancellations to be handled correctly / gracefully
 7. Show account totals summary in tree during draft editing
 8. Investigate if it's possible to show in-line editor recommendations during draft mode
