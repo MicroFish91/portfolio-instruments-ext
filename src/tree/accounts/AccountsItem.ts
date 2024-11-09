@@ -33,7 +33,9 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const accounts: Account[] = await AccountsItem.getAccounts(this.email);
         ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), accounts);
-        return accounts.map(a => new AccountItem(this, this.email, a));
+        return accounts
+            .filter(a => !a.is_deprecated)
+            .map(a => new AccountItem(this, this.email, a));
     }
 
     private getContextValue(): string {

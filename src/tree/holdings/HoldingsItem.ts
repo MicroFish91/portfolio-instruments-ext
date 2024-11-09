@@ -37,7 +37,9 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
         ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), holdings);
-        return holdings.map(h => new HoldingItem(this, this.email, h));
+        return holdings
+            .filter(h => !h.is_deprecated)
+            .map(h => new HoldingItem(this, this.email, h));
     }
 
     async viewProperties(): Promise<string> {

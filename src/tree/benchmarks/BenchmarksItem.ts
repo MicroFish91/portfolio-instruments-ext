@@ -33,7 +33,9 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
         ext.resourceCache.set(BenchmarksItem.generatePiExtBenchmarksId(this.email), benchmarks);
-        return benchmarks.map(b => new BenchmarkItem(this, this.email, b));
+        return benchmarks
+            .filter(b => !b.is_deprecated)
+            .map(b => new BenchmarkItem(this, this.email, b));
     }
 
     private getContextValue(): string {
