@@ -6,8 +6,18 @@ This is the Portfolio Instruments VS Code client extension. It was built to simp
 
 ## Key Features
 * 📷 <u>Snapshot Tracking</u>: Capture and monitor portfolio snapshots at different points in time.
+</br></br>
+<img src="resources/tree_view.png" width="200" />
+
 * 📁 <u>Benchmark Portfolios</u>: Provide portfolio benchmarks to monitor your portfolio snapshots against.
+</br></br>
+<img src="resources/benchmark.png" width="200" />
+
 * 📈 <u>Rebalance Calculations</u>: Automatically generate rebalancing recommendations based on your chosen benchmarks.
+</br></br>
+<img src="resources/snapshot_dashboard.png" width="200" />
+<img src="resources/rebalance.png" width="250" />
+
 
 ## 🔗 Useful Links
 
