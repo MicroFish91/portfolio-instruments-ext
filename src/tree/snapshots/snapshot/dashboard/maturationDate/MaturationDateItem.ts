@@ -32,7 +32,7 @@ export class MaturationDateItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.label,
-            description: `${this.resource.maturation_date} (${timeFrom})`,
+            description: `${this.resource.maturation_date} (expiration ${timeFrom})`,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.None,
             iconPath: new ThemeIcon("note", "white"),

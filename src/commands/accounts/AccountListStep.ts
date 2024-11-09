@@ -15,7 +15,7 @@ export class AccountListStep<T extends AuthContext & { accountId?: number }> ext
     }
 
     async prompt(context: T): Promise<void> {
-        context.accountId = (await context.ui.showQuickPick(this.getPicks(context), {
+        context.accountId = (await context.ui.showQuickPick(await this.getPicks(context), {
             title: this.title,
             placeHolder: l10n.t('Select a target account'),
         }))?.data;

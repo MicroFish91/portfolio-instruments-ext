@@ -4,6 +4,11 @@
   "description": "%portfolioInstruments.description%",
   "version": "0.0.1",
   "publisher": "MicroFish",
+  "author": "MicroFish91",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MicroFish91/portfolio-instruments-ext"
+  },
   "engines": {
     "vscode": "^1.94.0"
   },

@@ -18,7 +18,7 @@ export class BenchmarkListStep<T extends AuthContext & { settings?: Settings; be
     }
 
     async prompt(context: T): Promise<void> {
-        context.benchmarkId = (await context.ui.showQuickPick(this.getPicks(context), {
+        context.benchmarkId = (await context.ui.showQuickPick(await this.getPicks(context), {
             title: this.title,
             placeHolder: l10n.t('Select a target benchmark'),
         }))?.data;

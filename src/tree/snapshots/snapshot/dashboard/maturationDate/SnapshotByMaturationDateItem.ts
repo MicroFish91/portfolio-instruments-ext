@@ -10,6 +10,7 @@ import { getSnapshotByMaturationDate, GetSnapshotByMaturationDateApiResponse, Ge
 import { SnapshotMaturationStartItem } from "./SnapshotMaturationStartItem";
 import { SnapshotMaturationEndItem } from "./SnapshotMaturationEndItem";
 import { MaturationDateItem } from "./MaturationDateItem";
+import { SnapshotMaturationFilterItem } from "./SnapshotMaturationFilterItem";
 
 export class SnapshotByMaturationDateItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByMaturationDateItem';
@@ -49,8 +50,7 @@ export class SnapshotByMaturationDateItem extends TreeItem implements PiExtTreeI
 
         const resources: MaturationDateResource[] = await SnapshotByMaturationDateItem.getSnapshotByMaturationDate(this.email, this.snapshotData.snap_id, options) ?? [];
         return [
-            new SnapshotMaturationStartItem(this, this.email, this.snapshotData, options.startDate ?? 'mm/dd/yyyy'),
-            new SnapshotMaturationEndItem(this, this.email, this.snapshotData, options.endDate ?? 'mm/dd/yyyy'),
+            new SnapshotMaturationFilterItem(this, this.email, this.snapshotData),
             ...resources.map(resource => new MaturationDateItem(this, this.email, this.snapshotData, resource)),
         ];
     }

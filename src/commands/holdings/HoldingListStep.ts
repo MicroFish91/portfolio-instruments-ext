@@ -15,7 +15,7 @@ export class HoldingListStep<T extends AuthContext & { holdingId?: number }> ext
     }
 
     async prompt(context: T): Promise<void> {
-        context.holdingId = (await context.ui.showQuickPick(this.getPicks(context), {
+        context.holdingId = (await context.ui.showQuickPick(await this.getPicks(context), {
             title: this.title,
             placeHolder: l10n.t('Select a target holding'),
         }))?.data;

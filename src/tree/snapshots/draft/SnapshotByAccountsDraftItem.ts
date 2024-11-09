@@ -6,6 +6,8 @@ import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../sdk/
 import { AccountsItem } from "../../accounts/AccountsItem";
 import { Account } from "../../../sdk/types/accounts";
 import { GenericItem } from "../../GenericItem";
+import { nonNullValue } from "../../../utils/nonNull";
+import { capitalize } from "../../../utils/textUtils";
 
 export class SnapshotByAccountsDraftItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByAccountsDraftItem';
@@ -52,17 +54,18 @@ export class SnapshotByAccountsDraftItem extends TreeItem implements PiExtTreeIt
 
             let total: number = accountBreakdown[accountName] ?? 0;
             total += sv.total;
-            accountBreakdown[accountName] = total;
+            accountBreakdown[sv.account_id] = total;
         }
 
         const items: PiExtTreeItem[] = [];
-        for (const [accountName, total] of Object.entries(accountBreakdown)) {
+        for (const [accountId, total] of Object.entries(accountBreakdown)) {
+            const account: Account = nonNullValue(accountsMap.get(Number(accountId)));
             items.push(new GenericItem({
-                id: `${this.id}/${accountName}`,
-                label: accountName,
-                description: `$${total.toFixed(2)}`,
+                id: `${this.id}/${account.name}`,
+                label: account.name,
+                description: `$${total.toFixed(2)} (${account.institution}:${capitalize(account.tax_shelter)})`,
                 contextValue: 'snapshotByInstitutionsDraftItem',
-                iconPath: new ThemeIcon('home', 'white')
+                iconPath: new ThemeIcon('home', 'white'),
             }));
         }
         return items;
