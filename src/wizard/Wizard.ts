@@ -1,4 +1,4 @@
-import { CancellationTokenSource, ProgressLocation, ProgressOptions, window } from "vscode";
+import { ProgressLocation, ProgressOptions, window } from "vscode";
 import { CommandContext } from "../commands/registerCommand";
 import { ExecuteStep } from "./ExecuteStep";
 import { PromptStep } from "./PromptStep";
@@ -14,7 +14,6 @@ export class Wizard<T extends CommandContext> {
     private title: string;
     private promptSteps: PromptStep<T>[];
     private executeSteps: ExecuteStep<T>[];
-    private cancellationTokenSource: CancellationTokenSource;
 
     constructor(context: T, options: WizardOptions<T>) {
         this.context = context;
