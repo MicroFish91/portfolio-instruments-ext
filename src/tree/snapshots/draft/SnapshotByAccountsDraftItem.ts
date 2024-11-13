@@ -52,7 +52,7 @@ export class SnapshotByAccountsDraftItem extends TreeItem implements PiExtTreeIt
                 continue;
             }
 
-            let total: number = accountBreakdown[accountName] ?? 0;
+            let total: number = accountBreakdown[sv.account_id] ?? 0;
             total += sv.total;
             accountBreakdown[sv.account_id] = total;
         }

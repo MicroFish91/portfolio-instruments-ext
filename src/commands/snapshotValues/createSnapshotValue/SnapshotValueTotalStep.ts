@@ -33,7 +33,7 @@ export class SnapshotValueTotalStep<T extends CommandContext & { snapshotValue?:
             return validationUtils.getInvalidCharLengthMessage();
         }
 
-        const pattern: RegExp = /^\d+(\.\d{2})?$/;
+        const pattern: RegExp = /^(-)?\d+(\.\d{2})?$/;
         if (!pattern.test(value)) {
             return l10n.t('Please enter a valid dollar value amount (e.g. 10.25).');
         }
