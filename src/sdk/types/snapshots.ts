@@ -41,3 +41,13 @@ export type MaturationDateResource = {
     total: number;
     skip_rebalance: boolean;
 }
+
+export type LiquidityResource = {
+    account_name: string;
+    holding_name: string;
+    asset_category: string;
+    ticker: string;
+    institution: string;
+    tax_shelter: string;
+    total: number;
+};

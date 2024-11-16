@@ -31,7 +31,7 @@ export class MaturationDateItem extends TreeItem implements PiExtTreeItem {
 
         return {
             id: this.id,
-            label: `${this.label}${this.resource.interest_rate_pct ? ` (${this.resource.interest_rate_pct.toFixed}%)` : ''}`,
+            label: `${this.label}${this.resource.interest_rate_pct ? ` (${this.resource.interest_rate_pct.toFixed(2)}%)` : ''}`,
             description: `${this.resource.maturation_date} (expiration ${timeFrom})`,
             contextValue: this.getContextValue(),
             collapsibleState: TreeItemCollapsibleState.None,
