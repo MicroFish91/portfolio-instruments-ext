@@ -26,6 +26,7 @@ export enum AssetCategory {
     Iscb = "ISCB",
     Iscg = "ISCG",
     Iscv = "ISCV",
+    Crypto = "CRYPTO",
     Other = "OTHER",
 };
 

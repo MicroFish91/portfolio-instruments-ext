@@ -51,6 +51,7 @@ export class HoldingAssetCategoryStep<T extends HoldingCreateContext> extends Pr
             { label: "Commodities", description: `COMMODITIES${isCurrent(AssetCategory.Commodities) ? ` ${current}` : ""}`, data: AssetCategory.Commodities },
             { label: "Gold", description: `GOLD${isCurrent(AssetCategory.Gold) ? ` ${current}` : ""}`, data: AssetCategory.Gold },
             { label: "Real-Estate Investment Trusts", description: `REITS${isCurrent(AssetCategory.Reits) ? ` ${current}` : ""}`, data: AssetCategory.Reits },
+            { label: "Crypto Currency", description: `CRYPTO${isCurrent(AssetCategory.Crypto) ? ` ${current}` : ""}`, data: AssetCategory.Crypto },
             { label: "Other", description: `OTHER${isCurrent(AssetCategory.Other) ? ` ${current}` : ""}`, data: AssetCategory.Other },
         ];
     }

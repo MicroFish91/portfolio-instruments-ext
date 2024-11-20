@@ -54,6 +54,7 @@ export class BenchmarkAssetCategoriesStep<T extends BenchmarkCreateContext> exte
             { label: "Commodities", description: "COMMODITIES", picked: categories.has(AssetCategory.Commodities), data: AssetCategory.Commodities },
             { label: "Gold", description: "GOLD", picked: categories.has(AssetCategory.Gold), data: AssetCategory.Gold },
             { label: "Real-Estate Investment Trusts", description: "REITS", picked: categories.has(AssetCategory.Reits), data: AssetCategory.Reits },
+            { label: "Crypto Currency", description: "CRYPTO", picked: categories.has(AssetCategory.Crypto), data: AssetCategory.Crypto },
             { label: "Other", description: "OTHER", picked: categories.has(AssetCategory.Other), data: AssetCategory.Other },
         ];
     }
