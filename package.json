@@ -2,9 +2,10 @@
   "name": "portfolio-instruments",
   "displayName": "Portfolio Instruments",
   "description": "%portfolioInstruments.description%",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "MicroFish",
   "author": "MicroFish91",
+  "icon": "resources/pi_logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/MicroFish91/portfolio-instruments-ext"
