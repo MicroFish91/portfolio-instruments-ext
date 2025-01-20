@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Account } from "../types/accounts";
 import { Holding } from "../types/holdings";
 import { Snapshot, SnapshotValue } from "../types/snapshots";
@@ -15,7 +16,7 @@ export type GetSnapshotApiResponse = {
 };
 
 export async function getSnapshot(token: string, snapshotId: number): Promise<GetSnapshotApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

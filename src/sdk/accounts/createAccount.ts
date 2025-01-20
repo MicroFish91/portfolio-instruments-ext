@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Account, TaxShelter } from "../types/accounts";
 
 export type CreateAccountPayload = {
@@ -17,7 +18,7 @@ export type CreateAccountApiResponse = {
 };
 
 export async function createAccount(token: string, payload: CreateAccountPayload): Promise<CreateAccountApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/accounts", {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/accounts`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

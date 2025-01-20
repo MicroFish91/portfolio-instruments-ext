@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { AssetAllocationPct, Benchmark } from "../types/benchmarks";
 
 export type UpdateBenchmarkPayload = {
@@ -19,7 +20,7 @@ export type UpdateBenchmarkApiResponse = {
 };
 
 export async function updateBenchmark(token: string, benchmarkId: number, payload: UpdateBenchmarkPayload): Promise<UpdateBenchmarkApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/benchmarks/${benchmarkId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/benchmarks/${benchmarkId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',

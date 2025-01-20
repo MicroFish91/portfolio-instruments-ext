@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { PaginationMetadata } from "../types/pagination";
 import { Snapshot } from "../types/snapshots";
 
@@ -11,7 +12,7 @@ export type GetSnapshotsApiResponse = {
 };
 
 export async function getSnapshots(token: string, page: number): Promise<GetSnapshotsApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots?order_date_by=DESC&current_page=${page}&page_size=10`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots?order_date_by=DESC&current_page=${page}&page_size=10`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -21,7 +22,7 @@ export async function getSnapshots(token: string, page: number): Promise<GetSnap
 }
 
 export async function getSnapshotsLatest(token: string): Promise<GetSnapshotsApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/snapshots?order_date_by=DESC&page_size=1", {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots?order_date_by=DESC&page_size=1`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

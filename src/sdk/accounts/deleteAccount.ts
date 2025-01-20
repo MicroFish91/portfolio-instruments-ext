@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Account } from "../types/accounts";
 
 export type DeleteAccountApiResponse = {
@@ -10,7 +11,7 @@ export type DeleteAccountApiResponse = {
 };
 
 export async function deleteAccount(token: string, accountId: number): Promise<DeleteAccountApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/accounts/${accountId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/accounts/${accountId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,

@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Settings } from "../types/settings";
 
 export type UpdateSettingsPayload = {
@@ -14,7 +15,7 @@ export type UpdateSettingsApiResponse = {
 };
 
 export async function updateSettings(token: string, userId: number, payload: UpdateSettingsPayload): Promise<UpdateSettingsApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/users/${userId}/settings`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/users/${userId}/settings`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',

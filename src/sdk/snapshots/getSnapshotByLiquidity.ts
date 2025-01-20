@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { LiquidityResource } from "../types/snapshots";
 
 export type GetSnapshotByLiquidityApiResponse = {
@@ -11,7 +12,7 @@ export type GetSnapshotByLiquidityApiResponse = {
 };
 
 export async function getSnapshotByLiquidity(token: string, snapshotId: number): Promise<GetSnapshotByLiquidityApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}?group_by=LIQUIDITY`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=LIQUIDITY`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

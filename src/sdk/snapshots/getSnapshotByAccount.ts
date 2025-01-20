@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { ResourcesGrouped } from "../types/snapshots";
 
 export type GetSnapshotByAccountApiResponse = {
@@ -10,7 +11,7 @@ export type GetSnapshotByAccountApiResponse = {
 };
 
 export async function getSnapshotByAccount(token: string, snapshotId: number): Promise<GetSnapshotByAccountApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}?group_by=ACCOUNT_INSTITUTION`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=ACCOUNT_INSTITUTION`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

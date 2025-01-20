@@ -21,6 +21,7 @@ import { createHolding } from "./holdings/createHolding/createHolding";
 import { deleteHolding } from "./holdings/deleteHolding/deleteHolding";
 import { updateHolding } from "./holdings/updateHolding/updateHolding";
 import { registerCommand } from "./registerCommand";
+import { setApiEndpoint } from "./settings/setApiEndpoint/setApiEndpoint";
 import { updateBenchmarkSettings } from "./settings/updateBenchmarkSettings/updateBenchmarkSettings";
 import { updateRebalanceSettings } from "./settings/updateRebalanceSettings/updateRebalanceSettings";
 import { decrementSnapshotPage } from "./snapshots/decrementSnapshotPage";
@@ -88,4 +89,5 @@ export function registerCommands() {
 
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
+    registerCommand('portfolioInstruments.setApiEndpoint', setApiEndpoint);
 }

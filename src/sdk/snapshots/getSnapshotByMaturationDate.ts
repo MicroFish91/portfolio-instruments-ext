@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { MaturationDateResource } from "../types/snapshots";
 
 export type GetSnapshotByMaturationDateApiResponse = {
@@ -17,7 +18,7 @@ export type GetSnapshotMaturationDateOptions = {
 };
 
 export async function getSnapshotByMaturationDate(token: string, snapshotId: number, options?: GetSnapshotMaturationDateOptions): Promise<GetSnapshotByMaturationDateApiResponse> {
-    let url: string = `http://localhost:3000/api/v1/snapshots/${snapshotId}?group_by=MATURATION_DATE`;
+    let url: string = `${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=MATURATION_DATE`;
     if (options?.startDate) {
         url += `&maturation_start=${options.startDate}`;
     }

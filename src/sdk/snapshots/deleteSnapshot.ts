@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Snapshot } from "../types/snapshots";
 
 export type DeleteSnapshotApiResponse = {
@@ -10,7 +11,7 @@ export type DeleteSnapshotApiResponse = {
 };
 
 export async function deleteSnapshot(token: string, snapshotId: number): Promise<DeleteSnapshotApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,

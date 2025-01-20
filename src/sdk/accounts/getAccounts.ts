@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Account } from "../types/accounts";
 import { PaginationMetadata } from "../types/pagination";
 
@@ -11,7 +12,7 @@ export type GetAccountsApiResponse = {
 };
 
 export async function getAccounts(token: string): Promise<GetAccountsApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/accounts", {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/accounts`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
