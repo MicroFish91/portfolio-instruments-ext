@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { ResourcesGrouped } from "../types/snapshots";
 
 export type GetSnapshotByAssetCategoryApiResponse = {
@@ -10,7 +11,7 @@ export type GetSnapshotByAssetCategoryApiResponse = {
 };
 
 export async function getSnapshotByAssetCategory(token: string, snapshotId: number): Promise<GetSnapshotByAssetCategoryApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}?group_by=ASSET_CATEGORY`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=ASSET_CATEGORY`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

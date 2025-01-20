@@ -3,6 +3,7 @@ import { RegisterItem } from "./auth/RegisterItem";
 import { LoginItem } from "./auth/LoginItem";
 import { getAuthTokenRecord } from "../utils/tokenUtils";
 import { EmailItem } from "./auth/EmailItem";
+import { ApiEndpointItem } from "./auth/ApiEndpointItem";
 
 export interface PiExtTreeItem extends TreeItem {
     getTreeItem(): TreeItem | Promise<TreeItem>;
@@ -31,6 +32,7 @@ export class PiExtTreeDataProvider implements TreeDataProvider<PiExtTreeItem> {
                 return [
                     new LoginItem(),
                     new RegisterItem(),
+                    new ApiEndpointItem(),
                 ];
             }
         }

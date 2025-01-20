@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { User } from "../types/user";
 
 export type LoginUserPayload = {
@@ -15,7 +16,7 @@ export type LoginUserApiResponse = {
 };
 
 export async function loginUser(payload: LoginUserPayload): Promise<LoginUserApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/login", {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/login`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

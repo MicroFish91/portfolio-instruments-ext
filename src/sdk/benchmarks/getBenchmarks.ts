@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Benchmark } from "../types/benchmarks";
 import { PaginationMetadata } from "../types/pagination";
 
@@ -11,7 +12,7 @@ export type GetBenchmarksApiResponse = {
 };
 
 export async function getBenchmarks(token: string): Promise<GetBenchmarksApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/benchmarks", {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/benchmarks`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

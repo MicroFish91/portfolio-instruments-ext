@@ -196,7 +196,24 @@
         "command": "portfolioInstruments.viewProperties",
         "title": "%portfolioInstruments.viewProperties%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.setApiEndpoint",
+        "title": "%portfolioInstruments.setApiEndpoint%",
+        "category": "Portfolio Instruments"
       }
+    ],
+    "configuration": [
+        {
+            "title": "Portfolio Instruments",
+            "properties": {
+                "portfolioInstruments.apiEndpoint": {
+                    "type": "string",
+                    "description": "%portfolioInstruments.apiEndpoint%",
+                    "default": "http://localhost:3000"
+                }
+            }
+        }
     ],
     "viewsContainers": {
       "activitybar": [

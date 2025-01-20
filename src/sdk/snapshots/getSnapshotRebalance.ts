@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { AssetAllocation } from "../types/snapshots";
 
 export type GetSnapshotRebalanceApiResponse = {
@@ -14,7 +15,7 @@ export type GetSnapshotRebalanceApiResponse = {
 };
 
 export async function getSnapshotRebalance(token: string, snapshotId: number): Promise<GetSnapshotRebalanceApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/snapshots/${snapshotId}/rebalance`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}/rebalance`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,

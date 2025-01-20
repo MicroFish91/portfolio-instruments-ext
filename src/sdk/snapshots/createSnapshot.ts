@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Snapshot, SnapshotValue } from "../types/snapshots";
 
 export type CreateSnapshotPayload = {
@@ -24,7 +25,7 @@ export type CreateSnapshotApiResponse = {
 };
 
 export async function createSnapshot(token: string, payload: CreateSnapshotPayload): Promise<CreateSnapshotApiResponse> {
-    const response = await fetch("http://localhost:3000/api/v1/snapshots", {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

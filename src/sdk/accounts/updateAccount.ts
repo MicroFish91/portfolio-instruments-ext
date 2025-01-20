@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Account, TaxShelter } from "../types/accounts";
 
 export type UpdateAccountPayload = {
@@ -17,7 +18,7 @@ export type UpdateAccountApiResponse = {
 };
 
 export async function updateAccount(token: string, accountId: number, payload: UpdateAccountPayload): Promise<UpdateAccountApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/accounts/${accountId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/accounts/${accountId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',

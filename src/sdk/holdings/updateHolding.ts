@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { AssetCategory, Holding } from "../types/holdings";
 
 export type UpdateHoldingPayload = {
@@ -19,7 +20,7 @@ export type UpdateHoldingApiResponse = {
 };
 
 export async function updateHolding(token: string, holdingId: number, payload: UpdateHoldingPayload): Promise<UpdateHoldingApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/holdings/${holdingId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/holdings/${holdingId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',

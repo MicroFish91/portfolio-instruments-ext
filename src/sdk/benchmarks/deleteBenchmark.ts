@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Benchmark } from "../types/benchmarks";
 
 export type DeleteBenchmarkApiResponse = {
@@ -10,7 +11,7 @@ export type DeleteBenchmarkApiResponse = {
 };
 
 export async function deleteBenchmark(token: string, benchmarkId: number): Promise<DeleteBenchmarkApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/benchmarks/${benchmarkId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/benchmarks/${benchmarkId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,

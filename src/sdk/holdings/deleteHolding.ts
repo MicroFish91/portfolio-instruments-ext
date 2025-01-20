@@ -1,3 +1,4 @@
+import { settingUtils } from "../../utils/settingUtils";
 import { Holding } from "../types/holdings";
 
 export type DeleteHoldingApiResponse = {
@@ -10,7 +11,7 @@ export type DeleteHoldingApiResponse = {
 };
 
 export async function deleteHolding(token: string, holdingId: number): Promise<DeleteHoldingApiResponse> {
-    const response = await fetch(`http://localhost:3000/api/v1/holdings/${holdingId}`, {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/holdings/${holdingId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,
