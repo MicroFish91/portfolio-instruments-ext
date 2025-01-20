@@ -2,7 +2,7 @@
   "name": "portfolio-instruments",
   "displayName": "Portfolio Instruments",
   "description": "%portfolioInstruments.description%",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "MicroFish",
   "author": "MicroFish91",
   "repository": {
@@ -204,16 +204,16 @@
       }
     ],
     "configuration": [
-        {
-            "title": "Portfolio Instruments",
-            "properties": {
-                "portfolioInstruments.apiEndpoint": {
-                    "type": "string",
-                    "description": "%portfolioInstruments.apiEndpoint%",
-                    "default": "http://localhost:3000"
-                }
-            }
+      {
+        "title": "Portfolio Instruments",
+        "properties": {
+          "portfolioInstruments.apiEndpoint": {
+            "type": "string",
+            "description": "%portfolioInstruments.apiEndpoint%",
+            "default": "http://localhost:3000"
+          }
         }
+      }
     ],
     "viewsContainers": {
       "activitybar": [
