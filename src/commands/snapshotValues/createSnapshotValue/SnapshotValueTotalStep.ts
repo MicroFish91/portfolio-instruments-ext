@@ -19,7 +19,7 @@ export class SnapshotValueTotalStep<T extends CommandContext & { snapshotValue?:
             value: this.options?.defaultValue?.toString() ?? context.snapshotValue?.total.toString(),
             prompt: l10n.t('Enter a snapshot value amount ($)'),
             validateInput: this.validateInput,
-        }))?.trim());
+        }))?.trim().replace(/,/g, ''));
     }
 
     shouldPrompt(context: T): boolean {
@@ -28,6 +28,7 @@ export class SnapshotValueTotalStep<T extends CommandContext & { snapshotValue?:
 
     private validateInput(value: string): string | undefined {
         value = value.trim();
+        value = value.replace(/,/g, '');
 
         if (!validationUtils.hasValidCharLength(value)) {
             return validationUtils.getInvalidCharLengthMessage();
