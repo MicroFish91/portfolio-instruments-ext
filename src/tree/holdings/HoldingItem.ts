@@ -3,13 +3,16 @@ import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { Holding } from "../../sdk/types/holdings";
 import { HoldingsItem } from "./HoldingsItem";
 import { createContextValue } from "../../utils/contextUtils";
-import { viewPropertiesContext } from "../../constants";
+import { reorderableContext, viewPropertiesContext } from "../../constants";
+import { Reorderable } from "../reorder";
 
-export class HoldingItem extends TreeItem implements PiExtTreeItem {
+export class HoldingItem extends TreeItem implements PiExtTreeItem, Reorderable {
     static readonly contextValue: string = 'holdingItem';
     static readonly regExp: RegExp = new RegExp(HoldingItem.contextValue);
 
     id: string;
+    kind = 'holding';
+    contextValue: string;
 
     constructor(
         readonly parent: HoldingsItem,
@@ -18,6 +21,7 @@ export class HoldingItem extends TreeItem implements PiExtTreeItem {
     ) {
         super(holding.name);
         this.id = `/users/${email}/holdings/${holding.holding_id}`;
+        this.contextValue = createContextValue([HoldingItem.contextValue, reorderableContext, viewPropertiesContext]);
     }
 
     getTreeItem(): TreeItem {
@@ -25,16 +29,16 @@ export class HoldingItem extends TreeItem implements PiExtTreeItem {
             id: this.id,
             label: this.label,
             description: this.holding.asset_category,
-            contextValue: this.getContextValue(),
+            contextValue: this.contextValue,
             iconPath: new ThemeIcon("variable", "white"),
         };
     }
 
-    private getContextValue(): string {
-        return createContextValue([HoldingItem.contextValue, viewPropertiesContext]);
-    }
-
     viewProperties(): string {
         return JSON.stringify(this.holding, undefined, 4);
+    }
+
+    getResourceId(): string {
+        return this.holding.holding_id.toString();
     }
 }

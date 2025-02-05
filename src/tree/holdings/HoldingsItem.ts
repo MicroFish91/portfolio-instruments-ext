@@ -5,41 +5,72 @@ import { nonNullValue } from "../../utils/nonNull";
 import { Holding } from "../../sdk/types/holdings";
 import { getHoldings } from "../../sdk/holdings/getHoldings";
 import { HoldingItem } from "./HoldingItem";
-import { viewPropertiesContext } from "../../constants";
+import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { createContextValue } from "../../utils/contextUtils";
 import { ext } from "../../extensionVariables";
+import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
 
-export class HoldingsItem extends TreeItem implements PiExtTreeItem {
+export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'holdingsItem';
     static readonly regExp: RegExp = new RegExp(HoldingsItem.contextValue);
 
     id: string;
+    kind = 'holdings';
+    contextValue: string;
+    private refreshedChildOrder: boolean = false;
 
     constructor(readonly email: string) {
         super(l10n.t('Holdings'));
         this.id = `/users/${email}/holdings`;
+        this.contextValue = createContextValue([HoldingsItem.contextValue, reordererContext, viewPropertiesContext]);
     }
 
     getTreeItem(): TreeItem {
         return {
             id: this.id,
             label: this.label,
-            contextValue: this.getContextValue(),
+            contextValue: this.contextValue,
             collapsibleState: TreeItemCollapsibleState.Collapsed,
             iconPath: new ThemeIcon("variable", "white"),
         };
     }
 
-    private getContextValue(): string {
-        return createContextValue([HoldingsItem.contextValue, viewPropertiesContext]);
+    async getChildren(): Promise<PiExtTreeItem[]> {
+        let holdings: Holding[];
+        if (this.refreshedChildOrder) {
+            // We generally want to refresh the cache
+            // However, if we know the node was refreshed due to having been reordered, no need to re-fetch
+            holdings = await HoldingsItem.getHoldingsWithCache(this.email);
+            this.refreshedChildOrder = false;
+        } else {
+            holdings = await HoldingsItem.getHoldings(this.email);
+        }
+
+        holdings = holdings.filter(h => !h.is_deprecated);
+
+        const orderedHoldings: Holding[] = await this.getOrderedResourceModels(holdings);
+        ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), orderedHoldings);
+
+        return orderedHoldings.map(h => new HoldingItem(this, this.email, h));
     }
 
-    async getChildren(): Promise<PiExtTreeItem[]> {
-        const holdings: Holding[] = await HoldingsItem.getHoldings(this.email);
-        ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), holdings);
-        return holdings
-            .filter(h => !h.is_deprecated)
-            .map(h => new HoldingItem(this, this.email, h));
+    canReorderItem(item: PiExtTreeItem): boolean {
+        return !!item?.contextValue?.includes(HoldingItem.contextValue);
+    }
+
+    async getOrderedResourceModels(holdings?: Holding[]): Promise<(Holding & GenericPiResourceModel)[]> {
+        holdings ??= await HoldingsItem.getHoldingsWithCache(this.email);
+
+        const holdingResourceModels: (Holding & GenericPiResourceModel)[] = holdings.map(h => convertToGenericPiResourceModel(h, 'holding_id'));
+        const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(HoldingsItem.generatePiExtHoldingsOrderId(this.email)) ?? [];
+
+        return orderResourcesByTargetIds(holdingResourceModels, orderedResourceIds);
+    }
+
+    async reorderChildrenByTargetResourceModelIds(ids: string[]): Promise<void> {
+        this.refreshedChildOrder = true;
+        await ext.context.globalState.update(HoldingsItem.generatePiExtHoldingsOrderId(this.email), ids);
+        ext.portfolioInstrumentsTdp.refresh(this);
     }
 
     async viewProperties(): Promise<string> {
@@ -64,6 +95,10 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem {
     }
 
     static generatePiExtHoldingsId(email: string): string {
-        return `/users/${email}/holdings`;
+        return `/ users / ${email}/holdings`;
+    }
+
+    static generatePiExtHoldingsOrderId(email: string): string {
+        return orderKeyPrefix + HoldingsItem.generatePiExtHoldingsId(email);
     }
 }

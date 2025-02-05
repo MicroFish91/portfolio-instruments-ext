@@ -4,13 +4,18 @@ import { PiExtTreeDataProvider } from './tree/PiExtTreeDataProvider';
 import { registerCommands } from './commands/registerCommands';
 import { ReadOnlyContentProvider } from './commands/viewProperties/ReadOnlyContentProvider';
 import { SnapshotDraftFileSystem } from './commands/draft/SnapshotDraftFileSystem';
+import { PiExtTreeDragAndDropController } from './tree/PiExtTreeDragAndDropController';
 
 export function activate(context: ExtensionContext) {
 	ext.context = context;
 	ext.resourceCache = new Map<string, any>();
 
 	ext.portfolioInstrumentsTdp = new PiExtTreeDataProvider();
-	context.subscriptions.push(window.createTreeView('portfolioInstruments.main', { treeDataProvider: ext.portfolioInstrumentsTdp }));
+	context.subscriptions.push(window.createTreeView('portfolioInstruments.main', {
+		treeDataProvider: ext.portfolioInstrumentsTdp,
+		dragAndDropController: new PiExtTreeDragAndDropController(),
+		canSelectMany: true,
+	}));
 
 	ext.readOnlyProvider = new ReadOnlyContentProvider();
 	context.subscriptions.push(workspace.registerTextDocumentContentProvider(ReadOnlyContentProvider.scheme, ext.readOnlyProvider));
