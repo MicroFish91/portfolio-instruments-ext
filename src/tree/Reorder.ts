@@ -1,10 +1,6 @@
 import { reorderableContext, reordererContext } from "../constants";
 import { PiExtTreeItem } from "./PiExtTreeDataProvider";
 
-export type GenericPiResourceModel = {
-    id: string;
-};
-
 /**
  * Refers to a child item that is able to be reordered
  */
@@ -32,6 +28,13 @@ export function isReorderer(item: PiExtTreeItem): item is (PiExtTreeItem & Reord
 export function isReorderable(item: PiExtTreeItem): item is (PiExtTreeItem & Reorderable) {
     return !!item.contextValue?.includes(reorderableContext);
 }
+
+/**
+ * The simplest way to represent a generic PI resource without caring what the full resource looks like
+ */
+export type GenericPiResourceModel = {
+    id: string;
+};
 
 export function convertToGenericPiResourceModel<T extends {}>(resource: T, idProp: keyof T): T & GenericPiResourceModel {
     return {
