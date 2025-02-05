@@ -46,8 +46,6 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             holdings = await HoldingsItem.getHoldings(this.email);
         }
 
-        holdings = holdings.filter(h => !h.is_deprecated);
-
         const orderedHoldings: Holding[] = await this.getOrderedResourceModels(holdings);
         ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), orderedHoldings);
 
@@ -60,6 +58,7 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(holdings?: Holding[]): Promise<(Holding & GenericPiResourceModel)[]> {
         holdings ??= await HoldingsItem.getHoldingsWithCache(this.email);
+        holdings = holdings.filter(h => !h.is_deprecated);
 
         const holdingResourceModels: (Holding & GenericPiResourceModel)[] = holdings.map(h => convertToGenericPiResourceModel(h, 'holding_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(HoldingsItem.generatePiExtHoldingsOrderId(this.email)) ?? [];
