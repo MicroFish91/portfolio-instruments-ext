@@ -6,40 +6,69 @@ import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
 import { AccountItem } from "./AccountItem";
 import { createContextValue } from "../../utils/contextUtils";
-import { viewPropertiesContext } from "../../constants";
+import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { ext } from "../../extensionVariables";
+import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
 
-export class AccountsItem extends TreeItem implements PiExtTreeItem {
+export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'accountsItem';
     static readonly regExp: RegExp = new RegExp(AccountsItem.contextValue);
 
     id: string;
+    kind: 'accounts';
+    private refreshedChildOrder: boolean = false;
 
     constructor(readonly email: string) {
         super(l10n.t('Accounts'));
         this.id = `/users/${email}/accounts`;
+        this.contextValue = createContextValue([AccountsItem.contextValue, reordererContext, viewPropertiesContext]);
     }
 
     getTreeItem(): TreeItem {
         return {
             id: this.id,
             label: this.label,
-            contextValue: this.getContextValue(),
+            contextValue: this.contextValue,
             collapsibleState: TreeItemCollapsibleState.Collapsed,
             iconPath: new ThemeIcon('home', 'white'),
         };
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const accounts: Account[] = await AccountsItem.getAccounts(this.email);
-        ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), accounts);
-        return accounts
-            .filter(a => !a.is_deprecated)
-            .map(a => new AccountItem(this, this.email, a));
+        let accounts: Account[];
+        if (this.refreshedChildOrder) {
+            // We generally want to refresh the cache
+            // However, if we know the node was refreshed due to having been reordered, no need to re-fetch
+            accounts = await AccountsItem.getAccountsWithCache(this.email);
+            this.refreshedChildOrder = false;
+        } else {
+            accounts = await AccountsItem.getAccounts(this.email);
+        }
+
+        const orderedAccounts: Account[] = await this.getOrderedResourceModels(accounts);
+        ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), orderedAccounts);
+
+        return orderedAccounts.map(a => new AccountItem(this, this.email, a));
     }
 
-    private getContextValue(): string {
-        return createContextValue([AccountsItem.contextValue, viewPropertiesContext]);
+    canReorderItem(item: PiExtTreeItem): boolean {
+        return !!item?.contextValue?.includes(AccountItem.contextValue);
+    }
+
+    async getOrderedResourceModels(accounts?: Account[]): Promise<(Account & GenericPiResourceModel)[]> {
+        accounts ??= await AccountsItem.getAccountsWithCache(this.email);
+        accounts = accounts.filter(a => !a.is_deprecated);
+
+        const accountResourceModels: (Account & GenericPiResourceModel)[] = accounts.map(a => convertToGenericPiResourceModel(a, 'account_id'));
+        const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(AccountsItem.generatePiExtAccountsOrderId(this.email)) ?? [];
+
+        return orderResourcesByTargetIds(accountResourceModels, orderedResourceIds);
+    }
+
+    async reorderChildrenByTargetResourceModelIds(ids: string[]): Promise<void> {
+        this.refreshedChildOrder = true;
+        await ext.context.globalState.update(AccountsItem.generatePiExtAccountsOrderId(this.email), ids);
+        ext.portfolioInstrumentsTdp.refresh(this);
     }
 
     async viewProperties(): Promise<string> {
@@ -65,5 +94,9 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem {
 
     static generatePiExtAccountsId(email: string): string {
         return `/users/${email}/accounts/`;
+    }
+
+    static generatePiExtAccountsOrderId(email: string): string {
+        return orderKeyPrefix + AccountsItem.generatePiExtAccountsId(email);
     }
 }

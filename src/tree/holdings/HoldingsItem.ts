@@ -16,7 +16,6 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     id: string;
     kind = 'holdings';
-    contextValue: string;
     private refreshedChildOrder: boolean = false;
 
     constructor(readonly email: string) {
@@ -94,7 +93,7 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     }
 
     static generatePiExtHoldingsId(email: string): string {
-        return `/ users / ${email}/holdings`;
+        return `/users/${email}/holdings`;
     }
 
     static generatePiExtHoldingsOrderId(email: string): string {
