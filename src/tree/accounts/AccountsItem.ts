@@ -15,7 +15,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly regExp: RegExp = new RegExp(AccountsItem.contextValue);
 
     id: string;
-    kind: 'accounts';
+    kind = 'accounts';
     private refreshedChildOrder: boolean = false;
 
     constructor(readonly email: string) {
