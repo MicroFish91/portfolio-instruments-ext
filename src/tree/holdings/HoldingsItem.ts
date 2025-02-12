@@ -52,7 +52,7 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     }
 
     canReorderItem(item: PiExtTreeItem): boolean {
-        return !!item?.contextValue?.includes(HoldingItem.contextValue);
+        return !!item.contextValue?.includes(HoldingItem.contextValue);
     }
 
     async getOrderedResourceModels(holdings?: Holding[]): Promise<(Holding & GenericPiResourceModel)[]> {

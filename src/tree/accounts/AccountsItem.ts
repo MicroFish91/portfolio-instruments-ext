@@ -52,7 +52,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     }
 
     canReorderItem(item: PiExtTreeItem): boolean {
-        return !!item?.contextValue?.includes(AccountItem.contextValue);
+        return !!item.contextValue?.includes(AccountItem.contextValue);
     }
 
     async getOrderedResourceModels(accounts?: Account[]): Promise<(Account & GenericPiResourceModel)[]> {
