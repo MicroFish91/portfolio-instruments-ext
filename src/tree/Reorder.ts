@@ -5,8 +5,8 @@ import { PiExtTreeItem } from "./PiExtTreeDataProvider";
  * Refers to a child item that is able to be reordered
  */
 export interface Reorderable extends PiExtTreeItem {
-    parent: Reorderer;
     kind: string;
+    parent: Reorderer;
     getResourceId(): string;
 }
 
