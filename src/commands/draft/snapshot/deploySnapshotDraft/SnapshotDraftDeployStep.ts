@@ -20,6 +20,7 @@ export class SnapshotDraftDeployStep<T extends SnapshotDraftDeployContext> exten
         }
 
         context.snapshot = response.data?.snapshot;
+        context.snapshotValues = response.data?.snapshot_values;
     }
 
     shouldExecute(context: T): boolean {

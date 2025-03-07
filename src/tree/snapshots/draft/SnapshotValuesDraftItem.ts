@@ -2,7 +2,7 @@ import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapshot";
 import { createContextValue } from "../../../utils/contextUtils";
-import { viewPropertiesContext } from "../../../constants";
+import { reordererContext, viewPropertiesContext } from "../../../constants";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
 import { SnapshotValueDraftItem } from "./SnapshotValueDraftItem";
 import { AccountsItem } from "../../accounts/AccountsItem";
@@ -10,12 +10,15 @@ import { Account } from "../../../sdk/types/accounts";
 import { Holding } from "../../../sdk/types/holdings";
 import { HoldingsItem } from "../../holdings/HoldingsItem";
 import { nonNullValue } from "../../../utils/nonNull";
+import { GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../../reorder";
+import { ext } from "../../../extensionVariables";
 
-export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem {
+export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'snapshotValuesDraftItem';
     static readonly regExp: RegExp = new RegExp(SnapshotValuesDraftItem.contextValue);
 
     id: string;
+    kind: 'snapshotValuesDraft';
 
     constructor(
         readonly parent: SnapshotDraftItem,
@@ -25,13 +28,14 @@ export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem {
     ) {
         super('Values');
         this.id = `/users/${email}/snapshots/draft/snapshotValues`;
+        this.contextValue = createContextValue([SnapshotValuesDraftItem.contextValue, reordererContext, viewPropertiesContext]);
     }
 
     getTreeItem(): TreeItem {
         return {
             id: this.id,
             label: this.label,
-            contextValue: this.getContextValues(),
+            contextValue: this.contextValue,
             collapsibleState: TreeItemCollapsibleState.Expanded,
             iconPath: new ThemeIcon("array", "white"),
         };
@@ -54,6 +58,7 @@ export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem {
 
         return this.snapshotValues.map((sv, i) => new SnapshotValueDraftItem(
             this.parent,
+            this,
             this.email,
             i,
             sv,
@@ -62,8 +67,33 @@ export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem {
         ));
     }
 
-    private getContextValues(): string {
-        return createContextValue([SnapshotValuesDraftItem.contextValue, viewPropertiesContext]);
+    canReorderItem(item: PiExtTreeItem): boolean {
+        return !!item.contextValue?.includes(SnapshotValueDraftItem.contextValue);
+    }
+
+    async getOrderedResourceModels(): Promise<(CreateSnapshotValuePayload & GenericPiResourceModel)[]> {
+        // There are no resource model ids because draft items represent resources that haven't been created yet...
+        // so just use the current index of the value as the ID
+        // (Also, there's no need to manage any reordering here because we always reorder the source draft directly)
+        return this.snapshotValues.map((sv, idx) => {
+            return {
+                ...sv,
+                id: String(idx),
+            };
+        });
+    }
+
+    async reorderChildrenByTargetResourceModelIds(ids: string[]): Promise<void> {
+        const snapshotValues: (CreateSnapshotValuePayload & GenericPiResourceModel)[] = await this.getOrderedResourceModels();
+        // Remove the generic resource id we added as it's not required by the actual API
+        const reorderedValues: CreateSnapshotValuePayload[] = orderResourcesByTargetIds(snapshotValues, ids)
+            .map(sv => {
+                delete (sv as { id?: string }).id;
+                return sv;
+            });
+
+        await ext.snapshotDraftFileSystem.updateSnapshotValuesDraft(this.parent, reorderedValues);
+        ext.portfolioInstrumentsTdp.refresh(this.parent);
     }
 
     viewProperties(): string {

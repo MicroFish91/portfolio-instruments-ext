@@ -27,7 +27,7 @@ export async function updateSnapshotValueAmountDraft(context: CommandContext, it
             new SnapshotValueTotalStep({ defaultValue: wizardContext.snapshotValueDraft.total }),
         ],
         executeSteps: [
-            new SnapshotValueDraftUpdateStep(item.parent),
+            new SnapshotValueDraftUpdateStep(item.grandParent),
         ],
     });
 

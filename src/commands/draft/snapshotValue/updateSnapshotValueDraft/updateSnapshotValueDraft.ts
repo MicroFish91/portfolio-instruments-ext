@@ -30,7 +30,7 @@ export async function updateSnapshotValueDraft(context: CommandContext, item: Sn
             new SnapshotValueSkipRebalanceStep(),
         ],
         executeSteps: [
-            new SnapshotValueDraftUpdateStep(item.parent),
+            new SnapshotValueDraftUpdateStep(item.grandParent),
         ],
     });
 

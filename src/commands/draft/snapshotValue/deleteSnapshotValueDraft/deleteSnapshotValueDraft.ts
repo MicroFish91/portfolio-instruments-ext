@@ -24,7 +24,7 @@ export async function deleteSnapshotValueDraft(context: CommandContext, item: Sn
             new SnapshotValueDeleteConfirmStep(),
         ],
         executeSteps: [
-            new SnapshotValueDraftDeleteStep(item.parent),
+            new SnapshotValueDraftDeleteStep(item.grandParent),
         ],
     });
 

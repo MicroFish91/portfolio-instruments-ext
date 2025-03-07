@@ -2,20 +2,24 @@ import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapshot";
 import { createContextValue } from "../../../utils/contextUtils";
-import { viewPropertiesContext } from "../../../constants";
+import { reorderableContext, viewPropertiesContext } from "../../../constants";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
 import { Account } from "../../../sdk/types/accounts";
 import { Holding } from "../../../sdk/types/holdings";
 import { capitalize } from "../../../utils/textUtils";
+import { Reorderable } from "../../reorder";
+import { SnapshotValuesDraftItem } from "./SnapshotValuesDraftItem";
 
-export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem {
+export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem, Reorderable {
     static readonly contextValue: string = 'snapshotValueDraftItem';
     static readonly regExp: RegExp = new RegExp(SnapshotValueDraftItem.contextValue);
 
     id: string;
+    kind = 'snapshotValueDraft';
 
     constructor(
-        readonly parent: SnapshotDraftItem,
+        readonly grandParent: SnapshotDraftItem,
+        readonly parent: SnapshotValuesDraftItem,
         readonly email: string,
 
         readonly svIdx: number,
@@ -25,6 +29,7 @@ export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem {
     ) {
         super(holding.name);
         this.id = `/users/${email}/snapshots/draft/snapshotValues/${svIdx}`;
+        this.contextValue = createContextValue([SnapshotValueDraftItem.contextValue, reorderableContext, viewPropertiesContext]);
     }
 
     getTreeItem(): TreeItem {
@@ -32,17 +37,18 @@ export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem {
             id: this.id,
             label: `${this.holding.name} (${this.holding.asset_category})`,
             description: `${this.account.name} ${this.account.institution}:${capitalize(this.account.tax_shelter)} $${this.snapshotValue.total.toFixed(2)} `,
-            contextValue: this.getContextValues(),
+            contextValue: this.contextValue,
             collapsibleState: TreeItemCollapsibleState.None,
             iconPath: new ThemeIcon("variable", "white"),
         };
     }
 
-    private getContextValues(): string {
-        return createContextValue([SnapshotValueDraftItem.contextValue, viewPropertiesContext]);
-    }
-
     viewProperties(): string {
         return JSON.stringify(this.snapshotValue, undefined, 4);
+    }
+
+    getResourceId(): string {
+        // Since draft items don't have real resource IDs assigned yet, just use the index
+        return String(this.svIdx);
     }
 }

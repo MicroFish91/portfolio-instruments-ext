@@ -8,6 +8,7 @@ import { SnapshotDraftDeployContext } from "./SnapshotDraftDeployContext";
 import { nonNullValue, nonNullValueAndProp } from "../../../../utils/nonNull";
 import { getAuthToken } from "../../../../utils/tokenUtils";
 import { Wizard } from "../../../../wizard/Wizard";
+import { SnapshotValueOrderSaveStep } from "./SnapshotValueOrderSaveStep";
 
 export async function deploySnapshotDraft(context: CommandContext, item: SnapshotDraftItem) {
     if (!ext.snapshotDraftFileSystem.hasSnapshotDraft(item.email)) {
@@ -28,6 +29,7 @@ export async function deploySnapshotDraft(context: CommandContext, item: Snapsho
         ],
         executeSteps: [
             new SnapshotDraftDeployStep(),
+            new SnapshotValueOrderSaveStep(),
         ],
     });
 
