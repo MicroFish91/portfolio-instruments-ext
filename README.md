@@ -18,13 +18,13 @@ The Portfolio Instruments VS Code client extension leverages the Portfolio Instr
     <img src="resources/v1.0.0/snapshot_dashboard.png" width="400" />
     <img src="resources/v1.0.0/rebalance.png" width="450" />
 
-* 🖱️ <u>Custom Dashboard</u>: Customize your dashboards and resources using drag and drop features.
+* 🛠️ <u>Custom Dashboard</u>: Customize your dashboards and resources using drag and drop features.
     </br></br>
     <img src="resources/v1.1.0/drag_and_drop.gif" width="400" />
 
-* 🖱️ <u>Bulk Update</u>: Quickly bulk update new snapshots using our custom json snapshot filing system with live code lens.
+* 🚀 <u>Bulk Update</u>: Quickly bulk update using our live code lens for the snapshot draft editor
     </br></br>
-    <img src="resources/v1.1.0/code_lens.gif" width="400" />
+    <img src="resources/v1.1.0/code_lens.gif" width="450" />
 
 ## 🔗 Useful Links
 
