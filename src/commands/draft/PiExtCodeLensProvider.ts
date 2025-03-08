@@ -53,8 +53,10 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
                 continue;
             }
 
+            // Identify the start of an object
             const startPosition: vscode.Position = new vscode.Position(line.lineNumber, startIndexOf);
 
+            // Capture until the end of the object
             let accountId: string | undefined;
             let holdingId: string | undefined;
             let endPosition: vscode.Position | undefined;
@@ -97,7 +99,7 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
             }
 
             const email: string = document.fileName.slice(1, -PiExtCodeLensProvider.fileSuffix.length);
-            const commandTitle: string | undefined = await this.resolveCommandTitle(email, accountId, holdingId);
+            const commandTitle: string | undefined = await this.buildCommandTitle(email, accountId, holdingId);
 
             if (!commandTitle) {
                 continue;
@@ -115,12 +117,13 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
         return codeLenses;
     }
 
-    private async resolveCommandTitle(email: string, accountId: string, holdingId: string): Promise<string | undefined> {
+    private async buildCommandTitle(email: string, accountId: string, holdingId: string): Promise<string | undefined> {
         const accounts: Account[] = await AccountsItem.getAccountsWithCache(email);
         const account: Account | undefined = accounts.find(a => a.account_id.toString() === accountId);
 
         const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(email);
         const holding: Holding | undefined = holdings.find(h => h.holding_id.toString() === holdingId);
+
         if (!account || !holding) {
             return undefined;
         }
