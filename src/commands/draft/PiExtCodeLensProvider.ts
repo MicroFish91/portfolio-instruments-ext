@@ -85,8 +85,11 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
                 }
             }
 
-            if (!endPosition || !accountId || !holdingId) {
+            if (!endPosition) {
                 break;
+            }
+            if (!accountId || !holdingId) {
+                continue;
             }
 
             // Todo: Look up the name of the account and holding using the accountId and holdingId
