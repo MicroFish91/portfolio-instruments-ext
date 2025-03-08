@@ -24,7 +24,7 @@ The Portfolio Instruments VS Code client extension leverages the Portfolio Instr
 
 * 🚀 <u>Bulk Update</u>: Quickly bulk update using our live code lens for the snapshot draft editor
     </br></br>
-    <img src="resources/v1.1.0/code_lens.gif" width="450" />
+    <img src="resources/v1.1.0/code_lens.gif" width="600" />
 
 ## 🔗 Useful Links
 
