@@ -1,7 +1,11 @@
 import * as vscode from 'vscode';
+import { Account } from '../../sdk/types/accounts';
+import { AccountsItem } from '../../tree/accounts/AccountsItem';
+import { HoldingsItem } from '../../tree/holdings/HoldingsItem';
+import { Holding } from '../../sdk/types/holdings';
 
 export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
-    static fileSuffix: string = 'pi-snapshot.json';
+    static fileSuffix: string = '.pi-snapshot.json';
     private openDocuments: Set<string> = new Set();
 
     private onDidChangeCodeLensEmitter: vscode.EventEmitter<void> = new vscode.EventEmitter<void>();
@@ -27,7 +31,7 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
         });
     }
 
-    public provideCodeLenses(document: vscode.TextDocument, token: vscode.CancellationToken): vscode.CodeLens[] | Thenable<vscode.CodeLens[]> {
+    async provideCodeLenses(document: vscode.TextDocument, token: vscode.CancellationToken): Promise<vscode.CodeLens[]> {
         if (!document.fileName.endsWith(PiExtCodeLensProvider.fileSuffix)) {
             return [];
         }
@@ -92,11 +96,17 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
                 continue;
             }
 
-            // Todo: Look up the name of the account and holding using the accountId and holdingId
+            const email: string = document.fileName.slice(1, -PiExtCodeLensProvider.fileSuffix.length);
+            const commandTitle: string | undefined = await this.resolveCommandTitle(email, accountId, holdingId);
+
+            if (!commandTitle) {
+                continue;
+            }
+
             const range = new vscode.Range(startPosition, endPosition);
             const command: vscode.Command = {
-                title: `accountId: ${accountId}, holdingId: ${holdingId}`,
-                command: "",
+                title: commandTitle,
+                command: '',
             };
 
             codeLenses.push(new vscode.CodeLens(range, command));
@@ -105,8 +115,33 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
         return codeLenses;
     }
 
-    public resolveCodeLens(codeLens: vscode.CodeLens) {
-        // Everything is already resolved, so just send as-is
+    private async resolveCommandTitle(email: string, accountId: string, holdingId: string): Promise<string | undefined> {
+        const accounts: Account[] = await AccountsItem.getAccountsWithCache(email);
+        const account: Account | undefined = accounts.find(a => a.account_id.toString() === accountId);
+
+        const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(email);
+        const holding: Holding | undefined = holdings.find(h => h.holding_id.toString() === holdingId);
+        if (!account || !holding) {
+            return undefined;
+        }
+
+        let commandTitle: string = `${account.institution} | ${account.tax_shelter}`;
+        if (holding.ticker) {
+            commandTitle += ` | ${holding.ticker}`;
+        }
+        commandTitle += ` | ${holding.name}`;
+
+        if (holding.interest_rate_pct) {
+            commandTitle += ` | ${holding.interest_rate_pct}%`;
+        }
+        if (holding.maturation_date) {
+            commandTitle += ` | ${holding.maturation_date}`;
+        }
+
+        return commandTitle;
+    }
+
+    async resolveCodeLens(codeLens: vscode.CodeLens) {
         return codeLens;
     }
 }
