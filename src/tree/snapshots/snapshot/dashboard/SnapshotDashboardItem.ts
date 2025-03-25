@@ -7,7 +7,7 @@ import { SnapshotByInstitutionsItem } from "./SnapshotByInstitutionsItem";
 import { SnapshotByTaxShelterItem } from "./SnapshotByTaxShelterItem";
 import { SnapshotByAssetCategoryItem } from "./SnapshotByAssetCategoryItem";
 import { SnapshotByMaturationDateItem } from "./maturationDate/SnapshotByMaturationDateItem";
-import { SnapshotByLiquidityItem } from "./SnapshotByLiquidityItem";
+import { SnapshotByLiquidityItem } from "./liquidity/SnapshotByLiquidityItem";
 
 export class SnapshotDashboardItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDashboardItem';

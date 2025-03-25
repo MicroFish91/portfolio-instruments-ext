@@ -1,14 +1,14 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
-import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
-import { SnapshotItem } from "../SnapshotItem";
-import { LiquidityResource, Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
-import { getAuthToken } from "../../../../utils/tokenUtils";
-import { nonNullValue } from "../../../../utils/nonNull";
-import { createContextValue } from "../../../../utils/contextUtils";
-import { viewPropertiesContext } from "../../../../constants";
-import { getSnapshotByLiquidity, GetSnapshotByLiquidityApiResponse } from "../../../../sdk/snapshots/getSnapshotByLiquidity";
+import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
+import { SnapshotItem } from "../../SnapshotItem";
+import { LiquidityResource, Snapshot, SnapshotValue } from "../../../../../sdk/types/snapshots";
+import { createContextValue } from "../../../../../utils/contextUtils";
+import { viewPropertiesContext } from "../../../../../constants";
+import { getSnapshotByLiquidity, GetSnapshotByLiquidityApiResponse } from "../../../../../sdk/snapshots/getSnapshotByLiquidity";
+import { nonNullValue } from "../../../../../utils/nonNull";
+import { getAuthToken } from "../../../../../utils/tokenUtils";
 import { LiquidityItem } from "./LiquidityItem";
-import { GenericItem } from "../../../GenericItem";
+import { GenericItem } from "../../../../GenericItem";
 
 export class SnapshotByLiquidityItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByLiquidityItem';
@@ -43,9 +43,12 @@ export class SnapshotByLiquidityItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const resources: GetSnapshotByLiquidityApiResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(this.email)), this.snapshotData.snap_id);
         return [
+            // Liquidity Items
             ...resources.data?.resources
                 ?.filter(r => r.total > 0)
+                ?.sort((a, b) => b.total - a.total)
                 ?.map((r, idx) => new LiquidityItem(this.parent, this.email, this.snapshotData, idx, r)) ?? [],
+            // Total
             new GenericItem({
                 id: `${this.id}/liquidityTotal`,
                 label: '$' + String(resources.data?.liquid_total ?? 0),

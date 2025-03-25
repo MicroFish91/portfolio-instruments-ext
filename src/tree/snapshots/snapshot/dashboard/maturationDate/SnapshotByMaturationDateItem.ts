@@ -51,7 +51,9 @@ export class SnapshotByMaturationDateItem extends TreeItem implements PiExtTreeI
         const resources: MaturationDateResource[] = await SnapshotByMaturationDateItem.getSnapshotByMaturationDate(this.email, this.snapshotData.snap_id, options) ?? [];
         return [
             new SnapshotMaturationFilterItem(this, this.email, this.snapshotData),
-            ...resources.map(resource => new MaturationDateItem(this, this.email, this.snapshotData, resource)),
+            ...resources
+                .sort((a, b) => new Date(b.maturation_date).getTime() - new Date(a.maturation_date).getTime())
+                .map(resource => new MaturationDateItem(this, this.email, this.snapshotData, resource)),
         ];
     }
 
