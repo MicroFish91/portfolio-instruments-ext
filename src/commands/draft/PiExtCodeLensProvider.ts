@@ -128,7 +128,7 @@ export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
             return undefined;
         }
 
-        let commandTitle: string = `${account.institution} | ${account.tax_shelter}`;
+        let commandTitle: string = `${account.institution} | ${account.name} | ${account.tax_shelter}`;
         if (holding.ticker) {
             commandTitle += ` | ${holding.ticker}`;
         }

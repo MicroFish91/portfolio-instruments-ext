@@ -207,6 +207,11 @@
         "command": "portfolioInstruments.setApiEndpoint",
         "title": "%portfolioInstruments.setApiEndpoint%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.plotSnapshots",
+        "title": "%portfolioInstruments.plotSnapshots%",
+        "category": "Portfolio Instruments"
       }
     ],
     "configuration": [
@@ -287,6 +292,10 @@
         },
         {
           "command": "portfolioInstruments.createSnapshotDraft",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.plotSnapshots",
           "when": "never"
         },
         {
@@ -417,6 +426,11 @@
           "command": "portfolioInstruments.createSnapshotDraft",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.plotSnapshots",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
+          "group": "2@1"
         },
         {
           "command": "portfolioInstruments.editSnapshotDraft",
@@ -563,6 +577,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "chart.js": "^4.5.0",
     "dayjs": "^1.11.13",
     "isomorphic-fetch": "^3.0.0"
   }

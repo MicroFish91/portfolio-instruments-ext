@@ -21,6 +21,16 @@ export async function getSnapshots(token: string, page: number): Promise<GetSnap
     return await response.json() as GetSnapshotsApiResponse;
 }
 
+export async function getSnapshotsByDateRange(token: string, startDate: string, endDate: string) {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots?order_date_by=DESC&snap_date_lower=${startDate}&snap_date_upper=${endDate}`, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    return await response.json() as GetSnapshotsApiResponse;
+}
+
 export async function getSnapshotsLatest(token: string): Promise<GetSnapshotsApiResponse> {
     const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots?order_date_by=DESC&page_size=1`, {
         method: "GET",
