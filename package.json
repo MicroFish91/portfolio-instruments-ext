@@ -577,7 +577,6 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "chart.js": "^4.5.0",
     "dayjs": "^1.11.13",
     "isomorphic-fetch": "^3.0.0"
   }
