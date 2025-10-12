@@ -4,7 +4,7 @@ import { validationUtils } from "../../../utils/validationUtils";
 import { SnapshotsPlotContext } from "./SnapshotsPlotContext";
 
 export class SnapshotStartDatePromptStep<T extends SnapshotsPlotContext> extends PromptStep<T> {
-    constructor(readonly startDate?: string) {
+    constructor(readonly options: { startDate?: string } = {}) {
         super();
     }
 
@@ -12,7 +12,7 @@ export class SnapshotStartDatePromptStep<T extends SnapshotsPlotContext> extends
         context.startDate = (await context.ui.showInputBox({
             title: this.title,
             prompt: l10n.t('Enter a start date (mm/dd/yyyy).'),
-            value: this.startDate,
+            value: this.options.startDate,
             validateInput: this.validateInput,
         }))?.trim();
     }

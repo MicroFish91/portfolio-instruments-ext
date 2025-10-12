@@ -9,6 +9,7 @@ import { SnapshotsPlotStep } from './SnapshotsPlotStep';
 import { SnapshotStartDatePromptStep } from './SnapshotsStartDatePromptStep';
 import { SnapshotEndDatePromptStep } from './SnapshotEndDatePromptStep';
 import { SnapshotsGetByDateRangeStep } from './SnapshotsGetByDateRangeStep';
+import { getSnapshotsEarliest, getSnapshotsLatest } from '../../../sdk/snapshots/getSnapshots';
 
 export async function plotSnapshots(context: CommandContext, item: SnapshotsItem) {
     const wizardContext: SnapshotsPlotContext = {
@@ -20,8 +21,8 @@ export async function plotSnapshots(context: CommandContext, item: SnapshotsItem
     const wizard: Wizard<SnapshotsPlotContext> = new Wizard(wizardContext, {
         title: vscode.l10n.t('Plot Snapshot Range'),
         promptSteps: [
-            new SnapshotStartDatePromptStep(),
-            new SnapshotEndDatePromptStep(),
+            new SnapshotStartDatePromptStep({ startDate: (await getSnapshotsEarliest(wizardContext.token)).data?.snapshots[0]?.snap_date }),
+            new SnapshotEndDatePromptStep({ endDate: (await getSnapshotsLatest(wizardContext.token)).data?.snapshots[0]?.snap_date }),
         ],
         executeSteps: [
             new SnapshotsGetByDateRangeStep(),
