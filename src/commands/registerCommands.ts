@@ -28,6 +28,7 @@ import { updateRebalanceSettings } from "./settings/updateRebalanceSettings/upda
 import { decrementSnapshotPage } from "./snapshots/decrementSnapshotPage";
 import { deleteSnapshot } from "./snapshots/deleteSnapshot/deleteSnapshot";
 import { incrementSnapshotPage } from "./snapshots/incrementSnapshotPage";
+import { plotSnapshots } from "./snapshots/plotSnapshots/plotSnapshots";
 import { updateMaturationEnd } from "./snapshots/updateMaturationDate/updateMaturationEnd/updateMaturationEnd";
 import { updateMaturationStart } from "./snapshots/updateMaturationDate/updateMaturationStart/updateMaturationStart";
 import { updateSnapshot } from "./snapshots/updateSnapshot/updateSnapshot";
@@ -83,6 +84,7 @@ export function registerCommands() {
     registerCommand('portfolioInstruments.updateMaturationEnd', updateMaturationEnd);
     registerCommand('portfolioInstruments.incrementSnapshotPage', incrementSnapshotPage);
     registerCommand('portfolioInstruments.decrementSnapshotPage', decrementSnapshotPage);
+    registerCommand('portfolioInstruments.plotSnapshots', plotSnapshots);  // Webview
 
     // Snapshot values
     registerCommand('portfolioInstruments.createSnapshotValue', createSnapshotValue);
