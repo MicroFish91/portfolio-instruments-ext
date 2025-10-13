@@ -563,7 +563,8 @@
     }
   },
   "scripts": {
-    "compile": "webpack"
+    "compile": "webpack",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/node": "20.x",

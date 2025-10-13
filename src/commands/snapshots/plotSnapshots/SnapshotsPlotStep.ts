@@ -32,9 +32,9 @@ export class SnapshotsPlotStep<T extends SnapshotsPlotContext> extends ExecuteSt
     }
 
     private generateWebviewContent(context: T, panel: vscode.WebviewPanel): string {
-        const plotJsUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(ext.context.extensionUri, 'src', 'commands', 'snapshots', 'plotSnapshots', 'plot.js'));
-        const minifiedChartJsUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(ext.context.extensionUri, 'resources', 'libs', 'chart.min.js'));
-        const minifiedChartAnnotationJsUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(ext.context.extensionUri, 'resources', 'libs', 'chart.annotation.min.js'));
+        const plotJsUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(ext.context.extensionUri, 'resources', 'chart', 'plot.js'));
+        const minifiedChartJsUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(ext.context.extensionUri, 'resources', 'chart', 'chart.min.js'));
+        const minifiedChartAnnotationJsUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(ext.context.extensionUri, 'resources', 'chart', 'chart.annotation.min.js'));
 
         const snapshots: Snapshot[] = this.dedupeSnapshotsByMonth(nonNullProp(context, 'snapshots')).reverse();
         const { xAxis, yAxis } = this.calculateChartAxisValues(snapshots);
