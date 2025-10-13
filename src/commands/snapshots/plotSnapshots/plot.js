@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             borderWidth: 2,
                             label: {
                                 content: [
-                                    `${Number(va.xAxis.split('-')[1]) - 1}`,
+                                    va.xAxis.split('-')[1],
                                     `Annual Increase: ${va.annualIncreasePct?.toFixed(2) ?? '--'}%`,
                                     `Estimated Total: $${va.rawTotal.toFixed(2)}`
                                 ],
