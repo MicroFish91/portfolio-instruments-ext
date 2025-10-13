@@ -22,6 +22,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: {
                     display: true,
                     text: 'Net Worth Over Time'
+                },
+                annotation: {
+                    annotations: verticalAnnotations.map((va) => {
+                        return {
+                            type: 'line',
+                            mode: 'vertical',
+                            scaleID: 'x',
+                            value: va.xAxis,
+                            borderColor: 'white', 
+                            borderWidth: 2,
+                            label: {
+                                content: [
+                                    `${Number(va.xAxis.split('-')[1]) - 1}`,
+                                    `Annual Increase: ${va.annualIncreasePct?.toFixed(2) ?? '--'}%`,
+                                    `Estimated Total: $${va.rawTotal.toFixed(2)}`
+                                ],
+                                display: true, 
+                                position: 'center',
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                color: 'black', // Text color
+                                font: {
+                                    size: 12,
+                                },
+                            },
+                        };
+                    })
                 }
             },
             scales: {

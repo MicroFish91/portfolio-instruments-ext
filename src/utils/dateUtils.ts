@@ -1,6 +1,6 @@
 import { nonNullValue } from "./nonNull";
 
-const months: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export const months: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 /**
  * @param previousDate mm/yyyy
@@ -67,4 +67,13 @@ export function getMonthFromMonthYearLabel(label: string): string {
 export function getYearFromMonthYearLabel(label: string): string {
     const year: string = label.split('-')[1];
     return year;
+}
+
+/**
+ * @param date mm/dd/yyyy
+ * @returns yyyy-mm-dd
+ */
+export function convertDateToISOFormat(date: string): string {
+    const [month, day, year] = date.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 }
