@@ -1,8 +1,9 @@
 import { l10n, Progress } from "vscode";
 import { SnapshotMaturationStartItem } from "../../../../tree/snapshots/snapshot/dashboard/maturationDate/SnapshotMaturationStartItem";
 import { MaturationUpdateContext } from "../MaturationUpdateContext";
+import { ExecuteStep } from "../../../../wizard/ExecuteStep";
 
-export class MaturationStartUpdateStep<T extends MaturationUpdateContext> {
+export class MaturationStartUpdateStep<T extends MaturationUpdateContext> extends ExecuteStep<T> {
     priority: 200;
 
     async execute(context: T, progress: Progress<{ message?: string; increment?: number }>) {
