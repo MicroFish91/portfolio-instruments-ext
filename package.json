@@ -2,7 +2,7 @@
   "name": "portfolio-instruments",
   "displayName": "Portfolio Instruments",
   "description": "%portfolioInstruments.description%",
-  "version": "1.2.0",
+  "version": "1.2.1-alpha.0",
   "publisher": "MicroFish",
   "author": "MicroFish91",
   "icon": "resources/core/pi_logo.png",
