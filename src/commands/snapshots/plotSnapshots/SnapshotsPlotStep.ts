@@ -76,6 +76,7 @@ export class SnapshotsPlotStep<T extends SnapshotsPlotContext> extends ExecuteSt
         return { xAxis, yAxis };
     }
 
+    // Example: ['Jan-2025', 'Feb-2025', etc...]
     private calculateXAxisValues(startYear: number, endYear: number): string[] {
         const xAxis: string[] = [];
 
@@ -121,6 +122,8 @@ export class SnapshotsPlotStep<T extends SnapshotsPlotContext> extends ExecuteSt
         return yAxis;
     }
 
+    // These are vertical chart lines shown at each yearly interval.
+    // It shows year totals, % appreciation, etc.
     private getAnnualizedChartAnnotations(snapshots: Snapshot[]): VerticalAnnotation[] {
         const annotations: VerticalAnnotation[] = [];
 
@@ -156,6 +159,7 @@ export class SnapshotsPlotStep<T extends SnapshotsPlotContext> extends ExecuteSt
         return annotations;
     }
 
+    // Since we only plot values per month, values in the same month should be deduped
     private dedupeSnapshotsByMonth(snapshots: Snapshot[]): Snapshot[] {
         return snapshots.reduce(((dedupedSnapshots: Snapshot[], currentSnapshot: Snapshot) => {
             const lastSnapshot: Snapshot | undefined = dedupedSnapshots.at(-1);
