@@ -1,5 +1,14 @@
 # Change Log
 
+## v1.2.0
+### Added
+* Added a way to graph your snapshots / net worth over time
+
+### Changed
+* Show account name when editing through the snapshot code lens
+* Order liquidity items from most to least value
+* Order maturation date items by maturation date
+
 ## v1.1.0
 ### Added
 * Added live code lens for the snapshot draft editor
