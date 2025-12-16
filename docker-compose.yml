@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   app:
-    image: microfish91/portfolio-instruments-api:${APP_VERSION:-v2}
+    image: microfish91/portfolio-instruments-api:${API_VERSION:-v2}
     ports:
       - "3000:3000"
     depends_on:
