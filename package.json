@@ -564,6 +564,9 @@
   },
   "scripts": {
     "compile": "webpack",
+    "v2-api:up": "docker-compose up -d",
+    "v1-api:up": "APP_VERSION=v1 docker-compose up -d",
+    "api:down": "docker-compose down",
     "package": "vsce package"
   },
   "devDependencies": {
