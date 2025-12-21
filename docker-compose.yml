@@ -1,11 +1,5 @@
 version: "3.9"
 services:
-  app:
-    image: microfish91/portfolio-instruments-api:${API_VERSION:-v2}
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
   db:
     image: postgres
     restart: always
@@ -17,6 +11,33 @@ services:
       - "5431:5432"
     volumes:
       - db:/var/lib/posgressql
+
+  migrate:
+    image: microfish91/portfolio-instruments-api:migrate
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: db 
+      DB_USER: app
+      DB_PASSWORD: app
+      DB_SSL_MODE: disable
+
+  app:
+    image: microfish91/portfolio-instruments-api:${API_VERSION:-v2}
+    depends_on:
+      - db
+      - migrate
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: db 
+      DB_USER: app
+      DB_PASSWORD: app
+      DB_SSL_MODE: disable
+    ports:
+      - "3000:3000"
 
 volumes:
   db:
