@@ -2,7 +2,7 @@ import { l10n } from "vscode";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../../wizard/UserInterface";
 import { CommandContext } from "../../registerCommand";
-import { SnapshotValue } from "../../../sdk/types/snapshots";
+import { SnapshotValue } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValueSkipRebalanceStep<T extends CommandContext & { snapshotValue?: SnapshotValue, skipRebalance?: boolean }> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {

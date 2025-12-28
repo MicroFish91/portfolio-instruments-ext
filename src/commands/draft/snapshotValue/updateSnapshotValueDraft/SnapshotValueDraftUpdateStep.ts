@@ -1,9 +1,9 @@
 import { l10n, Progress } from "vscode";
 import { ext } from "../../../../extensionVariables";
-import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "../../../../tree/snapshots/draft/SnapshotDraftItem";
 import { SnapshotValueDraftUpdateContext } from "./SnapshotValueDraftUpdateContext";
 import { nonNullProp } from "../../../../utils/nonNull";
+import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValueDraftUpdateStep<T extends SnapshotValueDraftUpdateContext> {
     priority: 200;

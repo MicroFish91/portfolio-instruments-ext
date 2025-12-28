@@ -1,5 +1,7 @@
 import { l10n } from "vscode";
 
+export const latestApiVersion: string = 'v2';
+
 export const orderKeyPrefix: string = 'pi-order:';
 export const tokenStorageKey: string = 'pi-token-storage';
 

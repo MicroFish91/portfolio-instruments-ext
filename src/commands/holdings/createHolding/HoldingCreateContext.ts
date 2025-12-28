@@ -1,5 +1,5 @@
+import { AssetCategory, Holding } from "../../../sdk/portfolio-instruments-api";
 import { AuthContext } from "../../AuthContext";
-import { AssetCategory, Holding } from "../../../sdk/types/holdings";
 import { HoldingType } from "./HoldingTypeListStep";
 
 export type HoldingCreateContext = AuthContext & {

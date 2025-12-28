@@ -1,5 +1,5 @@
+import { Account, TaxShelter } from "../../../sdk/portfolio-instruments-api";
 import { AuthContext } from "../../AuthContext";
-import { Account, TaxShelter } from "../../../sdk/types/accounts";
 
 export type AccountCreateContext = AuthContext & {
     accountName?: string;

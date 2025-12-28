@@ -1,7 +1,8 @@
 import { l10n, Progress } from "vscode";
 import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { SnapshotsPlotContext } from "./SnapshotsPlotContext";
-import { GetSnapshotsApiResponse, getSnapshotsByDateRange } from "../../../sdk/snapshots/getSnapshots";
+import { getSnapshotsByDateRange } from "../../../sdk/snapshots/getSnapshots";
+import { GetSnapshotsResponse } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotsGetByDateRangeStep<T extends SnapshotsPlotContext> extends ExecuteStep<T> {
     priority: 200;
@@ -14,7 +15,7 @@ export class SnapshotsGetByDateRangeStep<T extends SnapshotsPlotContext> extends
 
         progress.report({ message: l10n.t("Getting snapshots...") });
 
-        const response: GetSnapshotsApiResponse = await getSnapshotsByDateRange(context.token, context.startDate, context.endDate);
+        const response: GetSnapshotsResponse = await getSnapshotsByDateRange(context.token, context.startDate, context.endDate);
         if (response.error) {
             context.snapshots = [];
             return;

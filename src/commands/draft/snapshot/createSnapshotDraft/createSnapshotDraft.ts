@@ -20,7 +20,6 @@ export async function createSnapshotDraft(context: CommandContext, item: Snapsho
         ...context,
         token: nonNullValue(await getAuthToken(item.email)),
         email: item.email,
-        settings: item.settings,
     };
 
     const wizard: Wizard<SnapshotDraftCreateContext> = new Wizard(wizardContext, {
@@ -28,7 +27,7 @@ export async function createSnapshotDraft(context: CommandContext, item: Snapsho
         promptSteps: [
             new SnapshotDateStep(),
             new SnapshotDescriptionStep(),
-            new BenchmarkListStep({ currentId: item.settings.benchmark_id }),
+            new BenchmarkListStep(/** Todo: { currentId: item.settings.benchmark_id } */),
         ],
         executeSteps: [
             new SnapshotDraftCreateStep(item),

@@ -1,10 +1,9 @@
 import { l10n, Progress } from "vscode";
 import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { BenchmarkCreateContext } from "./BenchmarkCreateContext";
-import { createBenchmark, CreateBenchmarkApiResponse } from "../../../sdk/benchmarks/createBenchmark";
+import { createBenchmark } from "../../../sdk/benchmarks/createBenchmark";
 import { nonNullProp } from "../../../utils/nonNull";
-import { AssetAllocationPct } from "../../../sdk/types/benchmarks";
-import { AssetCategory } from "../../../sdk/types/holdings";
+import { AssetAllocationPct, AssetCategory, CreateBenchmarkResponse } from "../../../sdk/portfolio-instruments-api";
 
 export class BenchmarkCreateStep<T extends BenchmarkCreateContext> extends ExecuteStep<T> {
     priority: 200;
@@ -26,7 +25,7 @@ export class BenchmarkCreateStep<T extends BenchmarkCreateContext> extends Execu
             });
         }
 
-        const response: CreateBenchmarkApiResponse = await createBenchmark(context.token, {
+        const response: CreateBenchmarkResponse = await createBenchmark(context.token, {
             name: nonNullProp(context, 'benchmarkName'),
             description: context.benchmarkDescription,
             asset_allocation: assetAllocation,

@@ -1,5 +1,4 @@
-import { CreateSnapshotPayload } from "../../../../sdk/snapshots/createSnapshot";
-import { Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
+import { CreateSnapshotPayload, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 import { AuthContext } from "../../../AuthContext";
 
 export type SnapshotDraftDeployContext = AuthContext & {

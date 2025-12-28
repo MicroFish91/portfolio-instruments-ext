@@ -1,10 +1,10 @@
 import { ThemeIcon, TreeItem } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
-import { Holding } from "../../sdk/types/holdings";
 import { HoldingsItem } from "./HoldingsItem";
 import { createContextValue } from "../../utils/contextUtils";
 import { reorderableContext, viewPropertiesContext } from "../../constants";
 import { Reorderable } from "../reorder";
+import { Holding } from "../../sdk/portfolio-instruments-api";
 
 export class HoldingItem extends TreeItem implements PiExtTreeItem, Reorderable {
     static readonly contextValue: string = 'holdingItem';

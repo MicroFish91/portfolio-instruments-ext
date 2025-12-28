@@ -1,9 +1,8 @@
 import { PromptStep } from "../../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../../wizard/UserInterface";
 import { l10n } from "vscode";
-import { AssetCategory } from "../../../sdk/types/holdings";
 import { BenchmarkCreateContext } from "./BenchmarkCreateContext";
-import { AssetAllocationPct } from "../../../sdk/types/benchmarks";
+import { AssetAllocationPct, AssetCategory } from "../../../sdk/portfolio-instruments-api";
 
 export class BenchmarkAssetCategoriesStep<T extends BenchmarkCreateContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {
@@ -29,31 +28,37 @@ export class BenchmarkAssetCategoriesStep<T extends BenchmarkCreateContext> exte
         return [
             { label: "Cash", description: "CASH", picked: categories.has(AssetCategory.Cash), data: AssetCategory.Cash },
             { label: "Bills", description: "BILLS", picked: categories.has(AssetCategory.Bills), data: AssetCategory.Bills },
-            { label: "Short-Term Bonds", description: "STB", picked: categories.has(AssetCategory.Stb), data: AssetCategory.Stb },
-            { label: "Intermediate-Term Bonds", description: "ITB", picked: categories.has(AssetCategory.Itb), data: AssetCategory.Itb },
-            { label: "Long-Term Bonds", description: "LTB", picked: categories.has(AssetCategory.Ltb), data: AssetCategory.Ltb },
-            { label: "Total Stock Market", description: "TSM", picked: categories.has(AssetCategory.Tsm), data: AssetCategory.Tsm },
-            { label: "Domestic Large-Cap Blend", description: "DLCB", picked: categories.has(AssetCategory.Dlcb), data: AssetCategory.Dlcb },
-            { label: "Domestic Large-Cap Growth", description: "DLCG", picked: categories.has(AssetCategory.Dlcg), data: AssetCategory.Dlcg },
-            { label: "Domestic Large-Cap Value", description: "DLCV", picked: categories.has(AssetCategory.Dlcv), data: AssetCategory.Dlcv },
-            { label: "Domestic Mid-Cap Blend", description: "DMCB", picked: categories.has(AssetCategory.Dmcb), data: AssetCategory.Dmcb },
-            { label: "Domestic Mid-Cap Growth", description: "DMCG", picked: categories.has(AssetCategory.Dmcg), data: AssetCategory.Dmcg },
-            { label: "Domestic Mid-Cap Value", description: "DMCV", picked: categories.has(AssetCategory.Dmcv), data: AssetCategory.Dmcv },
-            { label: "Domestic Small-Cap Growth", description: "DSCG", picked: categories.has(AssetCategory.Dscg), data: AssetCategory.Dscg },
-            { label: "Domestic Small-Cap Bonds", description: "DSCB", picked: categories.has(AssetCategory.Dscb), data: AssetCategory.Dscb },
-            { label: "Domestic Small-Cap Value", description: "DSCV", picked: categories.has(AssetCategory.Dscv), data: AssetCategory.Dscv },
-            { label: "International Large-Cap Blend", description: "ILCB", picked: categories.has(AssetCategory.Ilcb), data: AssetCategory.Ilcb },
-            { label: "International Large-Cap Growth", description: "ILCG", picked: categories.has(AssetCategory.Ilcg), data: AssetCategory.Ilcg },
-            { label: "International Large-Cap Value", description: "ILCV", picked: categories.has(AssetCategory.Ilcv), data: AssetCategory.Ilcv },
-            { label: "International Mid-Cap Blend", description: "IMCB", picked: categories.has(AssetCategory.Imcb), data: AssetCategory.Imcb },
-            { label: "International Mid-Cap Growth", description: "IMCG", picked: categories.has(AssetCategory.Imcg), data: AssetCategory.Imcg },
-            { label: "International Mid-Cap Value", description: "IMCV", picked: categories.has(AssetCategory.Imcv), data: AssetCategory.Imcv },
-            { label: "International Small-Cap Blend", description: "ISCB", picked: categories.has(AssetCategory.Iscb), data: AssetCategory.Iscb },
-            { label: "International Small-Cap Growth", description: "ISCG", picked: categories.has(AssetCategory.Iscg), data: AssetCategory.Iscg },
-            { label: "International Small-Cap Value", description: "ISCV", picked: categories.has(AssetCategory.Iscv), data: AssetCategory.Iscv },
+            { label: "Short-Term Bonds", description: "STB", picked: categories.has(AssetCategory.STB), data: AssetCategory.STB },
+            { label: "Intermediate-Term Bonds", description: "ITB", picked: categories.has(AssetCategory.ITB), data: AssetCategory.ITB },
+            { label: "Long-Term Bonds", description: "LTB", picked: categories.has(AssetCategory.LTB), data: AssetCategory.LTB },
+            { label: "Total Stock Market", description: "TSM", picked: categories.has(AssetCategory.TSM), data: AssetCategory.TSM },
+            { label: "Domestic Large-Cap Blend", description: "DLCB", picked: categories.has(AssetCategory.DLCB), data: AssetCategory.DLCB },
+            { label: "Domestic Large-Cap Growth", description: "DLCG", picked: categories.has(AssetCategory.DLCG), data: AssetCategory.DLCG },
+            { label: "Domestic Large-Cap Value", description: "DLCV", picked: categories.has(AssetCategory.DLCV), data: AssetCategory.DLCV },
+            { label: "Domestic Large-Cap Momentum", description: "DLCM", picked: categories.has(AssetCategory.DLCM), data: AssetCategory.DLCM },
+            { label: "Domestic Mid-Cap Blend", description: "DMCB", picked: categories.has(AssetCategory.DMCB), data: AssetCategory.DMCB },
+            { label: "Domestic Mid-Cap Growth", description: "DMCG", picked: categories.has(AssetCategory.DMCG), data: AssetCategory.DMCG },
+            { label: "Domestic Mid-Cap Value", description: "DMCV", picked: categories.has(AssetCategory.DMCV), data: AssetCategory.DMCV },
+            { label: "Domestic Mid-Cap Momentum", description: "DMCM", picked: categories.has(AssetCategory.DMCM), data: AssetCategory.DMCM },
+            { label: "Domestic Small-Cap Growth", description: "DSCG", picked: categories.has(AssetCategory.DSCG), data: AssetCategory.DSCG },
+            { label: "Domestic Small-Cap Bonds", description: "DSCB", picked: categories.has(AssetCategory.DSCB), data: AssetCategory.DSCB },
+            { label: "Domestic Small-Cap Value", description: "DSCV", picked: categories.has(AssetCategory.DSCV), data: AssetCategory.DSCV },
+            { label: "Domestic Small-Cap Momentum", description: "DSCM", picked: categories.has(AssetCategory.DSCM), data: AssetCategory.DSCM },
+            { label: "International Large-Cap Blend", description: "ILCB", picked: categories.has(AssetCategory.ILCB), data: AssetCategory.ILCB },
+            { label: "International Large-Cap Growth", description: "ILCG", picked: categories.has(AssetCategory.ILCG), data: AssetCategory.ILCG },
+            { label: "International Large-Cap Value", description: "ILCV", picked: categories.has(AssetCategory.ILCV), data: AssetCategory.ILCV },
+            { label: "International Large-Cap Momentum", description: "ILCM", picked: categories.has(AssetCategory.ILCM), data: AssetCategory.ILCM },
+            { label: "International Mid-Cap Blend", description: "IMCB", picked: categories.has(AssetCategory.IMCB), data: AssetCategory.IMCB },
+            { label: "International Mid-Cap Growth", description: "IMCG", picked: categories.has(AssetCategory.IMCG), data: AssetCategory.IMCG },
+            { label: "International Mid-Cap Value", description: "IMCV", picked: categories.has(AssetCategory.IMCV), data: AssetCategory.IMCV },
+            { label: "International Mid-Cap Momentum", description: "IMCM", picked: categories.has(AssetCategory.IMCM), data: AssetCategory.IMCM },
+            { label: "International Small-Cap Blend", description: "ISCB", picked: categories.has(AssetCategory.ISCB), data: AssetCategory.ISCB },
+            { label: "International Small-Cap Growth", description: "ISCG", picked: categories.has(AssetCategory.ISCG), data: AssetCategory.ISCG },
+            { label: "International Small-Cap Value", description: "ISCV", picked: categories.has(AssetCategory.ISCV), data: AssetCategory.ISCV },
+            { label: "International Small-Cap Momentum", description: "ISCM", picked: categories.has(AssetCategory.ISCM), data: AssetCategory.ISCM },
             { label: "Commodities", description: "COMMODITIES", picked: categories.has(AssetCategory.Commodities), data: AssetCategory.Commodities },
             { label: "Gold", description: "GOLD", picked: categories.has(AssetCategory.Gold), data: AssetCategory.Gold },
-            { label: "Real-Estate Investment Trusts", description: "REITS", picked: categories.has(AssetCategory.Reits), data: AssetCategory.Reits },
+            { label: "Real-Estate Investment Trusts", description: "REITS", picked: categories.has(AssetCategory.REITS), data: AssetCategory.REITS },
             { label: "Crypto Currency", description: "CRYPTO", picked: categories.has(AssetCategory.Crypto), data: AssetCategory.Crypto },
             { label: "Other", description: "OTHER", picked: categories.has(AssetCategory.Other), data: AssetCategory.Other },
         ];

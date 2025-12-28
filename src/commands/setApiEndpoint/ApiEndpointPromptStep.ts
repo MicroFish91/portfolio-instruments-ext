@@ -1,6 +1,6 @@
 import { l10n } from "vscode";
-import { PromptStep } from "../../../wizard/PromptStep";
 import { ApiEndpointSetContext } from "./ApiEndpointSetContext";
+import { PromptStep } from "../../wizard/PromptStep";
 
 export class ApiEndpointPromptStep<T extends ApiEndpointSetContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {

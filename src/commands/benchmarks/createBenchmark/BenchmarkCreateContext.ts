@@ -1,6 +1,5 @@
+import { AssetCategory, Benchmark } from "../../../sdk/portfolio-instruments-api";
 import { AuthContext } from "../../AuthContext";
-import { Benchmark } from "../../../sdk/types/benchmarks";
-import { AssetCategory } from "../../../sdk/types/holdings";
 
 export type BenchmarkCreateContext = AuthContext & {
     benchmarkName?: string;

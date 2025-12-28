@@ -1,7 +1,6 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAccounts } from "../../sdk/accounts/getAccounts";
-import { Account } from "../../sdk/types/accounts";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
 import { AccountItem } from "./AccountItem";
@@ -9,6 +8,7 @@ import { createContextValue } from "../../utils/contextUtils";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { ext } from "../../extensionVariables";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
+import { Account } from "../../sdk/portfolio-instruments-api";
 
 export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'accountsItem';

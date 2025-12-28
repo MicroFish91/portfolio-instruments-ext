@@ -1,7 +1,8 @@
 import { Progress } from "vscode";
 import { SnapshotDraftDeployContext } from "./SnapshotDraftDeployContext";
-import { createSnapshot, CreateSnapshotApiResponse } from "../../../../sdk/snapshots/createSnapshot";
+import { createSnapshot } from "../../../../sdk/snapshots/createSnapshot";
 import { ExecuteStep } from "../../../../wizard/ExecuteStep";
+import { CreateSnapshotResponse } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotDraftDeployStep<T extends SnapshotDraftDeployContext> extends ExecuteStep<T> {
     priority: 200;
@@ -9,7 +10,7 @@ export class SnapshotDraftDeployStep<T extends SnapshotDraftDeployContext> exten
     async execute(context: T, progress: Progress<{ message?: string; increment?: number }>) {
         progress.report({ message: "Creating snapshot..." });
 
-        const response: CreateSnapshotApiResponse = await createSnapshot(context.token, {
+        const response: CreateSnapshotResponse = await createSnapshot(context.token, {
             snap_date: context.snapshotPayload.snap_date,
             description: context.snapshotPayload.description,
             benchmark_id: context.snapshotPayload.benchmark_id,

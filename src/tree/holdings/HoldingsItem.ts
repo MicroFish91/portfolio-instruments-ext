@@ -2,13 +2,13 @@ import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
-import { Holding } from "../../sdk/types/holdings";
 import { getHoldings } from "../../sdk/holdings/getHoldings";
 import { HoldingItem } from "./HoldingItem";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { createContextValue } from "../../utils/contextUtils";
 import { ext } from "../../extensionVariables";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
+import { Holding } from "../../sdk/portfolio-instruments-api";
 
 export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'holdingsItem';

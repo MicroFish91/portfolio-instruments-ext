@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
-import { Account } from '../../sdk/types/accounts';
 import { AccountsItem } from '../../tree/accounts/AccountsItem';
 import { HoldingsItem } from '../../tree/holdings/HoldingsItem';
-import { Holding } from '../../sdk/types/holdings';
+import { Account, Holding } from '../../sdk/portfolio-instruments-api';
 
 export class PiExtCodeLensProvider implements vscode.CodeLensProvider {
     static fileSuffix: string = '.pi-snapshot.json';

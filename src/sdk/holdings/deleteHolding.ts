@@ -1,21 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Holding } from "../types/holdings";
+import { DeleteHoldingResponse } from "../portfolio-instruments-api";
 
-export type DeleteHoldingApiResponse = {
-    status: number;
-    data?: {
-        message: string;
-        holding: Holding;
-    };
-    error?: string;
-};
-
-export async function deleteHolding(token: string, holdingId: number): Promise<DeleteHoldingApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/holdings/${holdingId}`, {
+export async function deleteHolding(token: string, holdingId: number): Promise<DeleteHoldingResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/holdings/${holdingId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as DeleteHoldingApiResponse;
+    return await response.json() as DeleteHoldingResponse;
 }

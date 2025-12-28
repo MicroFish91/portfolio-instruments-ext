@@ -1,22 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Benchmark } from "../types/benchmarks";
-import { PaginationMetadata } from "../types/pagination";
+import { GetBenchmarksResponse } from "../portfolio-instruments-api";
 
-export type GetBenchmarksApiResponse = {
-    status: number;
-    data?: {
-        benchmarks: Benchmark[];
-        pagination: PaginationMetadata;
-    };
-    error?: string;
-};
-
-export async function getBenchmarks(token: string): Promise<GetBenchmarksApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/benchmarks`, {
+export async function getBenchmarks(token: string): Promise<GetBenchmarksResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/benchmarks`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as GetBenchmarksApiResponse;
+    return await response.json() as GetBenchmarksResponse;
 }

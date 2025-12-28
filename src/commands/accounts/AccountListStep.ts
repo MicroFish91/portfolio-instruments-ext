@@ -2,8 +2,8 @@ import { l10n } from "vscode";
 import { AuthContext } from "../AuthContext";
 import { PromptStep } from "../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../wizard/UserInterface";
-import { Account } from "../../sdk/types/accounts";
 import { AccountsItem } from "../../tree/accounts/AccountsItem";
+import { Account } from "../../sdk/portfolio-instruments-api";
 
 export type AccountListStepOptions = {
     currentId?: number;

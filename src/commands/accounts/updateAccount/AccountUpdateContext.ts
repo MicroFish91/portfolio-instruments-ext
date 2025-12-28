@@ -1,4 +1,4 @@
-import { Account } from "../../../sdk/types/accounts";
+import { Account } from "../../../sdk/portfolio-instruments-api";
 import { AccountCreateContext } from "../createAccount/AccountCreateContext";
 
 export type AccountUpdateContext = AccountCreateContext & {

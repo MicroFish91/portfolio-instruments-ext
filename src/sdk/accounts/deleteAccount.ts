@@ -1,21 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Account } from "../types/accounts";
+import { DeleteAccountResponse } from "../portfolio-instruments-api";
 
-export type DeleteAccountApiResponse = {
-    status: number;
-    data?: {
-        message: string;
-        account: Account;
-    };
-    error?: string;
-};
-
-export async function deleteAccount(token: string, accountId: number): Promise<DeleteAccountApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/accounts/${accountId}`, {
+export async function deleteAccount(token: string, accountId: number): Promise<DeleteAccountResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/accounts/${accountId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as DeleteAccountApiResponse;
+    return await response.json() as DeleteAccountResponse;
 }

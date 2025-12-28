@@ -1,24 +1,14 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { MaturationDateResource } from "../types/snapshots";
-
-export type GetSnapshotByMaturationDateApiResponse = {
-    status: number;
-    data?: {
-        resources: MaturationDateResource[];
-        field_type: string;
-        maturation_start: string;
-        maturation_end: string;
-    };
-    error?: string;
-};
+import { GetSnapshotMaturationDateResponse } from "../portfolio-instruments-api";
 
 export type GetSnapshotMaturationDateOptions = {
     startDate?: string;
     endDate?: string;
 };
 
-export async function getSnapshotByMaturationDate(token: string, snapshotId: number, options?: GetSnapshotMaturationDateOptions): Promise<GetSnapshotByMaturationDateApiResponse> {
-    let url: string = `${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=MATURATION_DATE`;
+export async function getSnapshotByMaturationDate(token: string, snapshotId: number, options?: GetSnapshotMaturationDateOptions): Promise<GetSnapshotMaturationDateResponse> {
+    let url: string = `${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots/${snapshotId}?group_by=MATURATION_DATE`;
     if (options?.startDate) {
         url += `&maturation_start=${options.startDate}`;
     }
@@ -33,5 +23,5 @@ export async function getSnapshotByMaturationDate(token: string, snapshotId: num
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as GetSnapshotByMaturationDateApiResponse;
+    return await response.json() as GetSnapshotMaturationDateResponse;
 }

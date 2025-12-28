@@ -1,11 +1,11 @@
 import { ThemeIcon, TreeItem } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
-import { Account } from "../../sdk/types/accounts";
 import { createContextValue } from "../../utils/contextUtils";
 import { reorderableContext, viewPropertiesContext } from "../../constants";
 import { capitalize } from "../../utils/textUtils";
 import { AccountsItem } from "./AccountsItem";
 import { Reorderable } from "../reorder";
+import { Account } from "../../sdk/portfolio-instruments-api";
 
 export class AccountItem extends TreeItem implements PiExtTreeItem, Reorderable {
     static readonly contextValue: string = 'accountItem';

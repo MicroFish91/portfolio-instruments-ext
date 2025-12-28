@@ -1,5 +1,4 @@
-import { Settings } from "../../../sdk/types/settings";
-import { User } from "../../../sdk/types/user";
+import { User } from "../../../sdk/portfolio-instruments-api";
 import { CommandContext } from "../../registerCommand";
 
 export type LoginContext = CommandContext & {
@@ -8,5 +7,4 @@ export type LoginContext = CommandContext & {
 
     token?: string;
     user?: User;
-    settings?: Settings;
 };

@@ -1,10 +1,10 @@
 import { l10n } from "vscode";
-import { Wizard } from "../../../wizard/Wizard";
-import { CommandContext } from "../../registerCommand";
 import { ApiEndpointSetContext } from "./ApiEndpointSetContext";
-import { ext } from "../../../extensionVariables";
 import { ApiEndpointPromptStep } from "./ApiEndpointPromptStep";
 import { ApiEndpointSetStep } from "./ApiEndpointSetStep";
+import { CommandContext } from "../registerCommand";
+import { Wizard } from "../../wizard/Wizard";
+import { ext } from "../../extensionVariables";
 
 export async function setApiEndpoint(context: CommandContext): Promise<void> {
     const wizard: Wizard<ApiEndpointSetContext> = new Wizard(context, {

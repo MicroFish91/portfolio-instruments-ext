@@ -1,8 +1,8 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
-import { Snapshot } from "../../../../../sdk/types/snapshots";
 import { ext } from "../../../../../extensionVariables";
 import { SnapshotByMaturationDateItem } from "./SnapshotByMaturationDateItem";
+import { Snapshot } from "../../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotMaturationStartItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotMaturationStartItem';

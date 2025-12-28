@@ -5,9 +5,9 @@ import { nonNullValue } from "../../utils/nonNull";
 import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { getBenchmarks } from "../../sdk/benchmarks/getBenchmarks";
-import { Benchmark } from "../../sdk/types/benchmarks";
 import { BenchmarkItem } from "./BenchmarkItem";
 import { ext } from "../../extensionVariables";
+import { Benchmark } from "../../sdk/portfolio-instruments-api";
 
 export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'benchmarksItem';

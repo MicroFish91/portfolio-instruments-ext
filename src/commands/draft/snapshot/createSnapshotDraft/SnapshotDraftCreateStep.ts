@@ -5,12 +5,11 @@ import { SnapshotsItem } from "../../../../tree/snapshots/SnapshotsItem";
 import { ext } from "../../../../extensionVariables";
 import { nonNullProp } from "../../../../utils/nonNull";
 import { getSnapshot } from "../../../../sdk/snapshots/getSnapshot";
-import { Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
-import { CreateSnapshotValuePayload } from "../../../../sdk/snapshotValue/createSnapshotValue";
 import { settingUtils } from "../../../../utils/settingUtils";
-import { GetSnapshotsApiResponse } from "../../../../sdk/snapshots/getSnapshots";
 import { SnapshotValuesItem } from "../../../../tree/snapshots/snapshot/SnapshotValuesItem";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds } from "../../../../tree/reorder";
+import { CreateSnapshotValuePayload, GetSnapshotsResponse, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
+import { latestApiVersion } from "../../../../constants";
 
 export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> extends ExecuteStep<T> {
     priority: 200;
@@ -42,13 +41,13 @@ export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> exten
     }
 
     private async tryGetMostRecentSnapshot(context: T, snapshotDate: string): Promise<Snapshot | undefined> {
-        const responseJson = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots?snap_date_upper=${snapshotDate}&order_date_by=DESC&page_size=1`, {
+        const responseJson = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots?snap_date_upper=${snapshotDate}&order_date_by=DESC&page_size=1`, {
             method: "GET",
             headers: {
                 'Authorization': `Bearer ${context.token}`,
             },
         });
-        const response = await responseJson.json() as GetSnapshotsApiResponse;
+        const response = await responseJson.json() as GetSnapshotsResponse;
         return response.data?.snapshots?.[0];
     }
 

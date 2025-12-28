@@ -1,13 +1,13 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../SnapshotItem";
-import { Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
 import { SnapshotRebalanceItem } from "./SnapshotRebalanceItem";
 import { SnapshotByInstitutionsItem } from "./SnapshotByInstitutionsItem";
 import { SnapshotByTaxShelterItem } from "./SnapshotByTaxShelterItem";
 import { SnapshotByAssetCategoryItem } from "./SnapshotByAssetCategoryItem";
 import { SnapshotByMaturationDateItem } from "./maturationDate/SnapshotByMaturationDateItem";
 import { SnapshotByLiquidityItem } from "./liquidity/SnapshotByLiquidityItem";
+import { Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotDashboardItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDashboardItem';

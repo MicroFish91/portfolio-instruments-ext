@@ -1,13 +1,13 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../SnapshotItem";
-import { ResourcesGrouped, Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
 import { getAuthToken } from "../../../../utils/tokenUtils";
 import { nonNullValue } from "../../../../utils/nonNull";
 import { createContextValue } from "../../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../../constants";
 import { GenericItem } from "../../../GenericItem";
-import { getSnapshotByTaxShelter, GetSnapshotByTaxShelterApiResponse } from "../../../../sdk/snapshots/getSnapshotByTaxShelter";
+import { getSnapshotByTaxShelter } from "../../../../sdk/snapshots/getSnapshotByTaxShelter";
+import { GetSnapshotAccountsResponse, ResourcesGrouped, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotByTaxShelterItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByTaxShelterItem';
@@ -54,7 +54,7 @@ export class SnapshotByTaxShelterItem extends TreeItem implements PiExtTreeItem 
     }
 
     static async getSnapshotByTaxShelter(email: string, snapId: number): Promise<ResourcesGrouped | undefined> {
-        const response: GetSnapshotByTaxShelterApiResponse = await getSnapshotByTaxShelter(nonNullValue(await getAuthToken(email)), snapId);
+        const response: GetSnapshotAccountsResponse = await getSnapshotByTaxShelter(nonNullValue(await getAuthToken(email)), snapId);
         return response.data?.accounts_grouped;
     }
 

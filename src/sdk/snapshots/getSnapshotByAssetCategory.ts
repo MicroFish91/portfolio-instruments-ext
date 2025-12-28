@@ -1,21 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { ResourcesGrouped } from "../types/snapshots";
+import { GetSnapshotHoldingsResponse } from "../portfolio-instruments-api";
 
-export type GetSnapshotByAssetCategoryApiResponse = {
-    status: number;
-    data?: {
-        holdings_grouped: ResourcesGrouped;
-        field_type: string;
-    };
-    error?: string;
-};
-
-export async function getSnapshotByAssetCategory(token: string, snapshotId: number): Promise<GetSnapshotByAssetCategoryApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=ASSET_CATEGORY`, {
+export async function getSnapshotByAssetCategory(token: string, snapshotId: number): Promise<GetSnapshotHoldingsResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots/${snapshotId}?group_by=ASSET_CATEGORY`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as GetSnapshotByAssetCategoryApiResponse;
+    return await response.json() as GetSnapshotHoldingsResponse;
 }

@@ -3,12 +3,10 @@ import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { createContextValue } from "../../../utils/contextUtils";
 import { reorderableContext, viewPropertiesContext } from "../../../constants";
 import { SnapshotItem } from "./SnapshotItem";
-import { Snapshot, SnapshotValue } from "../../../sdk/types/snapshots";
-import { Account } from "../../../sdk/types/accounts";
-import { Holding } from "../../../sdk/types/holdings";
 import { capitalize } from "../../../utils/textUtils";
 import { Reorderable } from "../../reorder";
 import { SnapshotValuesItem } from "./SnapshotValuesItem";
+import { Account, Holding, Snapshot, SnapshotValue } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValueItem extends TreeItem implements PiExtTreeItem, Reorderable {
     static readonly contextValue: string = 'snapshotValueItem';

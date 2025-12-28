@@ -2,7 +2,7 @@ import { PromptStep } from "../../../wizard/PromptStep";
 import { l10n } from "vscode";
 import { BenchmarkCreateContext } from "./BenchmarkCreateContext";
 import { nonNullProp, nonNullValue } from "../../../utils/nonNull";
-import { AssetCategory } from "../../../sdk/types/holdings";
+import { AssetCategory } from "../../../sdk/portfolio-instruments-api";
 
 export class BenchmarkAssetAmountsStep<T extends BenchmarkCreateContext> extends PromptStep<T> {
     private invalidInputMessage: string;

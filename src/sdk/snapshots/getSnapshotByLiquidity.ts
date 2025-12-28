@@ -1,22 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { LiquidityResource } from "../types/snapshots";
+import { GetSnapshotLiquidityResponse } from "../portfolio-instruments-api";
 
-export type GetSnapshotByLiquidityApiResponse = {
-    status: number;
-    data?: {
-        resources: LiquidityResource[];
-        liquid_total: number;
-        field_type: string;
-    };
-    error?: string;
-};
-
-export async function getSnapshotByLiquidity(token: string, snapshotId: number): Promise<GetSnapshotByLiquidityApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}?group_by=LIQUIDITY`, {
+export async function getSnapshotByLiquidity(token: string, snapshotId: number): Promise<GetSnapshotLiquidityResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots/${snapshotId}?group_by=LIQUIDITY`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as GetSnapshotByLiquidityApiResponse;
+    return await response.json() as GetSnapshotLiquidityResponse;
 }

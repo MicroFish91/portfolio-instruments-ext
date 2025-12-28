@@ -1,21 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Snapshot } from "../types/snapshots";
+import { DeleteSnapshotResponse } from "../portfolio-instruments-api";
 
-export type DeleteSnapshotApiResponse = {
-    status: number;
-    data?: {
-        message: string;
-        snapshot: Snapshot;
-    };
-    error?: string;
-};
-
-export async function deleteSnapshot(token: string, snapshotId: number): Promise<DeleteSnapshotApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}`, {
+export async function deleteSnapshot(token: string, snapshotId: number): Promise<DeleteSnapshotResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots/${snapshotId}`, {
         method: "DELETE",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as DeleteSnapshotApiResponse;
+    return await response.json() as DeleteSnapshotResponse;
 }

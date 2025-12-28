@@ -1,26 +1,14 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Settings } from "../types/settings";
-import { User } from "../types/user";
+import { RegisterResponse, RegisterUserPayload } from "../portfolio-instruments-api";
 
-export type RegisterUserPayload = {
-    email: string;
-    password: string;
-};
-
-export type RegisterUserApiResponse = {
-    status: number;
-    user?: User;
-    settings?: Settings;
-    error?: string;
-};
-
-export async function registerUser(payload: RegisterUserPayload): Promise<RegisterUserApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/register`, {
+export async function registerUser(payload: RegisterUserPayload): Promise<RegisterResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/register`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
     });
-    return await response.json() as RegisterUserApiResponse;
+    return await response.json() as RegisterResponse;
 }
