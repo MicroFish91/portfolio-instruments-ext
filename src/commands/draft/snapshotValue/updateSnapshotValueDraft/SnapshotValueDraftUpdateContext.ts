@@ -1,4 +1,4 @@
-import { CreateSnapshotValuePayload } from "../../../../sdk/snapshots/createSnapshot";
+import { CreateSnapshotValuePayload } from "../../../../sdk/portfolio-instruments-api";
 import { SnapshotValueCreateContext } from "../../../snapshotValues/createSnapshotValue/SnapshotValueCreateContext";
 
 export type SnapshotValueDraftUpdateContext = Omit<SnapshotValueCreateContext, 'snapshotId' | 'snapshotValue'> & {

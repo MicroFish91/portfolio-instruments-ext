@@ -1,14 +1,14 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../../SnapshotItem";
-import { LiquidityResource, Snapshot, SnapshotValue } from "../../../../../sdk/types/snapshots";
 import { createContextValue } from "../../../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../../../constants";
-import { getSnapshotByLiquidity, GetSnapshotByLiquidityApiResponse } from "../../../../../sdk/snapshots/getSnapshotByLiquidity";
+import { getSnapshotByLiquidity } from "../../../../../sdk/snapshots/getSnapshotByLiquidity";
 import { nonNullValue } from "../../../../../utils/nonNull";
 import { getAuthToken } from "../../../../../utils/tokenUtils";
 import { LiquidityItem } from "./LiquidityItem";
 import { GenericItem } from "../../../../GenericItem";
+import { GetSnapshotLiquidityResponse, LiquidityResource, Snapshot, SnapshotValue } from "../../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotByLiquidityItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByLiquidityItem';
@@ -41,7 +41,7 @@ export class SnapshotByLiquidityItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const resources: GetSnapshotByLiquidityApiResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(this.email)), this.snapshotData.snap_id);
+        const resources: GetSnapshotLiquidityResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(this.email)), this.snapshotData.snap_id);
         return [
             // Liquidity Items
             ...resources.data?.resources
@@ -60,12 +60,12 @@ export class SnapshotByLiquidityItem extends TreeItem implements PiExtTreeItem {
     }
 
     static async getSnapshotByLiquidity(email: string, snapId: number): Promise<LiquidityResource[] | undefined> {
-        const response: GetSnapshotByLiquidityApiResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(email)), snapId);
+        const response: GetSnapshotLiquidityResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(email)), snapId);
         return response.data?.resources;
     }
 
     async viewProperties(): Promise<string> {
-        const response: GetSnapshotByLiquidityApiResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(this.email)), this.snapshotData.snap_id);
+        const response: GetSnapshotLiquidityResponse = await getSnapshotByLiquidity(nonNullValue(await getAuthToken(this.email)), this.snapshotData.snap_id);
         return JSON.stringify(response.data ?? {}, undefined, 4);
     }
 }

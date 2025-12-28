@@ -1,17 +1,17 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../../SnapshotItem";
-import { MaturationDateResource, Snapshot, SnapshotValue } from "../../../../../sdk/types/snapshots";
 import { getAuthToken } from "../../../../../utils/tokenUtils";
 import { nonNullValue } from "../../../../../utils/nonNull";
 import { createContextValue } from "../../../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../../../constants";
-import { getSnapshotByMaturationDate, GetSnapshotByMaturationDateApiResponse, GetSnapshotMaturationDateOptions } from "../../../../../sdk/snapshots/getSnapshotByMaturationDate";
+import { getSnapshotByMaturationDate, GetSnapshotMaturationDateOptions } from "../../../../../sdk/snapshots/getSnapshotByMaturationDate";
 import { SnapshotMaturationStartItem } from "./SnapshotMaturationStartItem";
 import { SnapshotMaturationEndItem } from "./SnapshotMaturationEndItem";
 import { MaturationDateItem } from "./MaturationDateItem";
 import { SnapshotMaturationFilterItem } from "./SnapshotMaturationFilterItem";
 import { GenericItem } from "../../../../GenericItem";
+import { GetSnapshotMaturationDateResponse, MaturationDateResource, Snapshot, SnapshotValue } from "../../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotByMaturationDateItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByMaturationDateItem';
@@ -111,7 +111,7 @@ export class SnapshotByMaturationDateItem extends TreeItem implements PiExtTreeI
     }
 
     static async getSnapshotByMaturationDate(email: string, snapId: number, options?: GetSnapshotMaturationDateOptions): Promise<MaturationDateResource[] | undefined> {
-        const response: GetSnapshotByMaturationDateApiResponse = await getSnapshotByMaturationDate(nonNullValue(await getAuthToken(email)), snapId, options);
+        const response: GetSnapshotMaturationDateResponse = await getSnapshotByMaturationDate(nonNullValue(await getAuthToken(email)), snapId, options);
         return response.data?.resources;
     }
 

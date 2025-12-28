@@ -4,13 +4,11 @@ import { nonNullValue } from "../../utils/nonNull";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
-import { Snapshot } from "../../sdk/types/snapshots";
-import { getSnapshots, GetSnapshotsApiResponse } from "../../sdk/snapshots/getSnapshots";
+import { getSnapshots } from "../../sdk/snapshots/getSnapshots";
 import { SnapshotItem } from "./snapshot/SnapshotItem";
 import { ext } from "../../extensionVariables";
-import { CreateSnapshotPayload } from "../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "./draft/SnapshotDraftItem";
-import { Settings } from "../../sdk/types/settings";
+import { CreateSnapshotPayload, GetSnapshotsResponse, Snapshot } from "../../sdk/portfolio-instruments-api";
 
 export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotsItem';
@@ -20,7 +18,6 @@ export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
 
     constructor(
         readonly email: string,
-        readonly settings: Settings,
     ) {
         super(l10n.t('Snapshots'));
 
@@ -62,7 +59,7 @@ export class SnapshotsItem extends TreeItem implements PiExtTreeItem {
     }
 
     private async getSnapshots(): Promise<Snapshot[]> {
-        const response: GetSnapshotsApiResponse = await getSnapshots(nonNullValue(await getAuthToken(this.email)), this.page);
+        const response: GetSnapshotsResponse = await getSnapshots(nonNullValue(await getAuthToken(this.email)), this.page);
         return response.data?.snapshots ?? [];
     }
 

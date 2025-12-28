@@ -1,8 +1,8 @@
 import { l10n, Progress } from "vscode";
 import { SnapshotValueDraftDeleteContext } from "./SnapshotValueDraftDeleteContext";
 import { ext } from "../../../../extensionVariables";
-import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "../../../../tree/snapshots/draft/SnapshotDraftItem";
+import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValueDraftDeleteStep<T extends SnapshotValueDraftDeleteContext> {
     priority: 200;

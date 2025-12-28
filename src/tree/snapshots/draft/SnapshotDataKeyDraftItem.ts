@@ -1,7 +1,7 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
-import { CreateSnapshotPayload } from "../../../sdk/snapshots/createSnapshot";
+import { CreateSnapshotPayload } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotDataKeyDraftItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDataKeyDraftItem';

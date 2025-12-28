@@ -3,15 +3,13 @@ import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { createContextValue } from "../../../utils/contextUtils";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../../constants";
 import { SnapshotItem } from "./SnapshotItem";
-import { Snapshot, SnapshotValue } from "../../../sdk/types/snapshots";
-import { Account } from "../../../sdk/types/accounts";
 import { AccountsItem } from "../../accounts/AccountsItem";
 import { HoldingsItem } from "../../holdings/HoldingsItem";
-import { Holding } from "../../../sdk/types/holdings";
 import { SnapshotValueItem } from "./SnapshotValueItem";
 import { nonNullValue } from "../../../utils/nonNull";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../../reorder";
 import { ext } from "../../../extensionVariables";
+import { Account, Holding, Snapshot, SnapshotValue } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValuesItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'snapshotValuesItem';

@@ -1,8 +1,8 @@
 import { l10n } from "vscode";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { validationUtils } from "../../../utils/validationUtils";
-import { SnapshotValue } from "../../../sdk/types/snapshots";
 import { CommandContext } from "../../registerCommand";
+import { SnapshotValue } from "../../../sdk/portfolio-instruments-api";
 
 export type SnapshotValueTotalStepOptions = {
     defaultValue?: number;

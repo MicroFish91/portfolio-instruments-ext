@@ -1,4 +1,4 @@
-import { SnapshotValue } from "../../../sdk/types/snapshots";
+import { SnapshotValue } from "../../../sdk/portfolio-instruments-api";
 import { AuthContext } from "../../AuthContext";
 
 export type SnapshotValueDeleteContext = AuthContext & {

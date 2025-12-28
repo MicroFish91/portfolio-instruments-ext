@@ -1,10 +1,10 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
-import { Snapshot } from "../../../../../sdk/types/snapshots";
 import { SnapshotMaturationStartItem } from "./SnapshotMaturationStartItem";
 import { SnapshotMaturationEndItem } from "./SnapshotMaturationEndItem";
 import { SnapshotByMaturationDateItem } from "./SnapshotByMaturationDateItem";
 import { GetSnapshotMaturationDateOptions } from "../../../../../sdk/snapshots/getSnapshotByMaturationDate";
+import { Snapshot } from "../../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotMaturationFilterItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotMaturationFilterItem';

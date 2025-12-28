@@ -1,8 +1,8 @@
 import { Progress } from "vscode";
-import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { ApiEndpointSetContext } from "./ApiEndpointSetContext";
-import { settingUtils } from "../../../utils/settingUtils";
-import { nonNullProp } from "../../../utils/nonNull";
+import { ExecuteStep } from "../../wizard/ExecuteStep";
+import { nonNullProp } from "../../utils/nonNull";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class ApiEndpointSetStep<T extends ApiEndpointSetContext> extends ExecuteStep<T> {
     priority: 200;

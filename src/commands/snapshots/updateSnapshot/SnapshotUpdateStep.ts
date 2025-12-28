@@ -1,7 +1,8 @@
 import { l10n, Progress } from "vscode";
 import { nonNullProp } from "../../../utils/nonNull";
 import { SnapshotUpdateContext } from "./SnapshotUpdateContext";
-import { updateSnapshot, UpdateSnapshotApiResponse } from "../../../sdk/snapshots/updateSnapshot";
+import { updateSnapshot } from "../../../sdk/snapshots/updateSnapshot";
+import { UpdateSnapshotResponse } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotUpdateStep<T extends SnapshotUpdateContext> {
     priority: 200;
@@ -9,7 +10,7 @@ export class SnapshotUpdateStep<T extends SnapshotUpdateContext> {
     async execute(context: T, progress: Progress<{ message?: string; increment?: number }>) {
         progress.report({ message: l10n.t("Updating snapshot...") });
 
-        const response: UpdateSnapshotApiResponse = await updateSnapshot(nonNullProp(context, 'token'), context.snapshot.snap_id, {
+        const response: UpdateSnapshotResponse = await updateSnapshot(nonNullProp(context, 'token'), context.snapshot.snap_id, {
             snap_date: nonNullProp(context, 'snapDate'),
             description: context.snapDescription,
             benchmark_id: context.benchmarkId,

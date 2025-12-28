@@ -2,12 +2,11 @@ import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
 import { ext } from "../../../extensionVariables";
-import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapshot";
 import { AccountsItem } from "../../accounts/AccountsItem";
-import { Account } from "../../../sdk/types/accounts";
 import { GenericItem } from "../../GenericItem";
 import { nonNullValue } from "../../../utils/nonNull";
 import { capitalize } from "../../../utils/textUtils";
+import { Account, CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotByAccountsDraftItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByAccountsDraftItem';

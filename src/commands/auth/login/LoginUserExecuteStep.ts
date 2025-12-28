@@ -1,8 +1,9 @@
 import { Progress } from "vscode";
 import { nonNullProp, nonNullValueAndProp } from "../../../utils/nonNull";
 import { LoginContext } from "./LoginContext";
-import { loginUser, LoginUserApiResponse } from "../../../sdk/auth/loginUser";
+import { loginUser } from "../../../sdk/auth/loginUser";
 import { storeAuthToken } from "../../../utils/tokenUtils";
+import { LoginResponse } from "../../../sdk/portfolio-instruments-api";
 
 export class LoginUserExecuteStep<T extends LoginContext> {
     priority: 100;
@@ -10,7 +11,7 @@ export class LoginUserExecuteStep<T extends LoginContext> {
     async execute(context: T, progress: Progress<{ message?: string; increment?: number }>) {
         progress.report({ message: "Signing in..." });
 
-        const response: LoginUserApiResponse = await loginUser({
+        const response: LoginResponse = await loginUser({
             email: nonNullProp(context, 'email'),
             password: nonNullProp(context, 'password'),
         });

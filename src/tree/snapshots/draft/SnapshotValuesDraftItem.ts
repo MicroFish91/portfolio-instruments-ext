@@ -1,17 +1,15 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
-import { CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapshot";
 import { createContextValue } from "../../../utils/contextUtils";
 import { reordererContext, viewPropertiesContext } from "../../../constants";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
 import { SnapshotValueDraftItem } from "./SnapshotValueDraftItem";
 import { AccountsItem } from "../../accounts/AccountsItem";
-import { Account } from "../../../sdk/types/accounts";
-import { Holding } from "../../../sdk/types/holdings";
 import { HoldingsItem } from "../../holdings/HoldingsItem";
 import { nonNullValue } from "../../../utils/nonNull";
 import { GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../../reorder";
 import { ext } from "../../../extensionVariables";
+import { Account, CreateSnapshotValuePayload, Holding } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValuesDraftItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'snapshotValuesDraftItem';

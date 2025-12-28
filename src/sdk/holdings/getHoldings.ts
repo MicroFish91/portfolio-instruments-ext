@@ -1,22 +1,13 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Holding } from "../types/holdings";
-import { PaginationMetadata } from "../types/pagination";
+import { GetHoldingsResponse } from "../portfolio-instruments-api";
 
-export type GetHoldingsApiResponse = {
-    status: number;
-    data?: {
-        holdings: Holding[];
-        pagination: PaginationMetadata;
-    };
-    error?: string;
-};
-
-export async function getHoldings(token: string): Promise<GetHoldingsApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/holdings`, {
+export async function getHoldings(token: string): Promise<GetHoldingsResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/holdings`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
         },
     });
-    return await response.json() as GetHoldingsApiResponse;
+    return await response.json() as GetHoldingsResponse;
 }

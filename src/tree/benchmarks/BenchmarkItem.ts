@@ -3,7 +3,7 @@ import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { BenchmarksItem } from "./BenchmarksItem";
-import { Benchmark } from "../../sdk/types/benchmarks";
+import { Benchmark } from "../../sdk/portfolio-instruments-api";
 
 export class BenchmarkItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'benchmarkItem';

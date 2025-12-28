@@ -1,8 +1,9 @@
 import { Progress } from "vscode";
 import { HoldingCreateContext } from "./HoldingCreateContext";
-import { createHolding, CreateHoldingApiResponse } from "../../../sdk/holdings/createHolding";
+import { createHolding } from "../../../sdk/holdings/createHolding";
 import { nonNullProp } from "../../../utils/nonNull";
 import { ExecuteStep } from "../../../wizard/ExecuteStep";
+import { CreateHoldingResponse } from "../../../sdk/portfolio-instruments-api";
 
 export class HoldingCreateStep<T extends HoldingCreateContext> extends ExecuteStep<T> {
     priority: 200;
@@ -10,7 +11,7 @@ export class HoldingCreateStep<T extends HoldingCreateContext> extends ExecuteSt
     async execute(context: T, progress: Progress<{ message?: string; increment?: number }>) {
         progress.report({ message: "Creating holding..." });
 
-        const response: CreateHoldingApiResponse = await createHolding(context.token, {
+        const response: CreateHoldingResponse = await createHolding(context.token, {
             name: nonNullProp(context, 'holdingName'),
             asset_category: nonNullProp(context, 'holdingAssetCategory'),
             ticker: context.holdingTicker,

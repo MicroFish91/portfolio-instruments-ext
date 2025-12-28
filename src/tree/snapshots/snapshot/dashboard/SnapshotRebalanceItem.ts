@@ -1,15 +1,14 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../SnapshotItem";
-import { Snapshot } from "../../../../sdk/types/snapshots";
-import { getSnapshotRebalance, GetSnapshotRebalanceApiResponse } from "../../../../sdk/snapshots/getSnapshotRebalance";
+import { getSnapshotRebalance } from "../../../../sdk/snapshots/getSnapshotRebalance";
 import { getAuthToken } from "../../../../utils/tokenUtils";
 import { nonNullValue } from "../../../../utils/nonNull";
 import { createContextValue } from "../../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../../constants";
 import { GenericItem } from "../../../GenericItem";
-import { EmailItem } from "../../../auth/EmailItem";
 import * as crypto from "crypto";
+import { GetSnapshotRebalanceResponse, Snapshot } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotRebalanceItem';
@@ -41,9 +40,7 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const { settings } = await EmailItem.getUserAndSettingsWithCache(this.email);
-
-        const response: GetSnapshotRebalanceApiResponse = await getSnapshotRebalance(
+        const response: GetSnapshotRebalanceResponse = await getSnapshotRebalance(
             nonNullValue(await getAuthToken(this.email)),
             this.snapshotData.snap_id,
         );
@@ -61,7 +58,7 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
             return [];
         }
 
-        const rebalanceItems: GenericItem[] = response.data?.change_required.map(alloc => {
+        const rebalanceItems: GenericItem[] = response.data?.change_required?.map(alloc => {
             const changeRequired: string = alloc.value > 0 ? `+${alloc.value.toFixed(2)}` : `${alloc.value.toFixed(2)}`;
             return new GenericItem({
                 id: `${this.id}/${alloc.category}`,
@@ -85,16 +82,16 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
             }),
             new GenericItem({
                 id: `${this.id}/currentThreshold`,
-                label: `${String(response.data?.rebalance_thresh_pct)}%`,
+                label: `${String(response.data?.rebalance_deviation_pct)}%`,
                 description: l10n.t('Max Deviation') +
                     (
-                        (response.data?.rebalance_thresh_pct ?? 0) > settings.reb_thresh_pct ?
+                        (response.data?.rebalance_deviation_pct ?? 0) > (this.snapshotData?.rebalance_threshold_pct ?? 100) ?
                             ' ' + l10n.t('(exceeds rebalance threshold)') :
                             ''
                     ),
                 contextValue: 'currentThresholdItem',
                 collapsibleState: TreeItemCollapsibleState.None,
-                iconPath: (response.data?.rebalance_thresh_pct ?? 0) > settings.reb_thresh_pct ?
+                iconPath: (response.data?.rebalance_deviation_pct ?? 0) > (this.snapshotData?.rebalance_threshold_pct ?? 100) ?
                     new ThemeIcon('warning', 'white') :
                     new ThemeIcon('pass', 'white')
             }),
@@ -102,7 +99,7 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
     }
 
     async viewProperties(): Promise<string> {
-        const response: GetSnapshotRebalanceApiResponse = await getSnapshotRebalance(
+        const response: GetSnapshotRebalanceResponse = await getSnapshotRebalance(
             nonNullValue(await getAuthToken(this.email)),
             this.snapshotData.snap_id,
         );

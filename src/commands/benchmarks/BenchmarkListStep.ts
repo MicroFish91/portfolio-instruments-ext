@@ -1,18 +1,17 @@
 import { l10n } from "vscode";
-import { Settings } from "../../sdk/types/settings";
 import { PromptStep } from "../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../wizard/UserInterface";
 import { AuthContext } from "../AuthContext";
-import { Benchmark } from "../../sdk/types/benchmarks";
 import { capitalize } from "../../utils/textUtils";
 import { BenchmarksItem } from "../../tree/benchmarks/BenchmarksItem";
+import { Benchmark } from "../../sdk/portfolio-instruments-api";
 
 export type BenchmarkTargetStepOptions = {
     currentId?: number;
     suppressSkip?: boolean;
 };
 
-export class BenchmarkListStep<T extends AuthContext & { settings?: Settings; benchmarkId?: number }> extends PromptStep<T> {
+export class BenchmarkListStep<T extends AuthContext & { benchmarkId?: number }> extends PromptStep<T> {
     constructor(readonly options?: BenchmarkTargetStepOptions) {
         super();
     }

@@ -2,8 +2,8 @@ import { l10n } from "vscode";
 import { AuthContext } from "../AuthContext";
 import { PromptStep } from "../../wizard/PromptStep";
 import { PiQuickPickItem } from "../../wizard/UserInterface";
-import { Holding } from "../../sdk/types/holdings";
 import { HoldingsItem } from "../../tree/holdings/HoldingsItem";
+import { Holding } from "../../sdk/portfolio-instruments-api";
 
 export type HoldingListStepOptions = {
     currentId?: number;

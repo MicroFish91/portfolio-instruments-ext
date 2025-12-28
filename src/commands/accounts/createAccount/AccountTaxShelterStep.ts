@@ -1,8 +1,8 @@
 import { l10n } from "vscode";
 import { AccountCreateContext } from "./AccountCreateContext";
 import { PromptStep } from "../../../wizard/PromptStep";
-import { TaxShelter } from "../../../sdk/types/accounts";
 import { PiQuickPickItem } from "../../../wizard/UserInterface";
+import { TaxShelter } from "../../../sdk/portfolio-instruments-api";
 
 export class AccountTaxShelterStep<T extends AccountCreateContext> extends PromptStep<T> {
     async prompt(context: T): Promise<void> {

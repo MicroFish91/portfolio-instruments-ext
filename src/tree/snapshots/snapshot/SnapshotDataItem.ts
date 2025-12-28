@@ -3,10 +3,9 @@ import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { createContextValue } from "../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../constants";
 import { SnapshotItem } from "./SnapshotItem";
-import { Snapshot } from "../../../sdk/types/snapshots";
 import { SnapshotDataKeyItem } from "./SnapshotDataKeyItem";
-import { Benchmark } from "../../../sdk/types/benchmarks";
 import { BenchmarksItem } from "../../benchmarks/BenchmarksItem";
+import { Benchmark, Snapshot } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotDataItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDataItem';

@@ -1,11 +1,11 @@
 import { Disposable, EventEmitter, FileChangeType, FileType, l10n, window, workspace, type Event, type FileChangeEvent, type FileStat, type FileSystemProvider, type TextDocument, Uri } from "vscode";
 import { ext } from "../../extensionVariables";
 import { SnapshotsItem } from "../../tree/snapshots/SnapshotsItem";
-import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../sdk/snapshots/createSnapshot";
 import { SnapshotDraftItem } from "../../tree/snapshots/draft/SnapshotDraftItem";
 import { nonNullValue } from "../../utils/nonNull";
 import { getSnapshotLatest } from "../../sdk/snapshots/getSnapshot";
 import { getAuthToken } from "../../utils/tokenUtils";
+import { CreateSnapshotPayload, CreateSnapshotValuePayload } from "../../sdk/portfolio-instruments-api";
 
 const notSupported: string = l10n.t('This operation is not currently supported.');
 

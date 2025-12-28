@@ -1,4 +1,4 @@
-import { Snapshot } from "../../../sdk/types/snapshots";
+import { Snapshot } from "../../../sdk/portfolio-instruments-api";
 import { SnapshotCreateContext } from "../SnapshotCreateContext";
 
 export type SnapshotUpdateContext = SnapshotCreateContext & {

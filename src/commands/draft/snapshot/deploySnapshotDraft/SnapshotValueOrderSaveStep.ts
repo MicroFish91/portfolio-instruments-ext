@@ -3,8 +3,7 @@ import { ExecuteStep } from "../../../../wizard/ExecuteStep";
 import { SnapshotValuesItem } from "../../../../tree/snapshots/snapshot/SnapshotValuesItem";
 import { nonNullProp, nonNullValueAndProp } from "../../../../utils/nonNull";
 import { ext } from "../../../../extensionVariables";
-import { SnapshotValue } from "../../../../sdk/types/snapshots";
-import { CreateSnapshotValuePayload } from "../../../../sdk/snapshots/createSnapshot";
+import { CreateSnapshotValuePayload, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 
 type SerializedId = string;
 type ResourceId = string;

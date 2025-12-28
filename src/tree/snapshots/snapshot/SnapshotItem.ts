@@ -3,13 +3,13 @@ import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
 import { createContextValue } from "../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../constants";
 import { SnapshotsItem } from "../SnapshotsItem";
-import { Snapshot, SnapshotValue } from "../../../sdk/types/snapshots";
 import { SnapshotDataItem } from "./SnapshotDataItem";
 import { nonNullValue } from "../../../utils/nonNull";
 import { getAuthToken } from "../../../utils/tokenUtils";
 import { getSnapshot } from "../../../sdk/snapshots/getSnapshot";
 import { SnapshotValuesItem } from "./SnapshotValuesItem";
 import { SnapshotDashboardItem } from "./dashboard/SnapshotDashboardItem";
+import { Snapshot, SnapshotValue } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotItem';

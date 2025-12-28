@@ -1,14 +1,12 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../PiExtTreeDataProvider";
-import { CreateSnapshotValuePayload } from "../../../sdk/snapshots/createSnapshot";
 import { createContextValue } from "../../../utils/contextUtils";
 import { reorderableContext, viewPropertiesContext } from "../../../constants";
 import { SnapshotDraftItem } from "./SnapshotDraftItem";
-import { Account } from "../../../sdk/types/accounts";
-import { Holding } from "../../../sdk/types/holdings";
 import { capitalize } from "../../../utils/textUtils";
 import { Reorderable } from "../../reorder";
 import { SnapshotValuesDraftItem } from "./SnapshotValuesDraftItem";
+import { Account, CreateSnapshotValuePayload, Holding } from "../../../sdk/portfolio-instruments-api";
 
 export class SnapshotValueDraftItem extends TreeItem implements PiExtTreeItem, Reorderable {
     static readonly contextValue: string = 'snapshotValueDraftItem';

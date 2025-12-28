@@ -1,22 +1,9 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Snapshot } from "../types/snapshots";
+import { UpdateSnapshotPayload, UpdateSnapshotResponse } from "../portfolio-instruments-api";
 
-export type UpdateSnapshotPayload = {
-    snap_date: string;
-    description?: string;
-    benchmark_id?: number;
-};
-
-export type UpdateSnapshotApiResponse = {
-    status: number;
-    data?: {
-        snapshot: Snapshot;
-    };
-    error?: string;
-};
-
-export async function updateSnapshot(token: string, snapshotId: number, payload: UpdateSnapshotPayload): Promise<UpdateSnapshotApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots/${snapshotId}`, {
+export async function updateSnapshot(token: string, snapshotId: number, payload: UpdateSnapshotPayload): Promise<UpdateSnapshotResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots/${snapshotId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',
@@ -24,5 +11,5 @@ export async function updateSnapshot(token: string, snapshotId: number, payload:
         },
         body: JSON.stringify(payload),
     });
-    return await response.json() as UpdateSnapshotApiResponse;
+    return await response.json() as UpdateSnapshotResponse;
 }

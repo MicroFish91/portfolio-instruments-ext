@@ -1,31 +1,9 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Snapshot, SnapshotValue } from "../types/snapshots";
+import { CreateSnapshotPayload, CreateSnapshotResponse } from "../portfolio-instruments-api";
 
-export type CreateSnapshotPayload = {
-    snap_date: string;
-    description?: string;
-    snapshot_values: CreateSnapshotValuePayload[];
-    benchmark_id?: number;
-};
-
-export type CreateSnapshotValuePayload = {
-    account_id: number;
-    holding_id: number;
-    total: number;
-    skip_rebalance?: boolean;
-};
-
-export type CreateSnapshotApiResponse = {
-    status: number;
-    data?: {
-        snapshot: Snapshot;
-        snapshot_values: SnapshotValue[];
-    };
-    error?: string;
-};
-
-export async function createSnapshot(token: string, payload: CreateSnapshotPayload): Promise<CreateSnapshotApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/snapshots`, {
+export async function createSnapshot(token: string, payload: CreateSnapshotPayload): Promise<CreateSnapshotResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -33,5 +11,5 @@ export async function createSnapshot(token: string, payload: CreateSnapshotPaylo
         },
         body: JSON.stringify(payload),
     });
-    return await response.json() as CreateSnapshotApiResponse;
+    return await response.json() as CreateSnapshotResponse;
 }

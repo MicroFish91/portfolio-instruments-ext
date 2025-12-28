@@ -1,4 +1,4 @@
-import { Snapshot } from "../../../sdk/types/snapshots";
+import { Snapshot } from "../../../sdk/portfolio-instruments-api";
 import { AuthContext } from "../../AuthContext";
 
 export type SnapshotsPlotContext = AuthContext & {

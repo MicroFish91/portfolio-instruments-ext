@@ -2,7 +2,8 @@ import { Progress } from "vscode";
 import { nonNullProp } from "../../../utils/nonNull";
 import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { HoldingUpdateContext } from "./HoldingUpdateContext";
-import { updateHolding, UpdateHoldingApiResponse } from "../../../sdk/holdings/updateHolding";
+import { updateHolding } from "../../../sdk/holdings/updateHolding";
+import { UpdateHoldingResponse } from "../../../sdk/portfolio-instruments-api";
 
 export class HoldingUpdateStep<T extends HoldingUpdateContext> extends ExecuteStep<T> {
     priority: 200;
@@ -10,7 +11,7 @@ export class HoldingUpdateStep<T extends HoldingUpdateContext> extends ExecuteSt
     async execute(context: T, progress: Progress<{ message?: string; increment?: number }>) {
         progress.report({ message: "Updating holding..." });
 
-        const response: UpdateHoldingApiResponse = await updateHolding(context.token, context.holding.holding_id, {
+        const response: UpdateHoldingResponse = await updateHolding(context.token, context.holding.holding_id, {
             name: nonNullProp(context, 'holdingName'),
             asset_category: nonNullProp(context, 'holdingAssetCategory'),
             ticker: context.holdingTicker,

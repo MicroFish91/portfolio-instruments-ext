@@ -1,4 +1,4 @@
-import { Holding } from "../../../sdk/types/holdings";
+import { Holding } from "../../../sdk/portfolio-instruments-api";
 import { HoldingCreateContext } from "../createHolding/HoldingCreateContext";
 
 export type HoldingUpdateContext = HoldingCreateContext & {

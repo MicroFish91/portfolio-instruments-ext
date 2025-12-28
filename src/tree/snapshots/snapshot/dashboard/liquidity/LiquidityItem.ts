@@ -1,10 +1,10 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../../SnapshotItem";
-import { LiquidityResource, Snapshot } from "../../../../../sdk/types/snapshots";
 import { viewPropertiesContext } from "../../../../../constants";
 import { createContextValue } from "../../../../../utils/contextUtils";
 import { capitalize } from "../../../../../utils/textUtils";
+import { LiquidityResource, Snapshot } from "../../../../../sdk/portfolio-instruments-api";
 
 export class LiquidityItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'liquidityItem';

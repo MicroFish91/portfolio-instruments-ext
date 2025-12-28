@@ -1,11 +1,11 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../../PiExtTreeDataProvider";
-import { MaturationDateResource, Snapshot } from "../../../../../sdk/types/snapshots";
 import { SnapshotByMaturationDateItem } from "./SnapshotByMaturationDateItem";
 import { createContextValue } from "../../../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../../../constants";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { MaturationDateResource, Snapshot } from "../../../../../sdk/portfolio-instruments-api";
 
 dayjs.extend(relativeTime);
 

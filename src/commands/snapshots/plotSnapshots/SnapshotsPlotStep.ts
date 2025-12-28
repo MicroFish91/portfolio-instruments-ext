@@ -2,9 +2,9 @@ import * as vscode from 'vscode';
 import { ExecuteStep } from "../../../wizard/ExecuteStep";
 import { SnapshotsPlotContext } from "./SnapshotsPlotContext";
 import { ext } from '../../../extensionVariables';
-import { Snapshot } from '../../../sdk/types/snapshots';
 import { nonNullProp, nonNullValue } from '../../../utils/nonNull';
 import { convertDateToISOFormat, getIncrementingDate, getMonthFromDate, getMonthFromMonthYearLabel, getYearFromDate, getYearFromMonthYearLabel, months } from '../../../utils/dateUtils';
+import { Snapshot } from '../../../sdk/portfolio-instruments-api';
 
 type VerticalAnnotation = {
     annualIncreasePct?: number;

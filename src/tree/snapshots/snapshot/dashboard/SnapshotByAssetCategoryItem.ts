@@ -1,13 +1,13 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../../../PiExtTreeDataProvider";
 import { SnapshotItem } from "../SnapshotItem";
-import { ResourcesGrouped, Snapshot, SnapshotValue } from "../../../../sdk/types/snapshots";
 import { getAuthToken } from "../../../../utils/tokenUtils";
 import { nonNullValue } from "../../../../utils/nonNull";
 import { createContextValue } from "../../../../utils/contextUtils";
 import { viewPropertiesContext } from "../../../../constants";
 import { GenericItem } from "../../../GenericItem";
-import { getSnapshotByAssetCategory, GetSnapshotByAssetCategoryApiResponse } from "../../../../sdk/snapshots/getSnapshotByAssetCategory";
+import { getSnapshotByAssetCategory } from "../../../../sdk/snapshots/getSnapshotByAssetCategory";
+import { GetSnapshotHoldingsResponse, ResourcesGrouped, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotByAssetCategoryItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotByAssetCategoryItem';
@@ -54,7 +54,7 @@ export class SnapshotByAssetCategoryItem extends TreeItem implements PiExtTreeIt
     }
 
     static async getSnapshotByAssetCategory(email: string, snapId: number): Promise<ResourcesGrouped | undefined> {
-        const response: GetSnapshotByAssetCategoryApiResponse = await getSnapshotByAssetCategory(nonNullValue(await getAuthToken(email)), snapId);
+        const response: GetSnapshotHoldingsResponse = await getSnapshotByAssetCategory(nonNullValue(await getAuthToken(email)), snapId);
         return response.data?.holdings_grouped;
     }
 

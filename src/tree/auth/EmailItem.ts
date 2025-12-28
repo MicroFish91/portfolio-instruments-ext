@@ -1,17 +1,15 @@
 import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { AccountsItem } from "../accounts/AccountsItem";
-import { GetUserByTokenApiResponse, getUserByToken } from "../../sdk/auth/getUserByToken";
-import { nonNullProp, nonNullValue, nonNullValueAndProp } from "../../utils/nonNull";
+import { getUserByToken } from "../../sdk/auth/getUserByToken";
+import { nonNullValue, nonNullValueAndProp } from "../../utils/nonNull";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { GenericItem } from "../GenericItem";
 import { HoldingsItem } from "../holdings/HoldingsItem";
 import { BenchmarksItem } from "../benchmarks/BenchmarksItem";
-import { SettingsItem } from "../settings/SettingsItem";
 import { SnapshotsItem } from "../snapshots/SnapshotsItem";
 import { ext } from "../../extensionVariables";
-import { Settings } from "../../sdk/types/settings";
-import { User } from "../../sdk/types/user";
+import { GetMeResponse, User } from "../../sdk/portfolio-instruments-api";
 
 export class EmailItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'emailItem';
@@ -36,18 +34,16 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
     }
 
     async getChildren(): Promise<PiExtTreeItem[]> {
-        const response: GetUserByTokenApiResponse = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
+        const response: GetMeResponse = await getUserByToken(nonNullValue(await getAuthToken(this.email)));
 
         if (response.data) {
             ext.resourceCache.set(EmailItem.generatePiExtUserId(this.email), response.data?.user);
-            ext.resourceCache.set(SettingsItem.generatePiExtSettingsId(this.email), response.data?.settings);
 
             return [
-                new SnapshotsItem(this.email, response.data.settings),
+                new SnapshotsItem(this.email),
                 new AccountsItem(this.email),
                 new HoldingsItem(this.email),
                 new BenchmarksItem(this.email),
-                new SettingsItem(this.email),
             ];
         } else {
             return [
@@ -65,22 +61,19 @@ export class EmailItem extends TreeItem implements PiExtTreeItem {
         }
     }
 
-    static async getUserAndSettings(email: string): Promise<{ user: User; settings: Settings }> {
-        return nonNullValueAndProp(await getUserByToken(nonNullValue(await getAuthToken(email))), 'data');
+    static async getUser(email: string): Promise<User> {
+        return nonNullValueAndProp(await getUserByToken(nonNullValue(await getAuthToken(email))), 'data').user;
     }
 
-    static async getUserAndSettingsWithCache(email: string): Promise<{ user: User; settings: Settings }> {
-        const cachedUser: User | undefined = ext.resourceCache.get(EmailItem.generatePiExtUserId(email));
-        const cachedSettings: Settings | undefined = ext.resourceCache.get(SettingsItem.generatePiExtSettingsId(email));
+    static async getUserWithCache(email: string): Promise<User> {
+        let user: User | undefined = ext.resourceCache.get(EmailItem.generatePiExtUserId(email));
 
-        let userAndSettings = { user: cachedUser, settings: cachedSettings };
-        if (!cachedUser || !cachedSettings) {
-            userAndSettings = await EmailItem.getUserAndSettings(email);
-            ext.resourceCache.set(EmailItem.generatePiExtUserId(email), userAndSettings.user);
-            ext.resourceCache.set(SettingsItem.generatePiExtSettingsId(email), userAndSettings.settings);
+        if (!user) {
+            user = await EmailItem.getUser(email);
+            ext.resourceCache.set(EmailItem.generatePiExtUserId(email), user);
         }
 
-        return { user: nonNullProp(userAndSettings, 'user'), settings: nonNullProp(userAndSettings, 'settings') };
+        return user;
     }
 
     static generatePiExtUserId(email: string): string {

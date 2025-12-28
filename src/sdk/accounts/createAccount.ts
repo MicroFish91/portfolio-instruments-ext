@@ -1,24 +1,9 @@
+import { latestApiVersion } from "../../constants";
 import { settingUtils } from "../../utils/settingUtils";
-import { Account, TaxShelter } from "../types/accounts";
+import { CreateAccountPayload, CreateAccountResponse } from "../portfolio-instruments-api";
 
-export type CreateAccountPayload = {
-    name: string;
-    description?: string;
-    tax_shelter: TaxShelter;
-    institution: string;
-    is_deprecated?: boolean;
-};
-
-export type CreateAccountApiResponse = {
-    status: number;
-    data?: {
-        account: Account;
-    };
-    error?: string;
-};
-
-export async function createAccount(token: string, payload: CreateAccountPayload): Promise<CreateAccountApiResponse> {
-    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/v1/accounts`, {
+export async function createAccount(token: string, payload: CreateAccountPayload): Promise<CreateAccountResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/accounts`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -26,5 +11,5 @@ export async function createAccount(token: string, payload: CreateAccountPayload
         },
         body: JSON.stringify(payload),
     });
-    return await response.json() as CreateAccountApiResponse;
+    return await response.json() as CreateAccountResponse;
 }
