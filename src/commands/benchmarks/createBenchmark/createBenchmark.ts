@@ -14,6 +14,7 @@ import { BenchmarkDrawdownYearsStep } from "./BenchmarkDrawdownYearsStep";
 import { BenchmarkAssetCategoriesStep } from "./BenchmarkAssetCategoriesStep";
 import { BenchmarkAssetAmountsStep } from "./BenchmarkAssetAmountsStep";
 import { BenchmarkCreateStep } from "./BenchmarkCreateStep";
+import { BenchmarkRebalanceThresholdStep } from "./BenchmarkRebalanceThresholdStep";
 
 export async function createBenchmark(context: CommandContext, item: BenchmarksItem): Promise<void> {
     const wizardContext: BenchmarkCreateContext = {
@@ -29,6 +30,7 @@ export async function createBenchmark(context: CommandContext, item: BenchmarksI
             new BenchmarkDescriptionStep(),
             new BenchmarkAssetCategoriesStep(),
             new BenchmarkAssetAmountsStep(),
+            new BenchmarkRebalanceThresholdStep(),
             new BenchmarkRealReturnStep(),
             new BenchmarkStdDevStep(),
             new BenchmarkDrawdownYearsStep(),

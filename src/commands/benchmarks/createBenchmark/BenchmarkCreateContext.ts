@@ -9,6 +9,7 @@ export type BenchmarkCreateContext = AuthContext & {
     benchmarkRealReturn?: number;
     benchmarkStdDev?: number;
     benchmarkDrawdownYears?: number;
+    benchmarkRebalanceThresholdPct?: number;
 
     benchmark?: Benchmark;
 };
