@@ -32,6 +32,7 @@ export class BenchmarkCreateStep<T extends BenchmarkCreateContext> extends Execu
             real_return_pct: context.benchmarkRealReturn,
             std_dev_pct: context.benchmarkStdDev,
             drawdown_yrs: context.benchmarkDrawdownYears,
+            rec_rebalance_threshold_pct: context.benchmarkRebalanceThresholdPct,
             is_deprecated: false,
         });
         if (response.error) {
