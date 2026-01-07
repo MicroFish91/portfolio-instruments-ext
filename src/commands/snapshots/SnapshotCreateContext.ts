@@ -5,6 +5,7 @@ export type SnapshotCreateContext = AuthContext & {
     snapDate?: string;
     snapDescription?: string;
     benchmarkId?: number;
+    rebalanceThresholdPct?: number;
 
     snapshot?: Snapshot;
 };
