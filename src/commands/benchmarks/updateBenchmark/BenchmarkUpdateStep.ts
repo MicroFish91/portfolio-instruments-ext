@@ -29,6 +29,7 @@ export class BenchmarkUpdateStep<T extends BenchmarkUpdateContext> extends Execu
             name: nonNullProp(context, 'benchmarkName'),
             description: context.benchmarkDescription,
             asset_allocation: assetAllocation,
+            rec_rebalance_threshold_pct: context.benchmarkRebalanceThresholdPct,
             real_return_pct: context.benchmarkRealReturn,
             std_dev_pct: context.benchmarkStdDev,
             drawdown_yrs: context.benchmarkDrawdownYears,

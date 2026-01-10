@@ -8,6 +8,7 @@ export class BenchmarkRebalanceThresholdStep<T extends BenchmarkCreateContext> e
         context.benchmarkRebalanceThresholdPct = Number((await context.ui.showInputBox({
             title: this.title,
             prompt: l10n.t('Enter benchmark\'s recommended rebalance threshold (%)'),
+            value: context.benchmark?.rec_rebalance_threshold_pct?.toString(),
             validateInput: this.validateInput,
         })));
     }
