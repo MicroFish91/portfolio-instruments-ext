@@ -38,6 +38,7 @@ export class SnapshotDataItem extends TreeItem implements PiExtTreeItem {
             new SnapshotDataKeyItem(this.parent, this.email, 'snap_date', this.snapshotData.snap_date),
             new SnapshotDataKeyItem(this.parent, this.email, 'description', this.snapshotData.description || '""'),
             new SnapshotDataKeyItem(this.parent, this.email, 'benchmark', benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? '""'),
+            new SnapshotDataKeyItem(this.parent, this.email, 'rebalance_threshold_pct', String(this.snapshotData.rebalance_threshold_pct)),
             new SnapshotDataKeyItem(this.parent, this.email, 'total', String(this.snapshotData.total.toFixed(2)), false),
             new SnapshotDataKeyItem(this.parent, this.email, 'weighted_er_pct', String(this.snapshotData.weighted_er_pct.toFixed(3)), false),
         ];

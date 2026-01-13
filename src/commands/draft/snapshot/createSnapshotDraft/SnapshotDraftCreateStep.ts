@@ -5,11 +5,9 @@ import { SnapshotsItem } from "../../../../tree/snapshots/SnapshotsItem";
 import { ext } from "../../../../extensionVariables";
 import { nonNullProp } from "../../../../utils/nonNull";
 import { getSnapshot } from "../../../../sdk/snapshots/getSnapshot";
-import { settingUtils } from "../../../../utils/settingUtils";
 import { SnapshotValuesItem } from "../../../../tree/snapshots/snapshot/SnapshotValuesItem";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds } from "../../../../tree/reorder";
-import { CreateSnapshotValuePayload, GetSnapshotsResponse, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
-import { latestApiVersion } from "../../../../constants";
+import { CreateSnapshotValuePayload, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 
 export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> extends ExecuteStep<T> {
     priority: 200;
@@ -22,7 +20,7 @@ export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> exten
         progress.report({ message: "Creating snapshot draft..." });
 
         const snapDate: string = nonNullProp(context, 'snapDate');
-        const snapshot: Snapshot | undefined = await this.tryGetMostRecentSnapshot(context, snapDate);
+        const snapshot: Snapshot | undefined = context.mostRecentSnapshot;
         const snapshotValues: SnapshotValue[] = snapshot ? ((await getSnapshot(context.token, snapshot.snap_id)).data?.snapshot_values ?? []) : [];
 
         ext.snapshotDraftFileSystem.createSnapshotDraft(
@@ -31,6 +29,7 @@ export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> exten
                 snap_date: snapDate,
                 description: context.snapDescription,
                 benchmark_id: context.benchmarkId,
+                rebalance_threshold_pct: context.rebalanceThresholdPct,
             },
             this.convertToPayloadValues(context, snapshot?.snap_id ?? 0, snapshotValues),
         );
@@ -38,17 +37,6 @@ export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> exten
 
     shouldExecute(context: T): boolean {
         return !ext.snapshotDraftFileSystem.hasSnapshotDraft(context.email);
-    }
-
-    private async tryGetMostRecentSnapshot(context: T, snapshotDate: string): Promise<Snapshot | undefined> {
-        const responseJson = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots?snap_date_upper=${snapshotDate}&order_date_by=DESC&page_size=1`, {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${context.token}`,
-            },
-        });
-        const response = await responseJson.json() as GetSnapshotsResponse;
-        return response.data?.snapshots?.[0];
     }
 
     /**

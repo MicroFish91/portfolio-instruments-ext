@@ -1,7 +1,10 @@
 import { l10n } from "vscode";
 import { SnapshotCreateContext } from "../../../snapshots/SnapshotCreateContext";
-import { PromptStep } from "../../../../wizard/PromptStep";
+import { PromptStep, WizardSteps } from "../../../../wizard/PromptStep";
 import { validationUtils } from "../../../../utils/validationUtils";
+import { getMostRecentSnapshotByDate } from "../../../../sdk/snapshots/getSnapshots";
+import { BenchmarkListStep } from "../../../benchmarks/BenchmarkListStep";
+import { SnapshotRebalanceThresholdStep } from "../SnapshotRebalanceThresholdStep";
 
 export type SnapshotDateStepOptions = {
     defaultDate?: string;
@@ -62,5 +65,19 @@ export class SnapshotDateStep<T extends SnapshotCreateContext> extends PromptSte
         const yyyy = now.getFullYear();
 
         return `${mm}/${dd}/${yyyy}`;
+    }
+
+    async subWizard(context: T): Promise<WizardSteps<T>> {
+        if (context.snapDate) {
+            const response = await getMostRecentSnapshotByDate(context.token, context.snapDate);
+            context.mostRecentSnapshot = response.data?.snapshots[0];
+        }
+
+        return {
+            promptSteps: [
+                new BenchmarkListStep({ currentId: context.mostRecentSnapshot?.benchmark_id }),
+                new SnapshotRebalanceThresholdStep({ defaultThresholdPct: context.mostRecentSnapshot?.rebalance_threshold_pct }),
+            ],
+        };
     }
 }

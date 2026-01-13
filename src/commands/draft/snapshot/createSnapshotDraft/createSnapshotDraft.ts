@@ -8,9 +8,7 @@ import { getAuthToken } from "../../../../utils/tokenUtils";
 import { Wizard } from "../../../../wizard/Wizard";
 import { SnapshotDateStep } from "./SnapshotDateStep";
 import { SnapshotDescriptionStep } from "./SnapshotDescriptionStep";
-import { BenchmarkListStep } from "../../../benchmarks/BenchmarkListStep";
 import { SnapshotDraftCreateStep } from "./SnapshotDraftCreateStep";
-import { SnapshotRebalanceThresholdStep } from "../SnapshotRebalanceThresholdStep";
 
 export async function createSnapshotDraft(context: CommandContext, item: SnapshotsItem): Promise<void> {
     if (ext.snapshotDraftFileSystem.hasSnapshotDraft(item.email)) {
@@ -28,8 +26,6 @@ export async function createSnapshotDraft(context: CommandContext, item: Snapsho
         promptSteps: [
             new SnapshotDateStep(),
             new SnapshotDescriptionStep(),
-            new BenchmarkListStep(/** Todo: { currentId: item.settings.benchmark_id } */),
-            new SnapshotRebalanceThresholdStep(),
         ],
         executeSteps: [
             new SnapshotDraftCreateStep(item),

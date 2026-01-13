@@ -41,3 +41,13 @@ export async function getSnapshotsEarliest(token: string): Promise<GetSnapshotsR
     });
     return await response.json() as GetSnapshotsResponse;
 }
+
+export async function getMostRecentSnapshotByDate(token: string, date: string): Promise<GetSnapshotsResponse> {
+    const response = await fetch(`${settingUtils.getApiEndpointBaseUrl()}/api/${latestApiVersion}/snapshots?order_date_by=DESC&snap_date_upper=${date}&page_size=1`, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    return await response.json() as GetSnapshotsResponse;
+}

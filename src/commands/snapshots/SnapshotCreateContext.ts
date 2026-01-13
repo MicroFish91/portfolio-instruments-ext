@@ -7,5 +7,6 @@ export type SnapshotCreateContext = AuthContext & {
     benchmarkId?: number;
     rebalanceThresholdPct?: number;
 
+    mostRecentSnapshot?: Snapshot; // Auto-populated after a snapshot date is provided
     snapshot?: Snapshot;
 };

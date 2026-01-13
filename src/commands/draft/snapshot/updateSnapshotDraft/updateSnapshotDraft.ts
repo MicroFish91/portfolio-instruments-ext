@@ -11,6 +11,7 @@ import { SnapshotDescriptionStep } from "../createSnapshotDraft/SnapshotDescript
 import { BenchmarkListStep } from "../../../benchmarks/BenchmarkListStep";
 import { Wizard } from "../../../../wizard/Wizard";
 import { ext } from "../../../../extensionVariables";
+import { SnapshotRebalanceThresholdStep } from "../SnapshotRebalanceThresholdStep";
 
 export async function updateSnapshotDraft(context: CommandContext, item: SnapshotDataKeyDraftItem) {
     const wizardContext: SnapshotDraftUpdateContext = {
@@ -33,6 +34,9 @@ export async function updateSnapshotDraft(context: CommandContext, item: Snapsho
             break;
         case 'benchmark':
             promptSteps.push(new BenchmarkListStep({ suppressSkip: true }));
+            break;
+        case 'rebalance_threshold_pct':
+            promptSteps.push(new SnapshotRebalanceThresholdStep({ defaultThresholdPct: item.snapshotData.rebalance_threshold_pct }));
             break;
         default:
     }

@@ -4,10 +4,15 @@ import { validationUtils } from "../../../utils/validationUtils";
 import { SnapshotCreateContext } from "../../snapshots/SnapshotCreateContext";
 
 export class SnapshotRebalanceThresholdStep<T extends SnapshotCreateContext> extends PromptStep<T> {
+    constructor(private readonly options: { defaultThresholdPct?: number } = {}) {
+        super();
+    }
+
     async prompt(context: T): Promise<void> {
         context.rebalanceThresholdPct = Number((await context.ui.showInputBox({
             title: this.title,
             prompt: l10n.t('Enter the snapshot\'s rebalance threshold (%)'),
+            value: this.options.defaultThresholdPct?.toString(),
             validateInput: this.validateInput,
         })));
     }
