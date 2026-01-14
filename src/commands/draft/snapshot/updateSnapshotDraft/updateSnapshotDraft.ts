@@ -12,30 +12,32 @@ import { BenchmarkListStep } from "../../../benchmarks/BenchmarkListStep";
 import { Wizard } from "../../../../wizard/Wizard";
 import { ext } from "../../../../extensionVariables";
 import { SnapshotRebalanceThresholdStep } from "../SnapshotRebalanceThresholdStep";
+import { snapshotBenchmarkKey, snapshotDateKey, snapshotDescriptionKey, snapshotRebalanceThresholdKey } from "../../../../tree/snapshots/snapshot/SnapshotDataItem";
 
 export async function updateSnapshotDraft(context: CommandContext, item: SnapshotDataKeyDraftItem) {
     const wizardContext: SnapshotDraftUpdateContext = {
         ...context,
         email: item.email,
         token: nonNullValue(await getAuthToken(item.email)),
-        snapDate: item.key === 'snap_date' ? undefined : item.snapshotData.snap_date,
-        snapDescription: item.key === 'description' ? undefined : item.snapshotData.description,
-        benchmarkId: item.key === 'benchmark' ? undefined : item.snapshotData.benchmark_id,
+        snapDate: item.key === snapshotDateKey ? undefined : item.snapshotData.snap_date,
+        snapDescription: item.key === snapshotDescriptionKey ? undefined : item.snapshotData.description,
+        benchmarkId: item.key === snapshotBenchmarkKey ? undefined : item.snapshotData.benchmark_id,
+        rebalanceThresholdPct: item.key === snapshotRebalanceThresholdKey ? undefined : item.snapshotData.rebalance_threshold_pct,
         snapshotData: item.snapshotData,
     };
 
     const promptSteps: PromptStep<SnapshotDraftUpdateContext>[] = [];
     switch (item.key) {
-        case 'snap_date':
+        case snapshotDateKey:
             promptSteps.push(new SnapshotDateStep({ defaultDate: item.snapshotData.snap_date }));
             break;
-        case 'description':
+        case snapshotDescriptionKey:
             promptSteps.push(new SnapshotDescriptionStep());
             break;
-        case 'benchmark':
+        case snapshotBenchmarkKey:
             promptSteps.push(new BenchmarkListStep({ suppressSkip: true }));
             break;
-        case 'rebalance_threshold_pct':
+        case snapshotRebalanceThresholdKey:
             promptSteps.push(new SnapshotRebalanceThresholdStep({ defaultThresholdPct: item.snapshotData.rebalance_threshold_pct }));
             break;
         default:

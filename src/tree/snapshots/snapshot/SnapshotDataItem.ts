@@ -7,6 +7,13 @@ import { SnapshotDataKeyItem } from "./SnapshotDataKeyItem";
 import { BenchmarksItem } from "../../benchmarks/BenchmarksItem";
 import { Benchmark, Snapshot } from "../../../sdk/portfolio-instruments-api";
 
+export const snapshotDateKey = 'snap_date';
+export const snapshotDescriptionKey = 'description';
+export const snapshotBenchmarkKey = 'benchmark';
+export const snapshotRebalanceThresholdKey = 'rebalance_threshold_pct';
+export const snapshotTotalKey = 'total';
+export const snapshotWeightedErKey = 'weighted_er_pct';
+
 export class SnapshotDataItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDataItem';
     static readonly regExp: RegExp = new RegExp(SnapshotDataItem.contextValue);
@@ -35,12 +42,12 @@ export class SnapshotDataItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
         return [
-            new SnapshotDataKeyItem(this.parent, this.email, 'snap_date', this.snapshotData.snap_date),
-            new SnapshotDataKeyItem(this.parent, this.email, 'description', this.snapshotData.description || '""'),
-            new SnapshotDataKeyItem(this.parent, this.email, 'benchmark', benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? '""'),
-            new SnapshotDataKeyItem(this.parent, this.email, 'rebalance_threshold_pct', String(this.snapshotData.rebalance_threshold_pct)),
-            new SnapshotDataKeyItem(this.parent, this.email, 'total', String(this.snapshotData.total.toFixed(2)), false),
-            new SnapshotDataKeyItem(this.parent, this.email, 'weighted_er_pct', String(this.snapshotData.weighted_er_pct.toFixed(3)), false),
+            new SnapshotDataKeyItem(this.parent, this.email, snapshotDateKey, this.snapshotData.snap_date),
+            new SnapshotDataKeyItem(this.parent, this.email, snapshotDescriptionKey, this.snapshotData.description || '""'),
+            new SnapshotDataKeyItem(this.parent, this.email, snapshotBenchmarkKey, benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? '""'),
+            new SnapshotDataKeyItem(this.parent, this.email, snapshotRebalanceThresholdKey, String(this.snapshotData.rebalance_threshold_pct)),
+            new SnapshotDataKeyItem(this.parent, this.email, snapshotTotalKey, String(this.snapshotData.total.toFixed(2)), false),
+            new SnapshotDataKeyItem(this.parent, this.email, snapshotWeightedErKey, String(this.snapshotData.weighted_er_pct.toFixed(3)), false),
         ];
     }
 

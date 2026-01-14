@@ -6,6 +6,7 @@ import { SnapshotDraftItem } from "./SnapshotDraftItem";
 import { SnapshotDataKeyDraftItem } from "./SnapshotDataKeyDraftItem";
 import { BenchmarksItem } from "../../benchmarks/BenchmarksItem";
 import { Benchmark, CreateSnapshotPayload } from "../../../sdk/portfolio-instruments-api";
+import { snapshotBenchmarkKey, snapshotDateKey, snapshotDescriptionKey, snapshotRebalanceThresholdKey } from "../snapshot/SnapshotDataItem";
 
 export class SnapshotDataDraftItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'snapshotDataDraftItem';
@@ -35,10 +36,10 @@ export class SnapshotDataDraftItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
         return [
-            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'snap_date', this.snapshotData.snap_date),
-            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'description', this.snapshotData.description || '""'),
-            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'benchmark', benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? '""'),
-            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, 'rebalance_threshold_pct', this.snapshotData.rebalance_threshold_pct?.toString() ?? ''),
+            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, snapshotDateKey, this.snapshotData.snap_date),
+            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, snapshotDescriptionKey, this.snapshotData.description || '""'),
+            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, snapshotBenchmarkKey, benchmarks.find(b => b.benchmark_id === this.snapshotData.benchmark_id)?.name ?? '""'),
+            new SnapshotDataKeyDraftItem(this.parent, this.email, this.snapshotData, snapshotRebalanceThresholdKey, this.snapshotData.rebalance_threshold_pct?.toString() ?? ''),
         ];
     }
 

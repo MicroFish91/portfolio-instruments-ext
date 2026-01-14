@@ -85,13 +85,13 @@ export class SnapshotRebalanceItem extends TreeItem implements PiExtTreeItem {
                 label: `${String(response.data?.rebalance_deviation_pct)}%`,
                 description: l10n.t('Max Deviation') +
                     (
-                        (response.data?.rebalance_deviation_pct ?? 0) > (this.snapshotData?.rebalance_threshold_pct ?? 100) ?
+                        (response.data?.rebalance_deviation_pct ?? 0) >= (this.snapshotData?.rebalance_threshold_pct ?? 100) ?
                             ' ' + l10n.t('(exceeds rebalance threshold)') :
                             ''
                     ),
                 contextValue: 'currentThresholdItem',
                 collapsibleState: TreeItemCollapsibleState.None,
-                iconPath: (response.data?.rebalance_deviation_pct ?? 0) > (this.snapshotData?.rebalance_threshold_pct ?? 100) ?
+                iconPath: (response.data?.rebalance_deviation_pct ?? 0) >= (this.snapshotData?.rebalance_threshold_pct ?? 100) ?
                     new ThemeIcon('warning', 'white') :
                     new ThemeIcon('pass', 'white')
             }),

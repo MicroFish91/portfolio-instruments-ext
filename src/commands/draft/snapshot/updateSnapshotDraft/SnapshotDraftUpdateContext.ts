@@ -5,6 +5,7 @@ export type SnapshotDraftUpdateContext = AuthContext & {
     snapDate?: string;
     snapDescription?: string;
     benchmarkId?: number;
+    rebalanceThresholdPct?: number;
 
     snapshotData: Omit<CreateSnapshotPayload, 'snapshot_values'>,
 };

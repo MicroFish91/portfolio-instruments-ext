@@ -75,7 +75,7 @@ export class SnapshotDateStep<T extends SnapshotCreateContext> extends PromptSte
 
         return {
             promptSteps: [
-                new BenchmarkListStep({ currentId: context.mostRecentSnapshot?.benchmark_id }),
+                new BenchmarkListStep({ recommendedId: context.mostRecentSnapshot?.benchmark_id }),
                 new SnapshotRebalanceThresholdStep({ defaultThresholdPct: context.mostRecentSnapshot?.rebalance_threshold_pct }),
             ],
         };
