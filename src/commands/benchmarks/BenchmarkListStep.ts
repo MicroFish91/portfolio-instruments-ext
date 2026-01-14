@@ -7,7 +7,7 @@ import { BenchmarksItem } from "../../tree/benchmarks/BenchmarksItem";
 import { Benchmark } from "../../sdk/portfolio-instruments-api";
 
 export type BenchmarkTargetStepOptions = {
-    currentId?: number;
+    recommendedId?: number;
     suppressSkip?: boolean;
 };
 
@@ -34,10 +34,10 @@ export class BenchmarkListStep<T extends AuthContext & { benchmarkId?: number }>
         }
 
         const picks: PiQuickPickItem<number | undefined>[] = benchmarks.map(benchmark => {
-            const isDefault: boolean = this.options?.currentId === benchmark.benchmark_id;
+            const isDefault: boolean = this.options?.recommendedId === benchmark.benchmark_id;
             return {
                 label: benchmark.name,
-                description: isDefault ? l10n.t('(current)') : undefined,
+                description: isDefault ? l10n.t('(recommended)') : undefined,
                 detail: benchmark.asset_allocation.map(a => `${capitalize(a.category)} - ${a.percent}%`).join(', '),
                 data: benchmark.benchmark_id,
             };

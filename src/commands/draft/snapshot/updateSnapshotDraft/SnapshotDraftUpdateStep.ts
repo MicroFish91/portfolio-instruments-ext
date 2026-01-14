@@ -15,6 +15,7 @@ export class SnapshotDraftUpdateStep<T extends SnapshotDraftUpdateContext> {
             snap_date: nonNullProp(context, 'snapDate'),
             description: context.snapDescription,
             benchmark_id: context.benchmarkId,
+            rebalance_threshold_pct: context.rebalanceThresholdPct,
         });
     }
 

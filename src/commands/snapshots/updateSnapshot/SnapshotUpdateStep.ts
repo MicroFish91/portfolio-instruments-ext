@@ -14,6 +14,7 @@ export class SnapshotUpdateStep<T extends SnapshotUpdateContext> {
             snap_date: nonNullProp(context, 'snapDate'),
             description: context.snapDescription,
             benchmark_id: context.benchmarkId,
+            rebalance_threshold_pct: context.rebalanceThresholdPct,
         });
         if (response.error) {
             throw new Error(response.error);

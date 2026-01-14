@@ -14,8 +14,10 @@ export class SnapshotDraftDeployStep<T extends SnapshotDraftDeployContext> exten
             snap_date: context.snapshotPayload.snap_date,
             description: context.snapshotPayload.description,
             benchmark_id: context.snapshotPayload.benchmark_id,
+            rebalance_threshold_pct: context.snapshotPayload.rebalance_threshold_pct,
             snapshot_values: context.snapshotPayload.snapshot_values,
         });
+
         if (response.error) {
             throw new Error(response.error);
         }
