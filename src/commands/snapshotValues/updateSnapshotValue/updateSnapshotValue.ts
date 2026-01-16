@@ -38,5 +38,5 @@ export async function updateSnapshotValue(context: CommandContext, item: Snapsho
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Updated snapshot value to new total "{0}".', nonNullValueAndProp(wizardContext.updatedSnapshotValue, 'total')));
-    ext.portfolioInstrumentsTdp.refresh(item.parent);
+    ext.portfolioInstrumentsTdp.refresh(item.parent.parent);
 }

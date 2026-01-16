@@ -32,5 +32,5 @@ export async function deleteSnapshotValue(context: CommandContext, item: Snapsho
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Deleted snapshot value with total "{0}"', nonNullValueAndProp(wizardContext.snapshotValue, 'total')));
-    ext.portfolioInstrumentsTdp.refresh(item.parent);
+    ext.portfolioInstrumentsTdp.refresh(item.parent.parent);
 }
