@@ -13,7 +13,7 @@ services:
       - db:/var/lib/posgressql
 
   migrate:
-    image: microfish91/portfolio-instruments-api:migrate
+    image: microfish91/portfolio-instruments-api:migrate-${API_VERSION:-v2}
     depends_on:
       - db
     environment:
