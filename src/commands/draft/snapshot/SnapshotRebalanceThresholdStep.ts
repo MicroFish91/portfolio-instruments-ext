@@ -10,16 +10,16 @@ export class SnapshotRebalanceThresholdStep<T extends SnapshotCreateContext> ext
     }
 
     async prompt(context: T): Promise<void> {
-        let defaulThresholdPct: number | undefined = this.options.defaultThresholdPct;
-        if (!defaulThresholdPct && context.benchmarkId) {
+        let defaultThresholdPct: number | undefined = this.options.defaultThresholdPct;
+        if (!defaultThresholdPct && context.benchmarkId) {
             const response = await getBenchmark(context.token, context.benchmarkId);
-            defaulThresholdPct = response.data?.benchmark?.rec_rebalance_threshold_pct;
+            defaultThresholdPct = response.data?.benchmark?.rec_rebalance_threshold_pct;
         }
 
         context.rebalanceThresholdPct = Number((await context.ui.showInputBox({
             title: this.title,
             prompt: l10n.t('Enter the snapshot\'s rebalance threshold (%)'),
-            value: defaulThresholdPct?.toString(),
+            value: defaultThresholdPct?.toString(),
             validateInput: this.validateInput,
         })));
     }
