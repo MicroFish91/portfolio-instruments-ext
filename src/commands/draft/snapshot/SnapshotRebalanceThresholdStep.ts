@@ -2,6 +2,7 @@ import { l10n } from "vscode";
 import { PromptStep } from "../../../wizard/PromptStep";
 import { validationUtils } from "../../../utils/validationUtils";
 import { SnapshotCreateContext } from "../../snapshots/SnapshotCreateContext";
+import { getBenchmark } from "../../../sdk/benchmarks/getBenchmark";
 
 export class SnapshotRebalanceThresholdStep<T extends SnapshotCreateContext> extends PromptStep<T> {
     constructor(private readonly options: { defaultThresholdPct?: number } = {}) {
@@ -9,10 +10,16 @@ export class SnapshotRebalanceThresholdStep<T extends SnapshotCreateContext> ext
     }
 
     async prompt(context: T): Promise<void> {
+        let defaulThresholdPct: number | undefined = this.options.defaultThresholdPct;
+        if (!defaulThresholdPct && context.benchmarkId) {
+            const response = await getBenchmark(context.token, context.benchmarkId);
+            defaulThresholdPct = response.data?.benchmark?.rec_rebalance_threshold_pct;
+        }
+
         context.rebalanceThresholdPct = Number((await context.ui.showInputBox({
             title: this.title,
             prompt: l10n.t('Enter the snapshot\'s rebalance threshold (%)'),
-            value: this.options.defaultThresholdPct?.toString(),
+            value: defaulThresholdPct?.toString(),
             validateInput: this.validateInput,
         })));
     }

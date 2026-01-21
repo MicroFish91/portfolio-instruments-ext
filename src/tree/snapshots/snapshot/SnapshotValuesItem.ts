@@ -139,6 +139,8 @@ export class SnapshotValuesItem extends TreeItem implements PiExtTreeItem, Reord
     }
 
     viewProperties(): string {
-        return JSON.stringify(this.snapshotValues, undefined, 4);
+        // Show values in the same order as displayed in the tree view
+        const orderedSnapshotValues = this.getOrderedSnapshotValues();
+        return JSON.stringify(orderedSnapshotValues, undefined, 4);
     }
 }
