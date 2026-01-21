@@ -357,7 +357,7 @@ export interface Snapshot {
     weighted_er_pct: number;
     rebalance_threshold_pct?: number;
     benchmark_id?: number;
-    value_order?: number[]; // Server-side ordering of snapshot values (array of snap_val_ids)
+    value_order?: number[];
     user_id: number;
     created_at: string;
     updated_at: string;
