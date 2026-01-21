@@ -70,7 +70,7 @@ export class SnapshotDateStep<T extends SnapshotCreateContext> extends PromptSte
     async subWizard(context: T): Promise<WizardSteps<T>> {
         if (context.snapDate) {
             const response = await getMostRecentSnapshotByDate(context.token, context.snapDate);
-            context.mostRecentSnapshot = response.data?.snapshots[0];
+            context.mostRecentSnapshot = response.data?.snapshots?.[0];
         }
 
         return {
