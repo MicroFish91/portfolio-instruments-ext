@@ -357,6 +357,7 @@ export interface Snapshot {
     weighted_er_pct: number;
     rebalance_threshold_pct?: number;
     benchmark_id?: number;
+    value_order?: number[];
     user_id: number;
     created_at: string;
     updated_at: string;
@@ -487,9 +488,22 @@ export interface UpdateSnapshotPayload {
     description?: string;
     rebalance_threshold_pct?: number;
     benchmark_id?: number;
+    value_order?: number[];
 }
 
 export interface UpdateSnapshotResponse {
+    status: number;
+    data?: {
+        snapshot: Snapshot;
+    };
+    error?: string;
+}
+
+export interface UpdateSnapshotValueOrderPayload {
+    value_order: number[];
+}
+
+export interface UpdateSnapshotValueOrderResponse {
     status: number;
     data?: {
         snapshot: Snapshot;
