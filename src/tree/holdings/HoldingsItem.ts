@@ -73,7 +73,8 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
-        return JSON.stringify(holdings, undefined, 4);
+        const holdingsWithoutId = holdings.map(({ id, ...holding }: any) => holding);
+        return JSON.stringify(holdingsWithoutId, undefined, 4);
     }
 
     static async getHoldings(email: string): Promise<Holding[]> {

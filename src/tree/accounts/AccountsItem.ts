@@ -73,7 +73,8 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const accounts: Account[] = await AccountsItem.getAccountsWithCache(this.email);
-        return JSON.stringify(accounts, undefined, 4);
+        const accountsWithoutId = accounts.map(({ id, ...account }: any) => account);
+        return JSON.stringify(accountsWithoutId, undefined, 4);
     }
 
     static async getAccounts(email: string): Promise<Account[]> {
