@@ -36,7 +36,8 @@ export class AccountItem extends TreeItem implements PiExtTreeItem, Reorderable 
     }
 
     async viewProperties(): Promise<string> {
-        return JSON.stringify(this.account, undefined, 4);
+        const { id, ...accountWithoutId } = this.account as any;
+        return JSON.stringify(accountWithoutId, undefined, 4);
     }
 
     getResourceId(): string {
