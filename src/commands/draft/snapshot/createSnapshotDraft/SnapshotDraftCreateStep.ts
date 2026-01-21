@@ -5,7 +5,6 @@ import { SnapshotsItem } from "../../../../tree/snapshots/SnapshotsItem";
 import { ext } from "../../../../extensionVariables";
 import { nonNullProp } from "../../../../utils/nonNull";
 import { getSnapshot } from "../../../../sdk/snapshots/getSnapshot";
-import { SnapshotValuesItem } from "../../../../tree/snapshots/snapshot/SnapshotValuesItem";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds } from "../../../../tree/reorder";
 import { CreateSnapshotValuePayload, Snapshot, SnapshotValue } from "../../../../sdk/portfolio-instruments-api";
 
@@ -42,15 +41,26 @@ export class SnapshotDraftCreateStep<T extends SnapshotDraftCreateContext> exten
     /**
      * We only need to carry over the values that are required for creating new snapshot values.
      * Other metadata will look confusing when shown in the draft format since it is not used for creating new resources.
+     * 
+     * Uses server-side value_order from the snapshot if available.
      */
     private convertToPayloadValues(context: T, snapshotId: number, snapshotValues: SnapshotValue[]): CreateSnapshotValuePayload[] {
         if (!snapshotId || !snapshotValues.length) {
             return snapshotValues;
         }
 
+        // Get the snapshot to access server-side value_order
+        const snapshot: Snapshot | undefined = context.mostRecentSnapshot;
         const snapshotValueResourceModels: (SnapshotValue & GenericPiResourceModel)[] = snapshotValues.map(sv => convertToGenericPiResourceModel(sv, 'snap_val_id'));
-        const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(SnapshotValuesItem.generatePiExtSnapshotValuesOrderId(context.email, snapshotId)) ?? [];
-        const orderedSnapshotValues: (SnapshotValue & GenericPiResourceModel)[] = orderResourcesByTargetIds(snapshotValueResourceModels, orderedResourceIds);
+
+        // Use server-side value_order if available, otherwise use default order
+        let orderedSnapshotValues: (SnapshotValue & GenericPiResourceModel)[];
+        if (snapshot?.value_order && snapshot.value_order.length > 0) {
+            const orderedResourceIds = snapshot.value_order.map(id => String(id));
+            orderedSnapshotValues = orderResourcesByTargetIds(snapshotValueResourceModels, orderedResourceIds);
+        } else {
+            orderedSnapshotValues = snapshotValueResourceModels;
+        }
 
         const simplifiedPayloads: CreateSnapshotValuePayload[] = [];
         for (const sv of orderedSnapshotValues) {
