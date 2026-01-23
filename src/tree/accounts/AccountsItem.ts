@@ -1,4 +1,4 @@
-import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
+import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAccounts } from "../../sdk/accounts/getAccounts";
 import { getAuthToken } from "../../utils/tokenUtils";
@@ -57,7 +57,11 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(accounts?: Account[]): Promise<(Account & GenericPiResourceModel)[]> {
         accounts ??= await AccountsItem.getAccountsWithCache(this.email);
-        accounts = accounts.filter(a => !a.is_deprecated);
+        
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        if (!showDeprecated) {
+            accounts = accounts.filter(a => !a.is_deprecated);
+        }
 
         const accountResourceModels: (Account & GenericPiResourceModel)[] = accounts.map(a => convertToGenericPiResourceModel(a, 'account_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(AccountsItem.generatePiExtAccountsOrderId(this.email)) ?? [];

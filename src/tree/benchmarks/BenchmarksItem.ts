@@ -1,4 +1,4 @@
-import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
+import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
@@ -33,9 +33,13 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
         ext.resourceCache.set(BenchmarksItem.generatePiExtBenchmarksId(this.email), benchmarks);
-        return benchmarks
-            .filter(b => !b.is_deprecated)
-            .map(b => new BenchmarkItem(this, this.email, b));
+        
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const filteredBenchmarks = showDeprecated 
+            ? benchmarks 
+            : benchmarks.filter(b => !b.is_deprecated);
+        
+        return filteredBenchmarks.map(b => new BenchmarkItem(this, this.email, b));
     }
 
     private getContextValue(): string {

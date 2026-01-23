@@ -34,6 +34,7 @@ import { createSnapshotValue } from "./snapshotValues/createSnapshotValue/create
 import { deleteSnapshotValue } from "./snapshotValues/deleteSnapshotValue/deleteSnapshotValue";
 import { updateSnapshotValue } from "./snapshotValues/updateSnapshotValue/updateSnapshotValue";
 import { viewProperties } from "./viewProperties/viewProperties";
+import { toggleShowDeprecatedResources } from "./toggleShowDeprecatedResources/toggleShowDeprecatedResources";
 
 export function registerCommands() {
     // Auth
@@ -88,4 +89,5 @@ export function registerCommands() {
     // Other
     registerCommand('portfolioInstruments.viewProperties', viewProperties);
     registerCommand('portfolioInstruments.setApiEndpoint', setApiEndpoint);
+    registerCommand('portfolioInstruments.toggleShowDeprecatedResources', toggleShowDeprecatedResources);
 }

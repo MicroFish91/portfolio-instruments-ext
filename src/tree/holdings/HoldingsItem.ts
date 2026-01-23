@@ -1,4 +1,4 @@
-import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
+import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
@@ -57,7 +57,11 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(holdings?: Holding[]): Promise<(Holding & GenericPiResourceModel)[]> {
         holdings ??= await HoldingsItem.getHoldingsWithCache(this.email);
-        holdings = holdings.filter(h => !h.is_deprecated);
+        
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        if (!showDeprecated) {
+            holdings = holdings.filter(h => !h.is_deprecated);
+        }
 
         const holdingResourceModels: (Holding & GenericPiResourceModel)[] = holdings.map(h => convertToGenericPiResourceModel(h, 'holding_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(HoldingsItem.generatePiExtHoldingsOrderId(this.email)) ?? [];

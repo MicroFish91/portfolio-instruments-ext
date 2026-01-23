@@ -212,6 +212,11 @@
         "command": "portfolioInstruments.plotSnapshots",
         "title": "%portfolioInstruments.plotSnapshots%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.toggleShowDeprecatedResources",
+        "title": "%portfolioInstruments.toggleShowDeprecatedResources%",
+        "category": "Portfolio Instruments"
       }
     ],
     "configuration": [
@@ -222,6 +227,11 @@
             "type": "string",
             "description": "%portfolioInstruments.apiEndpoint%",
             "default": "http://localhost:3000"
+          },
+          "portfolioInstruments.showDeprecatedResources": {
+            "type": "boolean",
+            "description": "%portfolioInstruments.showDeprecatedResources%",
+            "default": false
           }
         }
       }
