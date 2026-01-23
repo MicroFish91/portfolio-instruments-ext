@@ -86,7 +86,17 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
-        return JSON.stringify(holdings, undefined, 4);
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        
+        // Separate deprecated and non-deprecated holdings
+        const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
+        const deprecatedHoldings = showDeprecated ? holdings.filter(h => h.is_deprecated) : [];
+        
+        // Order non-deprecated holdings and append deprecated ones at the end
+        const orderedHoldings = await this.getOrderedResourceModels(nonDeprecatedHoldings);
+        const result = [...orderedHoldings, ...deprecatedHoldings];
+        
+        return JSON.stringify(result, undefined, 4);
     }
 
     static async getHoldings(email: string): Promise<Holding[]> {

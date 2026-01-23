@@ -57,7 +57,16 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
 
     async viewProperties(): Promise<string> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
-        return JSON.stringify(benchmarks, undefined, 4);
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        
+        // Separate deprecated and non-deprecated benchmarks
+        const nonDeprecatedBenchmarks = benchmarks.filter(b => !b.is_deprecated);
+        const deprecatedBenchmarks = showDeprecated ? benchmarks.filter(b => b.is_deprecated) : [];
+        
+        // Combine non-deprecated and deprecated benchmarks, with deprecated at the end
+        const result = [...nonDeprecatedBenchmarks, ...deprecatedBenchmarks];
+        
+        return JSON.stringify(result, undefined, 4);
     }
 
     static async getBenchmarks(email: string): Promise<Benchmark[]> {

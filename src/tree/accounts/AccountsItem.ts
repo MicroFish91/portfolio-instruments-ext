@@ -86,7 +86,17 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const accounts: Account[] = await AccountsItem.getAccountsWithCache(this.email);
-        return JSON.stringify(accounts, undefined, 4);
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        
+        // Separate deprecated and non-deprecated accounts
+        const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
+        const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
+        
+        // Order non-deprecated accounts and append deprecated ones at the end
+        const orderedAccounts = await this.getOrderedResourceModels(nonDeprecatedAccounts);
+        const result = [...orderedAccounts, ...deprecatedAccounts];
+        
+        return JSON.stringify(result, undefined, 4);
     }
 
     static async getAccounts(email: string): Promise<Account[]> {
