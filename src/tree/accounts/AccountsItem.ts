@@ -1,4 +1,4 @@
-import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
+import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAccounts } from "../../sdk/accounts/getAccounts";
 import { getAuthToken } from "../../utils/tokenUtils";
@@ -10,6 +10,7 @@ import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../c
 import { ext } from "../../extensionVariables";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
 import { Account } from "../../sdk/portfolio-instruments-api";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'accountsItem';
@@ -46,7 +47,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             accounts = await AccountsItem.getAccounts(this.email);
         }
 
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
         
         // Separate deprecated and non-deprecated accounts
         const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
@@ -86,7 +87,7 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const accounts: Account[] = await AccountsItem.getAccountsWithCache(this.email);
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
         
         // Separate deprecated and non-deprecated accounts
         const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);

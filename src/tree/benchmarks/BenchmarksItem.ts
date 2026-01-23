@@ -1,4 +1,4 @@
-import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
+import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
@@ -9,6 +9,7 @@ import { BenchmarkItem } from "./BenchmarkItem";
 import { BenchmarkDeprecatedItem } from "./BenchmarkDeprecatedItem";
 import { ext } from "../../extensionVariables";
 import { Benchmark } from "../../sdk/portfolio-instruments-api";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'benchmarksItem';
@@ -35,7 +36,7 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
         ext.resourceCache.set(BenchmarksItem.generatePiExtBenchmarksId(this.email), benchmarks);
         
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
         
         // Separate deprecated and non-deprecated benchmarks
         const nonDeprecatedBenchmarks = benchmarks.filter(b => !b.is_deprecated);
@@ -57,7 +58,7 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
 
     async viewProperties(): Promise<string> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
         
         // Separate deprecated and non-deprecated benchmarks
         const nonDeprecatedBenchmarks = benchmarks.filter(b => !b.is_deprecated);

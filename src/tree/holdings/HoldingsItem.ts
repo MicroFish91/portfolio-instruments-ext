@@ -1,4 +1,4 @@
-import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState, workspace } from "vscode";
+import { l10n, ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
 import { PiExtTreeItem } from "../PiExtTreeDataProvider";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
@@ -10,6 +10,7 @@ import { createContextValue } from "../../utils/contextUtils";
 import { ext } from "../../extensionVariables";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
 import { Holding } from "../../sdk/portfolio-instruments-api";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'holdingsItem';
@@ -46,7 +47,7 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             holdings = await HoldingsItem.getHoldings(this.email);
         }
 
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
         
         // Separate deprecated and non-deprecated holdings
         const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
@@ -86,7 +87,7 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
         
         // Separate deprecated and non-deprecated holdings
         const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
