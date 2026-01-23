@@ -31,5 +31,5 @@ export async function deleteSnapshot(context: CommandContext, item: SnapshotItem
     await wizard.execute();
 
     void context.ui.showInformationMessage(l10n.t('Deleted snapshot dated "{0}"', nonNullValueAndProp(wizardContext.snapshot, 'snap_date')));
-    ext.portfolioInstrumentsTdp.refresh(item.parent);
+    ext.portfolioInstrumentsTdp.refresh();
 }

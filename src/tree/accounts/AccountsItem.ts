@@ -4,11 +4,13 @@ import { getAccounts } from "../../sdk/accounts/getAccounts";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
 import { AccountItem } from "./AccountItem";
+import { AccountDeprecatedItem } from "./AccountDeprecatedItem";
 import { createContextValue } from "../../utils/contextUtils";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { ext } from "../../extensionVariables";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
 import { Account } from "../../sdk/portfolio-instruments-api";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'accountsItem';
@@ -45,10 +47,26 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             accounts = await AccountsItem.getAccounts(this.email);
         }
 
-        const orderedAccounts: Account[] = await this.getOrderedResourceModels(accounts);
-        ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), orderedAccounts);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
+        
+        // Separate deprecated and non-deprecated accounts
+        const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
+        const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
 
-        return orderedAccounts.map(a => new AccountItem(this, this.email, a));
+        const orderedAccounts: Account[] = await this.getOrderedResourceModels(nonDeprecatedAccounts);
+        
+        // Cache all accounts (both deprecated and non-deprecated) to preserve deprecated items after reordering
+        const allAccounts = [...orderedAccounts, ...accounts.filter(a => a.is_deprecated)];
+        ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), allAccounts);
+
+        const items: PiExtTreeItem[] = orderedAccounts.map(a => new AccountItem(this, this.email, a));
+        
+        // Add deprecated accounts at the end
+        if (deprecatedAccounts.length > 0) {
+            items.push(...deprecatedAccounts.map(a => new AccountDeprecatedItem(this, this.email, a)));
+        }
+
+        return items;
     }
 
     canReorderItem(item: PiExtTreeItem): boolean {
@@ -57,7 +75,6 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(accounts?: Account[]): Promise<(Account & GenericPiResourceModel)[]> {
         accounts ??= await AccountsItem.getAccountsWithCache(this.email);
-        accounts = accounts.filter(a => !a.is_deprecated);
 
         const accountResourceModels: (Account & GenericPiResourceModel)[] = accounts.map(a => convertToGenericPiResourceModel(a, 'account_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(AccountsItem.generatePiExtAccountsOrderId(this.email)) ?? [];
@@ -73,8 +90,20 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const accounts: Account[] = await AccountsItem.getAccountsWithCache(this.email);
-        const accountsWithoutId = accounts.map(({ id, ...account }: any) => account);
-        return JSON.stringify(accountsWithoutId, undefined, 4);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
+        
+        // Separate deprecated and non-deprecated accounts
+        const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
+        const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
+        
+        // Order non-deprecated accounts and append deprecated ones at the end
+        const orderedAccounts = await this.getOrderedResourceModels(nonDeprecatedAccounts);
+        const result = [...orderedAccounts, ...deprecatedAccounts];
+        
+        // Remove id field from all accounts
+        const resultWithoutId = result.map(({ id, ...account }: any) => account);
+        
+        return JSON.stringify(resultWithoutId, undefined, 4);
     }
 
     static async getAccounts(email: string): Promise<Account[]> {
