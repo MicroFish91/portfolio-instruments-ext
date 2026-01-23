@@ -4,6 +4,7 @@ import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
 import { getHoldings } from "../../sdk/holdings/getHoldings";
 import { HoldingItem } from "./HoldingItem";
+import { HoldingDeprecatedItem } from "./HoldingDeprecatedItem";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { createContextValue } from "../../utils/contextUtils";
 import { ext } from "../../extensionVariables";
@@ -45,10 +46,23 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             holdings = await HoldingsItem.getHoldings(this.email);
         }
 
-        const orderedHoldings: Holding[] = await this.getOrderedResourceModels(holdings);
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        
+        // Separate deprecated and non-deprecated holdings
+        const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
+        const deprecatedHoldings = showDeprecated ? holdings.filter(h => h.is_deprecated) : [];
+
+        const orderedHoldings: Holding[] = await this.getOrderedResourceModels(nonDeprecatedHoldings);
         ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), orderedHoldings);
 
-        return orderedHoldings.map(h => new HoldingItem(this, this.email, h));
+        const items: PiExtTreeItem[] = orderedHoldings.map(h => new HoldingItem(this, this.email, h));
+        
+        // Add deprecated holdings at the end
+        if (deprecatedHoldings.length > 0) {
+            items.push(...deprecatedHoldings.map(h => new HoldingDeprecatedItem(this, this.email, h)));
+        }
+
+        return items;
     }
 
     canReorderItem(item: PiExtTreeItem): boolean {
@@ -57,11 +71,6 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(holdings?: Holding[]): Promise<(Holding & GenericPiResourceModel)[]> {
         holdings ??= await HoldingsItem.getHoldingsWithCache(this.email);
-        
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
-        if (!showDeprecated) {
-            holdings = holdings.filter(h => !h.is_deprecated);
-        }
 
         const holdingResourceModels: (Holding & GenericPiResourceModel)[] = holdings.map(h => convertToGenericPiResourceModel(h, 'holding_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(HoldingsItem.generatePiExtHoldingsOrderId(this.email)) ?? [];

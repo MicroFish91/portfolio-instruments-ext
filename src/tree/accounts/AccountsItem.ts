@@ -4,6 +4,7 @@ import { getAccounts } from "../../sdk/accounts/getAccounts";
 import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
 import { AccountItem } from "./AccountItem";
+import { AccountDeprecatedItem } from "./AccountDeprecatedItem";
 import { createContextValue } from "../../utils/contextUtils";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { ext } from "../../extensionVariables";
@@ -45,10 +46,23 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             accounts = await AccountsItem.getAccounts(this.email);
         }
 
-        const orderedAccounts: Account[] = await this.getOrderedResourceModels(accounts);
+        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
+        
+        // Separate deprecated and non-deprecated accounts
+        const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
+        const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
+
+        const orderedAccounts: Account[] = await this.getOrderedResourceModels(nonDeprecatedAccounts);
         ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), orderedAccounts);
 
-        return orderedAccounts.map(a => new AccountItem(this, this.email, a));
+        const items: PiExtTreeItem[] = orderedAccounts.map(a => new AccountItem(this, this.email, a));
+        
+        // Add deprecated accounts at the end
+        if (deprecatedAccounts.length > 0) {
+            items.push(...deprecatedAccounts.map(a => new AccountDeprecatedItem(this, this.email, a)));
+        }
+
+        return items;
     }
 
     canReorderItem(item: PiExtTreeItem): boolean {
@@ -57,11 +71,6 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(accounts?: Account[]): Promise<(Account & GenericPiResourceModel)[]> {
         accounts ??= await AccountsItem.getAccountsWithCache(this.email);
-        
-        const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
-        if (!showDeprecated) {
-            accounts = accounts.filter(a => !a.is_deprecated);
-        }
 
         const accountResourceModels: (Account & GenericPiResourceModel)[] = accounts.map(a => convertToGenericPiResourceModel(a, 'account_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(AccountsItem.generatePiExtAccountsOrderId(this.email)) ?? [];

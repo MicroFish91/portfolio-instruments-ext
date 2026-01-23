@@ -6,6 +6,7 @@ import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { getBenchmarks } from "../../sdk/benchmarks/getBenchmarks";
 import { BenchmarkItem } from "./BenchmarkItem";
+import { BenchmarkDeprecatedItem } from "./BenchmarkDeprecatedItem";
 import { ext } from "../../extensionVariables";
 import { Benchmark } from "../../sdk/portfolio-instruments-api";
 
@@ -35,11 +36,19 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
         ext.resourceCache.set(BenchmarksItem.generatePiExtBenchmarksId(this.email), benchmarks);
         
         const showDeprecated = workspace.getConfiguration('portfolioInstruments').get<boolean>('showDeprecatedResources', false);
-        const filteredBenchmarks = showDeprecated 
-            ? benchmarks 
-            : benchmarks.filter(b => !b.is_deprecated);
         
-        return filteredBenchmarks.map(b => new BenchmarkItem(this, this.email, b));
+        // Separate deprecated and non-deprecated benchmarks
+        const nonDeprecatedBenchmarks = benchmarks.filter(b => !b.is_deprecated);
+        const deprecatedBenchmarks = showDeprecated ? benchmarks.filter(b => b.is_deprecated) : [];
+        
+        const items: PiExtTreeItem[] = nonDeprecatedBenchmarks.map(b => new BenchmarkItem(this, this.email, b));
+        
+        // Add deprecated benchmarks at the end
+        if (deprecatedBenchmarks.length > 0) {
+            items.push(...deprecatedBenchmarks.map(b => new BenchmarkDeprecatedItem(this, this.email, b)));
+        }
+        
+        return items;
     }
 
     private getContextValue(): string {
