@@ -27,7 +27,7 @@ export class HoldingDeprecatedItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.label,
-            description: l10n.t('deprecated'),
+            description: `${this.holding.asset_category} ${l10n.t('(deprecated)')}`,
             contextValue: this.contextValue,
             iconPath: new ThemeIcon("variable", "white"),
         };

@@ -54,7 +54,10 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
         const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
 
         const orderedAccounts: Account[] = await this.getOrderedResourceModels(nonDeprecatedAccounts);
-        ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), orderedAccounts);
+        
+        // Cache all accounts (both deprecated and non-deprecated) to preserve deprecated items after reordering
+        const allAccounts = [...orderedAccounts, ...accounts.filter(a => a.is_deprecated)];
+        ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), allAccounts);
 
         const items: PiExtTreeItem[] = orderedAccounts.map(a => new AccountItem(this, this.email, a));
         

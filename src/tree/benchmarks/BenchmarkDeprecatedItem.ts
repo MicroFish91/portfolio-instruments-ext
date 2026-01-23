@@ -24,7 +24,7 @@ export class BenchmarkDeprecatedItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.label,
-            description: l10n.t('deprecated'),
+            description: this.benchmark.asset_allocation.map(a => a.percent).sort((a, b) => b - a).join('% / ') + `% ${l10n.t('(deprecated)')}`,
             contextValue: this.getContextValue(),
             iconPath: new ThemeIcon('pie-chart', 'white'),
         };

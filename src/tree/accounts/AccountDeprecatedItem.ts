@@ -4,6 +4,7 @@ import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { AccountsItem } from "./AccountsItem";
 import { Account } from "../../sdk/portfolio-instruments-api";
+import { capitalize } from "../../utils/textUtils";
 
 export class AccountDeprecatedItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'accountDeprecatedItem';
@@ -27,7 +28,7 @@ export class AccountDeprecatedItem extends TreeItem implements PiExtTreeItem {
         return {
             id: this.id,
             label: this.label,
-            description: l10n.t('deprecated'),
+            description: `${capitalize(this.account.institution)}-${capitalize(this.account.tax_shelter)} ${l10n.t('(deprecated)')}`,
             contextValue: this.contextValue,
             iconPath: new ThemeIcon('home', 'white'),
         };
