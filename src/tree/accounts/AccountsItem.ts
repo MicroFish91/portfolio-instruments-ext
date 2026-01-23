@@ -48,19 +48,19 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
         }
 
         const showDeprecated = settingUtils.getShowDeprecatedResources();
-        
+
         // Separate deprecated and non-deprecated accounts
         const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
         const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
 
         const orderedAccounts: Account[] = await this.getOrderedResourceModels(nonDeprecatedAccounts);
-        
+
         // Cache all accounts (both deprecated and non-deprecated) to preserve deprecated items after reordering
         const allAccounts = [...orderedAccounts, ...accounts.filter(a => a.is_deprecated)];
         ext.resourceCache.set(AccountsItem.generatePiExtAccountsId(this.email), allAccounts);
 
         const items: PiExtTreeItem[] = orderedAccounts.map(a => new AccountItem(this, this.email, a));
-        
+
         // Add deprecated accounts at the end
         if (deprecatedAccounts.length > 0) {
             items.push(...deprecatedAccounts.map(a => new AccountDeprecatedItem(this, this.email, a)));
@@ -91,18 +91,17 @@ export class AccountsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     async viewProperties(): Promise<string> {
         const accounts: Account[] = await AccountsItem.getAccountsWithCache(this.email);
         const showDeprecated = settingUtils.getShowDeprecatedResources();
-        
+
         // Separate deprecated and non-deprecated accounts
         const nonDeprecatedAccounts = accounts.filter(a => !a.is_deprecated);
         const deprecatedAccounts = showDeprecated ? accounts.filter(a => a.is_deprecated) : [];
-        
+
         // Order non-deprecated accounts and append deprecated ones at the end
         const orderedAccounts = await this.getOrderedResourceModels(nonDeprecatedAccounts);
         const result = [...orderedAccounts, ...deprecatedAccounts];
-        
+
         // Remove id field from all accounts
         const resultWithoutId = result.map(({ id, ...account }: any) => account);
-        
         return JSON.stringify(resultWithoutId, undefined, 4);
     }
 
