@@ -4,11 +4,13 @@ import { getAuthToken } from "../../utils/tokenUtils";
 import { nonNullValue } from "../../utils/nonNull";
 import { getHoldings } from "../../sdk/holdings/getHoldings";
 import { HoldingItem } from "./HoldingItem";
+import { HoldingDeprecatedItem } from "./HoldingDeprecatedItem";
 import { orderKeyPrefix, reordererContext, viewPropertiesContext } from "../../constants";
 import { createContextValue } from "../../utils/contextUtils";
 import { ext } from "../../extensionVariables";
 import { convertToGenericPiResourceModel, GenericPiResourceModel, orderResourcesByTargetIds, Reorderer } from "../reorder";
 import { Holding } from "../../sdk/portfolio-instruments-api";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     static readonly contextValue: string = 'holdingsItem';
@@ -45,10 +47,26 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
             holdings = await HoldingsItem.getHoldings(this.email);
         }
 
-        const orderedHoldings: Holding[] = await this.getOrderedResourceModels(holdings);
-        ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), orderedHoldings);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
+        
+        // Separate deprecated and non-deprecated holdings
+        const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
+        const deprecatedHoldings = showDeprecated ? holdings.filter(h => h.is_deprecated) : [];
 
-        return orderedHoldings.map(h => new HoldingItem(this, this.email, h));
+        const orderedHoldings: Holding[] = await this.getOrderedResourceModels(nonDeprecatedHoldings);
+        
+        // Cache all holdings (both deprecated and non-deprecated) to preserve deprecated items after reordering
+        const allHoldings = [...orderedHoldings, ...holdings.filter(h => h.is_deprecated)];
+        ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), allHoldings);
+
+        const items: PiExtTreeItem[] = orderedHoldings.map(h => new HoldingItem(this, this.email, h));
+        
+        // Add deprecated holdings at the end
+        if (deprecatedHoldings.length > 0) {
+            items.push(...deprecatedHoldings.map(h => new HoldingDeprecatedItem(this, this.email, h)));
+        }
+
+        return items;
     }
 
     canReorderItem(item: PiExtTreeItem): boolean {
@@ -57,7 +75,6 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async getOrderedResourceModels(holdings?: Holding[]): Promise<(Holding & GenericPiResourceModel)[]> {
         holdings ??= await HoldingsItem.getHoldingsWithCache(this.email);
-        holdings = holdings.filter(h => !h.is_deprecated);
 
         const holdingResourceModels: (Holding & GenericPiResourceModel)[] = holdings.map(h => convertToGenericPiResourceModel(h, 'holding_id'));
         const orderedResourceIds: string[] = ext.context.globalState.get<string[]>(HoldingsItem.generatePiExtHoldingsOrderId(this.email)) ?? [];
@@ -73,7 +90,17 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
 
     async viewProperties(): Promise<string> {
         const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
-        return JSON.stringify(holdings, undefined, 4);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
+        
+        // Separate deprecated and non-deprecated holdings
+        const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
+        const deprecatedHoldings = showDeprecated ? holdings.filter(h => h.is_deprecated) : [];
+        
+        // Order non-deprecated holdings and append deprecated ones at the end
+        const orderedHoldings = await this.getOrderedResourceModels(nonDeprecatedHoldings);
+        const result = [...orderedHoldings, ...deprecatedHoldings];
+        
+        return JSON.stringify(result, undefined, 4);
     }
 
     static async getHoldings(email: string): Promise<Holding[]> {

@@ -4,6 +4,7 @@ import { nonNullValue } from "./nonNull";
 export namespace settingUtils {
     const extPrefix: string = 'portfolioInstruments';
     const apiEndpointSetting: string = 'apiEndpoint';
+    const showDeprecatedResourcesSetting: string = 'showDeprecatedResources';
 
     /**
      * Directly retrieves one of the user's `Global` configuration settings.
@@ -31,5 +32,13 @@ export namespace settingUtils {
 
     export async function updateApiEndpointBaseUrl(newBaseUrl: string): Promise<void> {
         await updateGlobalSetting(apiEndpointSetting, newBaseUrl);
+    }
+
+    export function getShowDeprecatedResources(): boolean {
+        return getGlobalSetting<boolean>(showDeprecatedResourcesSetting) ?? false;
+    }
+
+    export async function updateShowDeprecatedResources(show: boolean): Promise<void> {
+        await updateGlobalSetting(showDeprecatedResourcesSetting, show);
     }
 }

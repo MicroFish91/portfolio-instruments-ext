@@ -6,8 +6,10 @@ import { createContextValue } from "../../utils/contextUtils";
 import { viewPropertiesContext } from "../../constants";
 import { getBenchmarks } from "../../sdk/benchmarks/getBenchmarks";
 import { BenchmarkItem } from "./BenchmarkItem";
+import { BenchmarkDeprecatedItem } from "./BenchmarkDeprecatedItem";
 import { ext } from "../../extensionVariables";
 import { Benchmark } from "../../sdk/portfolio-instruments-api";
+import { settingUtils } from "../../utils/settingUtils";
 
 export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     static readonly contextValue: string = 'benchmarksItem';
@@ -33,9 +35,21 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
     async getChildren(): Promise<PiExtTreeItem[]> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarks(this.email);
         ext.resourceCache.set(BenchmarksItem.generatePiExtBenchmarksId(this.email), benchmarks);
-        return benchmarks
-            .filter(b => !b.is_deprecated)
-            .map(b => new BenchmarkItem(this, this.email, b));
+        
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
+        
+        // Separate deprecated and non-deprecated benchmarks
+        const nonDeprecatedBenchmarks = benchmarks.filter(b => !b.is_deprecated);
+        const deprecatedBenchmarks = showDeprecated ? benchmarks.filter(b => b.is_deprecated) : [];
+        
+        const items: PiExtTreeItem[] = nonDeprecatedBenchmarks.map(b => new BenchmarkItem(this, this.email, b));
+        
+        // Add deprecated benchmarks at the end
+        if (deprecatedBenchmarks.length > 0) {
+            items.push(...deprecatedBenchmarks.map(b => new BenchmarkDeprecatedItem(this, this.email, b)));
+        }
+        
+        return items;
     }
 
     private getContextValue(): string {
@@ -44,7 +58,16 @@ export class BenchmarksItem extends TreeItem implements PiExtTreeItem {
 
     async viewProperties(): Promise<string> {
         const benchmarks: Benchmark[] = await BenchmarksItem.getBenchmarksWithCache(this.email);
-        return JSON.stringify(benchmarks, undefined, 4);
+        const showDeprecated = settingUtils.getShowDeprecatedResources();
+        
+        // Separate deprecated and non-deprecated benchmarks
+        const nonDeprecatedBenchmarks = benchmarks.filter(b => !b.is_deprecated);
+        const deprecatedBenchmarks = showDeprecated ? benchmarks.filter(b => b.is_deprecated) : [];
+        
+        // Combine non-deprecated and deprecated benchmarks, with deprecated at the end
+        const result = [...nonDeprecatedBenchmarks, ...deprecatedBenchmarks];
+        
+        return JSON.stringify(result, undefined, 4);
     }
 
     static async getBenchmarks(email: string): Promise<Benchmark[]> {
