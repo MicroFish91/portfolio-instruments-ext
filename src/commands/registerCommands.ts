@@ -36,12 +36,7 @@ import { updateSnapshotValue } from "./snapshotValues/updateSnapshotValue/update
 import { viewProperties } from "./viewProperties/viewProperties";
 import { toggleShowDeprecatedResources } from "./toggleShowDeprecatedResources/toggleShowDeprecatedResources";
 import { undeprecate } from "./undeprecate/undeprecate";
-import { refresh } from "./refresh/refresh";
-import { refreshSnapshots } from "./refresh/refreshSnapshots";
-import { refreshAccounts } from "./refresh/refreshAccounts";
-import { refreshHoldings } from "./refresh/refreshHoldings";
-import { refreshBenchmarks } from "./refresh/refreshBenchmarks";
-import { refreshSnapshot } from "./refresh/refreshSnapshot";
+import { refresh, refreshNode } from "./refresh/refresh";
 import { collapseAll } from "./refresh/collapseAll";
 
 export function registerCommands() {
@@ -102,10 +97,10 @@ export function registerCommands() {
 
     // Refresh
     registerCommand('portfolioInstruments.refresh', refresh);
-    registerCommand('portfolioInstruments.refreshSnapshots', refreshSnapshots);
-    registerCommand('portfolioInstruments.refreshAccounts', refreshAccounts);
-    registerCommand('portfolioInstruments.refreshHoldings', refreshHoldings);
-    registerCommand('portfolioInstruments.refreshBenchmarks', refreshBenchmarks);
-    registerCommand('portfolioInstruments.refreshSnapshot', refreshSnapshot);
+    registerCommand('portfolioInstruments.refreshSnapshots', refreshNode);
+    registerCommand('portfolioInstruments.refreshAccounts', refreshNode);
+    registerCommand('portfolioInstruments.refreshHoldings', refreshNode);
+    registerCommand('portfolioInstruments.refreshBenchmarks', refreshNode);
+    registerCommand('portfolioInstruments.refreshSnapshot', refreshNode);
     registerCommand('portfolioInstruments.collapseAll', collapseAll);
 }
