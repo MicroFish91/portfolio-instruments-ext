@@ -44,7 +44,7 @@ export class SnapshotByTaxShelterItem extends TreeItem implements PiExtTreeItem 
         return taxShelters.map((shelter, i) => {
             const percent: number = Math.round(totals[i] / this.snapshotData.total * 100);
             return new GenericItem({
-                id: `${this.id}/${shelter}`,
+                id: `${this.id}/${i}`,
                 label: shelter,
                 description: `${totals[i].toFixed(2)} (${percent}%)`,
                 contextValue: 'snapshotTaxShelterItem',

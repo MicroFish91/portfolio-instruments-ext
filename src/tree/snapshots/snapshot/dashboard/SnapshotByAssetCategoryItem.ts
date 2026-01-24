@@ -44,7 +44,7 @@ export class SnapshotByAssetCategoryItem extends TreeItem implements PiExtTreeIt
         return assetCategories.map((category, i) => {
             const percent: number = Math.round(totals[i] / this.snapshotData.total * 100);
             return new GenericItem({
-                id: `${this.id}/${category}`,
+                id: `${this.id}/${i}`,
                 label: category,
                 description: `${totals[i].toFixed(2)} (${percent}%)`,
                 contextValue: 'snapshotAssetCategoryItem',
