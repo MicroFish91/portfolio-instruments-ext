@@ -34,8 +34,8 @@ import { createSnapshotValue } from "./snapshotValues/createSnapshotValue/create
 import { deleteSnapshotValue } from "./snapshotValues/deleteSnapshotValue/deleteSnapshotValue";
 import { updateSnapshotValue } from "./snapshotValues/updateSnapshotValue/updateSnapshotValue";
 import { viewProperties } from "./viewProperties/viewProperties";
-import { toggleShowDeprecatedResources } from "./toggleShowDeprecatedResources/toggleShowDeprecatedResources";
-import { undeprecate } from "./undeprecate/undeprecate";
+import { toggleShowDeprecatedResources } from "./deprecate/toggleShowDeprecatedResources";
+import { undeprecate } from "./deprecate/undeprecate";
 import { refresh, refreshNode } from "./refresh";
 import { collapseAll } from "./collapseAll";
 
