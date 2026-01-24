@@ -40,5 +40,12 @@
     "portfolioInstruments.updateRebalanceSettings": "Update Rebalance Threshold...",
     "portfolioInstruments.plotSnapshots": "Plot Snapshots...",
     "portfolioInstruments.viewProperties": "View Properties",
-    "portfolioInstruments.undeprecate": "Restore..."
+    "portfolioInstruments.undeprecate": "Restore...",
+    "portfolioInstruments.refresh": "Refresh",
+    "portfolioInstruments.refreshSnapshots": "Refresh",
+    "portfolioInstruments.refreshAccounts": "Refresh",
+    "portfolioInstruments.refreshHoldings": "Refresh",
+    "portfolioInstruments.refreshBenchmarks": "Refresh",
+    "portfolioInstruments.refreshSnapshot": "Refresh",
+    "portfolioInstruments.collapseAll": "Collapse All"
 }
