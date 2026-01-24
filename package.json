@@ -217,6 +217,11 @@
         "command": "portfolioInstruments.toggleShowDeprecatedResources",
         "title": "%portfolioInstruments.toggleShowDeprecatedResources%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.undeprecate",
+        "title": "%portfolioInstruments.undeprecate%",
+        "category": "Portfolio Instruments"
       }
     ],
     "configuration": [
@@ -378,6 +383,10 @@
         },
         {
           "command": "portfolioInstruments.viewProperties",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.undeprecate",
           "when": "never"
         }
       ],
@@ -556,6 +565,21 @@
           "command": "portfolioInstruments.viewProperties",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /viewProperties/i",
           "group": "z@1"
+        },
+        {
+          "command": "portfolioInstruments.undeprecate",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /accountDeprecatedItem/i",
+          "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.undeprecate",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /holdingDeprecatedItem/i",
+          "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.undeprecate",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /benchmarkDeprecatedItem/i",
+          "group": "1@1"
         }
       ],
       "view/title": [
