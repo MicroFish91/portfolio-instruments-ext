@@ -19,10 +19,11 @@ export class MaturationDateItem extends TreeItem implements PiExtTreeItem {
         readonly parent: SnapshotByMaturationDateItem,
         readonly email: string,
         readonly snapshotData: Snapshot,
+        readonly resourceIdx: number,
         readonly resource: MaturationDateResource,
     ) {
         super(resource.holding_name);
-        this.id = `/snapshots/${snapshotData.snap_id}/dashboard/maturationDateBreakdown/${resource.holding_name}-${resource.account_name}`;
+        this.id = `/snapshots/${snapshotData.snap_id}/dashboard/maturationDateBreakdown/${resourceIdx}`;
     }
 
     getTreeItem(): TreeItem {

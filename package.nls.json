@@ -39,5 +39,6 @@
     "portfolioInstruments.updateBenchmarkSettings": "Update Benchmark Target...",
     "portfolioInstruments.updateRebalanceSettings": "Update Rebalance Threshold...",
     "portfolioInstruments.plotSnapshots": "Plot Snapshots...",
-    "portfolioInstruments.viewProperties": "View Properties"
+    "portfolioInstruments.viewProperties": "View Properties",
+    "portfolioInstruments.undeprecate": "Restore..."
 }

@@ -44,7 +44,7 @@ export class SnapshotByInstitutionsItem extends TreeItem implements PiExtTreeIte
         return accountInstitutions.map((acc, i) => {
             const percent: number = Math.round(totals[i] / this.snapshotData.total * 100);
             return new GenericItem({
-                id: `${this.id}/${acc}`,
+                id: `${this.id}/${i}`,
                 label: acc,
                 description: `${totals[i].toFixed(2)} (${percent}%)`,
                 contextValue: 'snapshotAccountItem',

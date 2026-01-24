@@ -56,7 +56,7 @@ export class SnapshotByMaturationDateItem extends TreeItem implements PiExtTreeI
             new SnapshotMaturationFilterItem(this, this.email, this.snapshotData),
             ...resources
                 .sort((a, b) => new Date(b.maturation_date).getTime() - new Date(a.maturation_date).getTime())
-                .map(resource => new MaturationDateItem(this, this.email, this.snapshotData, resource)),
+                .map((resource, idx) => new MaturationDateItem(this, this.email, this.snapshotData, idx, resource)),
             new GenericItem({
                 id: `${this.id}/averageRate`,
                 label: interestRatePct + '%',
