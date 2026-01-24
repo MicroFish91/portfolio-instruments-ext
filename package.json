@@ -222,6 +222,47 @@
         "command": "portfolioInstruments.undeprecate",
         "title": "%portfolioInstruments.undeprecate%",
         "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.refresh",
+        "title": "%portfolioInstruments.refresh%",
+        "category": "Portfolio Instruments",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "portfolioInstruments.refreshSnapshots",
+        "title": "%portfolioInstruments.refreshSnapshots%",
+        "category": "Portfolio Instruments",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "portfolioInstruments.refreshAccounts",
+        "title": "%portfolioInstruments.refreshAccounts%",
+        "category": "Portfolio Instruments",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "portfolioInstruments.refreshHoldings",
+        "title": "%portfolioInstruments.refreshHoldings%",
+        "category": "Portfolio Instruments",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "portfolioInstruments.refreshBenchmarks",
+        "title": "%portfolioInstruments.refreshBenchmarks%",
+        "category": "Portfolio Instruments",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "portfolioInstruments.refreshSnapshot",
+        "title": "%portfolioInstruments.refreshSnapshot%",
+        "category": "Portfolio Instruments"
+      },
+      {
+        "command": "portfolioInstruments.collapseAll",
+        "title": "%portfolioInstruments.collapseAll%",
+        "category": "Portfolio Instruments",
+        "icon": "$(collapse-all)"
       }
     ],
     "configuration": [
@@ -388,6 +429,26 @@
         {
           "command": "portfolioInstruments.undeprecate",
           "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.refreshSnapshots",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.refreshAccounts",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.refreshHoldings",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.refreshBenchmarks",
+          "when": "never"
+        },
+        {
+          "command": "portfolioInstruments.refreshSnapshot",
+          "when": "never"
         }
       ],
       "view/item/context": [
@@ -507,6 +568,11 @@
           "group": "1@1"
         },
         {
+          "command": "portfolioInstruments.refreshSnapshot",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotItem/i",
+          "group": "z@0"
+        },
+        {
           "command": "portfolioInstruments.updateMaturationStart",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotMaturationStartItem/i",
           "group": "1@1"
@@ -580,18 +646,48 @@
           "command": "portfolioInstruments.undeprecate",
           "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /benchmarkDeprecatedItem/i",
           "group": "1@1"
+        },
+        {
+          "command": "portfolioInstruments.refreshSnapshots",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /snapshotsItem/i",
+          "group": "z@0"
+        },
+        {
+          "command": "portfolioInstruments.refreshAccounts",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /accountsItem/i",
+          "group": "z@0"
+        },
+        {
+          "command": "portfolioInstruments.refreshHoldings",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /holdingsItem/i",
+          "group": "z@0"
+        },
+        {
+          "command": "portfolioInstruments.refreshBenchmarks",
+          "when": "view =~ /portfolioInstruments.main/i && viewItem =~ /benchmarksItem/i",
+          "group": "z@0"
         }
       ],
       "view/title": [
         {
           "command": "portfolioInstruments.login",
           "when": "view == portfolioInstruments.main",
-          "group": "navigation"
+          "group": "navigation@1"
         },
         {
           "command": "portfolioInstruments.logoutAll",
           "when": "view == portfolioInstruments.main",
-          "group": "navigation"
+          "group": "navigation@2"
+        },
+        {
+          "command": "portfolioInstruments.collapseAll",
+          "when": "view == portfolioInstruments.main",
+          "group": "navigation@3"
+        },
+        {
+          "command": "portfolioInstruments.refresh",
+          "when": "view == portfolioInstruments.main",
+          "group": "navigation@4"
         }
       ]
     }
