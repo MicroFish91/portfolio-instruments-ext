@@ -36,8 +36,8 @@ import { updateSnapshotValue } from "./snapshotValues/updateSnapshotValue/update
 import { viewProperties } from "./viewProperties/viewProperties";
 import { toggleShowDeprecatedResources } from "./toggleShowDeprecatedResources/toggleShowDeprecatedResources";
 import { undeprecate } from "./undeprecate/undeprecate";
-import { refresh, refreshNode } from "./refresh/refresh";
-import { collapseAll } from "./refresh/collapseAll";
+import { refresh, refreshNode } from "./refresh";
+import { collapseAll } from "./collapseAll";
 
 export function registerCommands() {
     // Auth
