@@ -48,19 +48,19 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
         }
 
         const showDeprecated = settingUtils.getShowDeprecatedResources();
-        
+
         // Separate deprecated and non-deprecated holdings
         const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
         const deprecatedHoldings = showDeprecated ? holdings.filter(h => h.is_deprecated) : [];
 
         const orderedHoldings: Holding[] = await this.getOrderedResourceModels(nonDeprecatedHoldings);
-        
+
         // Cache all holdings (both deprecated and non-deprecated) to preserve deprecated items after reordering
         const allHoldings = [...orderedHoldings, ...holdings.filter(h => h.is_deprecated)];
         ext.resourceCache.set(HoldingsItem.generatePiExtHoldingsId(this.email), allHoldings);
 
         const items: PiExtTreeItem[] = orderedHoldings.map(h => new HoldingItem(this, this.email, h));
-        
+
         // Add deprecated holdings at the end
         if (deprecatedHoldings.length > 0) {
             items.push(...deprecatedHoldings.map(h => new HoldingDeprecatedItem(this, this.email, h)));
@@ -91,16 +91,18 @@ export class HoldingsItem extends TreeItem implements PiExtTreeItem, Reorderer {
     async viewProperties(): Promise<string> {
         const holdings: Holding[] = await HoldingsItem.getHoldingsWithCache(this.email);
         const showDeprecated = settingUtils.getShowDeprecatedResources();
-        
+
         // Separate deprecated and non-deprecated holdings
         const nonDeprecatedHoldings = holdings.filter(h => !h.is_deprecated);
         const deprecatedHoldings = showDeprecated ? holdings.filter(h => h.is_deprecated) : [];
-        
+
         // Order non-deprecated holdings and append deprecated ones at the end
         const orderedHoldings = await this.getOrderedResourceModels(nonDeprecatedHoldings);
         const result = [...orderedHoldings, ...deprecatedHoldings];
-        
-        return JSON.stringify(result, undefined, 4);
+
+        // Remove id field from all holdings
+        const resultWithoutId = result.map(({ id, ...holding }: any) => holding);
+        return JSON.stringify(resultWithoutId, undefined, 4);
     }
 
     static async getHoldings(email: string): Promise<Holding[]> {

@@ -35,7 +35,8 @@ export class HoldingItem extends TreeItem implements PiExtTreeItem, Reorderable 
     }
 
     viewProperties(): string {
-        return JSON.stringify(this.holding, undefined, 4);
+        const { id, ...holdingWithoutId } = this.holding as any;
+        return JSON.stringify(holdingWithoutId, undefined, 4);
     }
 
     getResourceId(): string {
